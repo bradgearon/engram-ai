@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "id": "architecture-train-0",
+  "domain": "architecture",
+  "artifact": {
+    "components": [
+      {
+        "id": "domain",
+        "layer": "domain",
+        "writes": [
+          "domain-db"
+        ],
+        "stateful": true,
+        "supervised": true
+      },
+      {
+        "id": "app",
+        "layer": "app",
+        "writes": [
+          "app-db"
+        ],
+        "stateful": true,
+        "supervised": true
+      },
+      {
+        "id": "storage",
+        "layer": "adapter",
+        "writes": [
+          "storage-db"
+        ],
+        "stateful": false,
+        "supervised": true
+      }
+    ],
+    "edges": [
+      {
+        "from": "domain",
+        "to": "storage",
+        "kind": "call",
+        "via_port": false,
+        "idempotent": true,
+        "timeout_ms": 30
+      },
+      {
+        "from": "app",
+        "to": "storage",
+        "kind": "event",
+        "via_port": true,
+        "idempotent": true,
+        "timeout_ms": 0
+      }
+    ]
+  },
+  "requirements": {
+    "domain_isolation": true,
+    "private_ownership": true,
+    "event_idempotency": true,
+    "bounded_calls": true,
+    "supervision": true,
+    "async_boundary": false,
+    "latency_budget_ms": 30
+  }
+}

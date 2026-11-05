@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "backend": "ggml-sgd CPU",
+  "framework": "C++20 Task and standalone Asio",
+  "activation_events_during_training": 0,
+  "resume_repeated_benchmark_episodes": 0,
+  "resume_repeated_training_epochs": 0,
+  "original_v02_loader_accepted": [
+    "packages/candidates/music/cefed33bfd36b669120438a288036533907b1f92",
+    "packages/candidates/architecture/a40c1ad23112f71b4b6826477297b4a1b1617652"
+  ],
+  "cli_smoke": "start, status, explicit activation, run, stop, restart passed in isolated temporary data",
+  "candidates_included": [
+    "packages/candidates/music/cefed33bfd36b669120438a288036533907b1f92",
+    "packages/candidates/architecture/a40c1ad23112f71b4b6826477297b4a1b1617652"
+  ],
+  "scope": "authored symbolic repair fixtures; no real GGUF or GPU quality claim"
+}

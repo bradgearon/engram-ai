@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "id": "wds.ai.curriculum.music",
+  "version": 1,
+  "domain": "music",
+  "feature_schema": "music.deficits/1",
+  "action_schema": "music.repairs/1",
+  "evaluator": "wds.ai.heart.music/1",
+  "splits": {
+    "train": {
+      "path": "train.json",
+      "sha256": "4a82bb6e2a494852a08290a1e4c4c127e9d447b3b0d6d9cf484a99552da10622",
+      "tasks": 48,
+      "families": 12
+    },
+    "validation": {
+      "path": "validation.json",
+      "sha256": "7b63cfdf5f054d9e65d0665ac129f3e1e1027044c93df7f022aaf7b902d1806b",
+      "tasks": 12,
+      "families": 4
+    },
+    "test": {
+      "path": "test.json",
+      "sha256": "ce3e14fe182e69c27d34aa93bdf36407af46ab27b36a5266f3f162167840962b",
+      "tasks": 20,
+      "families": 5
+    }
+  },
+  "max_steps": 4,
+  "training_epochs": 40,
+  "learning_rate": 0.05,
+  "max_trajectory_steps": 4,
+  "scope": "symbolic repair-action selection; no general expertise or subjective quality claim",
+  "teacher_role": "optional source-linked critique only; never test labels or numerical acceptance",
+  "activation": "separate explicit command after all domain episodes finish",
+  "external_enrichment": "not fetched automatically; original source links retained",
+  "sources": [
+    {
+      "path": "sources/00_INDEX.md",
+      "sha256": "dcb77de761c6fc80b9554a33b4a91bc29e565c8dad4a827a7d5d9990274b2fad"
+    },
+    {
+      "path": "sources/01_TRAINING_INSTRUCTIONS.md",
+      "sha256": "0c0b27c10728f4f13135d6db9cea4fa11cf17d0e342f02885b2a3b432b9b7efd"
+    },
+    {
+      "path": "sources/README.md",
+      "sha256": "8f029cf5e71dbe1be810440f7bd5741066a878540c128b4938775cd4450f032c"
+    },
+    {
+      "path": "sources/extracted/02_INTERVAL_EMOTION.md",
+      "sha256": "b4d306d27fabd866563ca4ca96c2a56713576b745d35d241cc6a0f08ae924346"
+    },
+    {
+      "path": "sources/extracted/03_AHD.md",
+      "sha256": "7fbac908e73ce229f0a497ec44a61014d5c58d28afe56fcc1f150f523f7ff7b3"
+    },
+    {
+      "path": "sources/extracted/04_MOTIF_AND_GENRE.md",
+      "sha256": "016b3235102c5f254027f6fc2e99125c74a9549e8cf6291bb54f6c6a9c7f4896"
+    },
+    {
+      "path": "sources/extracted/05_STATEMENT_ANSWER_COUNTER.md",
+      "sha256": "27446371cdd029bd0188f4e3157201a40a519620cbeb37a5e9953ff2d9e2f38d"
+    },
+    {
+      "path": "sources/extracted/06_EXTERNAL_RESOURCES.md",
+      "sha256": "daad2693b4b6f768ebe1d7925f174213c48f3cd1026e69ed0a9001852bf63231"
+    }
+  ]
+}

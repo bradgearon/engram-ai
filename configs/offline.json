@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "port": 8765,
+  "build_dir": "build-offline",
+  "ggml": false,
+  "llama": false,
+  "llama_source": "",
+  "model": "",
+  "gpu_layers": 0,
+  "build_jobs": 4,
+  "data": "workshop-data",
+  "runs": "runs",
+  "package_root": "packages",
+  "initial_package": "packages/breeze",
+  "teacher_ws": "",
+  "max_teacher_calls": 1,
+  "max_foundation_calls": 0,
+  "run_timeout_seconds": 1800,
+  "trainer_backend": "auto"
+}

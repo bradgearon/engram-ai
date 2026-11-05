@@ -1,0 +1,82 @@
+{
+  "schema": 1,
+  "run_id": "2071ec356d56c97029cf2a1af529196ece5c88e1",
+  "domain": "architecture",
+  "candidate_key": "wds.ai.winds.architecture.743c486fcb353bc2@2:b7147a61ca70f9be",
+  "parent_key": "wds.ai.winds.breeze@1:0b4c20196b781565",
+  "implementation_sha256": "66db29afa1bf52b766276f200220011bca0b15f02bf31897d5af073814b19e2a",
+  "curriculum_sha256": "b8c1ff2829e4f240655862aaba1c0451061bbf49676f65888f19f33edbfa30f7",
+  "split_pins": {
+    "train": "be34bc97b51dbfe863af01734a752c7a1548545ffe4c801e42800b88aec2281a",
+    "validation": "2f5e4181a3f6fa616d684fb47e7995cbffa7844ed20da8c0104795aa7c8ff4ab",
+    "test": "d7e760f64e86f99a7e785a1cc6aef13714968c5cac90f7fef9bf1569219e2b61"
+  },
+  "validation": {
+    "parent": {
+      "tasks": 12,
+      "passes": 0,
+      "mean_constraint_score": 0.7619047611951828,
+      "failures": 0,
+      "max_actions_per_task": 4
+    },
+    "fixed_refine": {
+      "tasks": 12,
+      "passes": 6,
+      "mean_constraint_score": 0.9226190447807312,
+      "failures": 0,
+      "max_actions_per_task": 4
+    },
+    "input_once": {
+      "tasks": 12,
+      "passes": 0,
+      "mean_constraint_score": 0.6785714477300644,
+      "failures": 0,
+      "max_actions_per_task": 1
+    },
+    "candidate": {
+      "tasks": 12,
+      "passes": 12,
+      "mean_constraint_score": 1.0,
+      "failures": 0,
+      "max_actions_per_task": 4
+    }
+  },
+  "locked_test": {
+    "parent": {
+      "tasks": 20,
+      "passes": 0,
+      "mean_constraint_score": 0.7190476298332215,
+      "failures": 0,
+      "max_actions_per_task": 4
+    },
+    "fixed_refine": {
+      "tasks": 20,
+      "passes": 4,
+      "mean_constraint_score": 0.87619047164917,
+      "failures": 0,
+      "max_actions_per_task": 4
+    },
+    "input_once": {
+      "tasks": 20,
+      "passes": 0,
+      "mean_constraint_score": 0.6857143044471741,
+      "failures": 0,
+      "max_actions_per_task": 1
+    },
+    "candidate": {
+      "tasks": 20,
+      "passes": 20,
+      "mean_constraint_score": 1.0,
+      "failures": 0,
+      "max_actions_per_task": 4
+    }
+  },
+  "accepted": true,
+  "gate": "candidate improves mean declared-constraint score over parent and fixed-order refinement at equal action limits; no candidate execution failures",
+  "scope": "symbolic repair-action selection; no general expertise or subjective quality claim",
+  "model_identity": "wds.ai.intelligence.demo/1",
+  "input_once_reference": "unchanged input fixture; not an LLM baseline",
+  "foundation_reference": "not run",
+  "activation": "not requested; this runner never activates packages",
+  "package": "packages/candidates/architecture/2071ec356d56c97029cf2a1af529196ece5c88e1"
+}

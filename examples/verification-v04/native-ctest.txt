@@ -1,0 +1,25 @@
+Test project /workspace/scratch/599c77d0dd47/wds-ai/build-llama
+      Start  1: core
+ 1/10 Test  #1: core .............................   Passed    0.01 sec
+      Start  2: heart
+ 2/10 Test  #2: heart ............................   Passed    0.02 sec
+      Start  3: heart_websocket
+ 3/10 Test  #3: heart_websocket ..................   Passed    0.34 sec
+      Start  4: websocket
+ 4/10 Test  #4: websocket ........................   Passed    0.34 sec
+      Start  5: workshop_core
+ 5/10 Test  #5: workshop_core ....................   Passed    0.01 sec
+      Start  6: native_trainer
+ 6/10 Test  #6: native_trainer ...................   Passed    0.39 sec
+      Start  7: upkeep_core
+ 7/10 Test  #7: upkeep_core ......................   Passed    0.03 sec
+      Start  8: upkeep_websocket
+ 8/10 Test  #8: upkeep_websocket .................   Passed    1.91 sec
+      Start  9: sixstars_setup
+ 9/10 Test  #9: sixstars_setup ...................   Passed    0.05 sec
+      Start 10: gemma4_template
+10/10 Test #10: gemma4_template ..................   Passed    0.01 sec
+
+100% tests passed out of 10
+
+Total Test time (real) =   3.11 sec

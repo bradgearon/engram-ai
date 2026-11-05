@@ -1,0 +1,3530 @@
+[
+  {
+    "family": "repair-0",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-0",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": false,
+            "idempotent": true,
+            "timeout_ms": 30
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 30
+      }
+    }
+  },
+  {
+    "family": "repair-0",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-1",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          },
+          {
+            "id": "worker",
+            "layer": "app",
+            "writes": [
+              "worker-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": false,
+            "idempotent": true,
+            "timeout_ms": 75
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 75
+      }
+    }
+  },
+  {
+    "family": "repair-0",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-2",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": false,
+            "idempotent": true,
+            "timeout_ms": 150
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 150
+      }
+    }
+  },
+  {
+    "family": "repair-0",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-3",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          },
+          {
+            "id": "worker",
+            "layer": "app",
+            "writes": [
+              "worker-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": false,
+            "idempotent": true,
+            "timeout_ms": 400
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 400
+      }
+    }
+  },
+  {
+    "family": "repair-1",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-4",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 30
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 30
+      }
+    }
+  },
+  {
+    "family": "repair-1",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-5",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          },
+          {
+            "id": "worker",
+            "layer": "app",
+            "writes": [
+              "worker-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 75
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 75
+      }
+    }
+  },
+  {
+    "family": "repair-1",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-6",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 150
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 150
+      }
+    }
+  },
+  {
+    "family": "repair-1",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-7",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          },
+          {
+            "id": "worker",
+            "layer": "app",
+            "writes": [
+              "worker-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 400
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 400
+      }
+    }
+  },
+  {
+    "family": "repair-2",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-8",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 30
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": false,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 30
+      }
+    }
+  },
+  {
+    "family": "repair-2",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-9",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          },
+          {
+            "id": "worker",
+            "layer": "app",
+            "writes": [
+              "worker-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 75
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": false,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 75
+      }
+    }
+  },
+  {
+    "family": "repair-2",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-10",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 150
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": false,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 150
+      }
+    }
+  },
+  {
+    "family": "repair-2",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-11",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          },
+          {
+            "id": "worker",
+            "layer": "app",
+            "writes": [
+              "worker-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 400
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": false,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 400
+      }
+    }
+  },
+  {
+    "family": "repair-3",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-12",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 30
+      }
+    }
+  },
+  {
+    "family": "repair-3",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-13",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          },
+          {
+            "id": "worker",
+            "layer": "app",
+            "writes": [
+              "worker-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 75
+      }
+    }
+  },
+  {
+    "family": "repair-3",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-14",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 150
+      }
+    }
+  },
+  {
+    "family": "repair-3",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-15",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          },
+          {
+            "id": "worker",
+            "layer": "app",
+            "writes": [
+              "worker-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 400
+      }
+    }
+  },
+  {
+    "family": "repair-4",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-16",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 30
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": true,
+        "latency_budget_ms": 30
+      }
+    }
+  },
+  {
+    "family": "repair-4",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-17",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          },
+          {
+            "id": "worker",
+            "layer": "app",
+            "writes": [
+              "worker-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 75
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": true,
+        "latency_budget_ms": 75
+      }
+    }
+  },
+  {
+    "family": "repair-4",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-18",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 150
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": true,
+        "latency_budget_ms": 150
+      }
+    }
+  },
+  {
+    "family": "repair-4",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-19",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          },
+          {
+            "id": "worker",
+            "layer": "app",
+            "writes": [
+              "worker-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 400
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": true,
+        "latency_budget_ms": 400
+      }
+    }
+  },
+  {
+    "family": "repair-5",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-20",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": false
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 30
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 30
+      }
+    }
+  },
+  {
+    "family": "repair-5",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-21",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": false
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          },
+          {
+            "id": "worker",
+            "layer": "app",
+            "writes": [
+              "worker-db"
+            ],
+            "stateful": true,
+            "supervised": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 75
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 75
+      }
+    }
+  },
+  {
+    "family": "repair-5",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-22",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": false
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 150
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 150
+      }
+    }
+  },
+  {
+    "family": "repair-5",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-23",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": false
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          },
+          {
+            "id": "worker",
+            "layer": "app",
+            "writes": [
+              "worker-db"
+            ],
+            "stateful": true,
+            "supervised": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 400
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 400
+      }
+    }
+  },
+  {
+    "family": "repair-0-1",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-24",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": false,
+            "idempotent": true,
+            "timeout_ms": 30
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 30
+      }
+    }
+  },
+  {
+    "family": "repair-0-1",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-25",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          },
+          {
+            "id": "worker",
+            "layer": "app",
+            "writes": [
+              "worker-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": false,
+            "idempotent": true,
+            "timeout_ms": 75
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 75
+      }
+    }
+  },
+  {
+    "family": "repair-0-1",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-26",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": false,
+            "idempotent": true,
+            "timeout_ms": 150
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 150
+      }
+    }
+  },
+  {
+    "family": "repair-0-1",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-27",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          },
+          {
+            "id": "worker",
+            "layer": "app",
+            "writes": [
+              "worker-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": false,
+            "idempotent": true,
+            "timeout_ms": 400
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 400
+      }
+    }
+  },
+  {
+    "family": "repair-1-2",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-28",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 30
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": false,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 30
+      }
+    }
+  },
+  {
+    "family": "repair-1-2",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-29",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          },
+          {
+            "id": "worker",
+            "layer": "app",
+            "writes": [
+              "worker-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 75
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": false,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 75
+      }
+    }
+  },
+  {
+    "family": "repair-1-2",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-30",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 150
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": false,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 150
+      }
+    }
+  },
+  {
+    "family": "repair-1-2",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-31",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          },
+          {
+            "id": "worker",
+            "layer": "app",
+            "writes": [
+              "worker-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 400
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": false,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 400
+      }
+    }
+  },
+  {
+    "family": "repair-2-3",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-32",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": false,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 30
+      }
+    }
+  },
+  {
+    "family": "repair-2-3",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-33",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          },
+          {
+            "id": "worker",
+            "layer": "app",
+            "writes": [
+              "worker-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": false,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 75
+      }
+    }
+  },
+  {
+    "family": "repair-2-3",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-34",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": false,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 150
+      }
+    }
+  },
+  {
+    "family": "repair-2-3",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-35",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          },
+          {
+            "id": "worker",
+            "layer": "app",
+            "writes": [
+              "worker-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": false,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 400
+      }
+    }
+  },
+  {
+    "family": "repair-3-4",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-36",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": true,
+        "latency_budget_ms": 30
+      }
+    }
+  },
+  {
+    "family": "repair-3-4",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-37",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          },
+          {
+            "id": "worker",
+            "layer": "app",
+            "writes": [
+              "worker-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": true,
+        "latency_budget_ms": 75
+      }
+    }
+  },
+  {
+    "family": "repair-3-4",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-38",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": true,
+        "latency_budget_ms": 150
+      }
+    }
+  },
+  {
+    "family": "repair-3-4",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-39",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          },
+          {
+            "id": "worker",
+            "layer": "app",
+            "writes": [
+              "worker-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": true,
+        "latency_budget_ms": 400
+      }
+    }
+  },
+  {
+    "family": "repair-4-5",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-40",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": false
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 30
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": true,
+        "latency_budget_ms": 30
+      }
+    }
+  },
+  {
+    "family": "repair-4-5",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-41",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": false
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          },
+          {
+            "id": "worker",
+            "layer": "app",
+            "writes": [
+              "worker-db"
+            ],
+            "stateful": true,
+            "supervised": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 75
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": true,
+        "latency_budget_ms": 75
+      }
+    }
+  },
+  {
+    "family": "repair-4-5",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-42",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": false
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 150
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": true,
+        "latency_budget_ms": 150
+      }
+    }
+  },
+  {
+    "family": "repair-4-5",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-43",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": false
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          },
+          {
+            "id": "worker",
+            "layer": "app",
+            "writes": [
+              "worker-db"
+            ],
+            "stateful": true,
+            "supervised": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 400
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": true,
+        "latency_budget_ms": 400
+      }
+    }
+  },
+  {
+    "family": "repair-0-5",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-44",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": false
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": false,
+            "idempotent": true,
+            "timeout_ms": 30
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 30
+      }
+    }
+  },
+  {
+    "family": "repair-0-5",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-45",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": false
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          },
+          {
+            "id": "worker",
+            "layer": "app",
+            "writes": [
+              "worker-db"
+            ],
+            "stateful": true,
+            "supervised": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": false,
+            "idempotent": true,
+            "timeout_ms": 75
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 75
+      }
+    }
+  },
+  {
+    "family": "repair-0-5",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-46",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": false
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": false,
+            "idempotent": true,
+            "timeout_ms": 150
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 150
+      }
+    }
+  },
+  {
+    "family": "repair-0-5",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "architecture-train-47",
+      "domain": "architecture",
+      "artifact": {
+        "components": [
+          {
+            "id": "domain",
+            "layer": "domain",
+            "writes": [
+              "domain-db"
+            ],
+            "stateful": true,
+            "supervised": true
+          },
+          {
+            "id": "app",
+            "layer": "app",
+            "writes": [
+              "app-db"
+            ],
+            "stateful": true,
+            "supervised": false
+          },
+          {
+            "id": "storage",
+            "layer": "adapter",
+            "writes": [
+              "storage-db"
+            ],
+            "stateful": false,
+            "supervised": true
+          },
+          {
+            "id": "worker",
+            "layer": "app",
+            "writes": [
+              "worker-db"
+            ],
+            "stateful": true,
+            "supervised": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "domain",
+            "to": "storage",
+            "kind": "call",
+            "via_port": false,
+            "idempotent": true,
+            "timeout_ms": 400
+          },
+          {
+            "from": "app",
+            "to": "storage",
+            "kind": "event",
+            "via_port": true,
+            "idempotent": true,
+            "timeout_ms": 0
+          }
+        ]
+      },
+      "requirements": {
+        "domain_isolation": true,
+        "private_ownership": true,
+        "event_idempotency": true,
+        "bounded_calls": true,
+        "supervision": true,
+        "async_boundary": false,
+        "latency_budget_ms": 400
+      }
+    }
+  }
+]

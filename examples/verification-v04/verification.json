@@ -1,0 +1,153 @@
+{
+  "schema": 1,
+  "scalar_ctest": {
+    "passed": 9,
+    "total": 9
+  },
+  "native_llama_ggml_ctest": {
+    "passed": 10,
+    "total": 10
+  },
+  "real_gguf_tested": false,
+  "gpu_tested": false,
+  "windows_tested": false,
+  "benchmark_episode_count": 256,
+  "resume_added_episodes": 0,
+  "benchmark_review_suggestions": 0,
+  "benchmark_flesh_mutations": 0,
+  "training_activations": 0,
+  "candidate_abi": [
+    {
+      "domain": "architecture",
+      "package": "packages/candidates/architecture/2071ec356d56c97029cf2a1af529196ece5c88e1",
+      "original_v02_load": true,
+      "policy_bytes": 1152,
+      "validation": {
+        "parent": {
+          "tasks": 12,
+          "passes": 0,
+          "mean_constraint_score": 0.7619047611951828,
+          "failures": 0,
+          "max_actions_per_task": 4
+        },
+        "fixed_refine": {
+          "tasks": 12,
+          "passes": 6,
+          "mean_constraint_score": 0.9226190447807312,
+          "failures": 0,
+          "max_actions_per_task": 4
+        },
+        "input_once": {
+          "tasks": 12,
+          "passes": 0,
+          "mean_constraint_score": 0.6785714477300644,
+          "failures": 0,
+          "max_actions_per_task": 1
+        },
+        "candidate": {
+          "tasks": 12,
+          "passes": 12,
+          "mean_constraint_score": 1.0,
+          "failures": 0,
+          "max_actions_per_task": 4
+        }
+      },
+      "locked_test": {
+        "parent": {
+          "tasks": 20,
+          "passes": 0,
+          "mean_constraint_score": 0.7190476298332215,
+          "failures": 0,
+          "max_actions_per_task": 4
+        },
+        "fixed_refine": {
+          "tasks": 20,
+          "passes": 4,
+          "mean_constraint_score": 0.87619047164917,
+          "failures": 0,
+          "max_actions_per_task": 4
+        },
+        "input_once": {
+          "tasks": 20,
+          "passes": 0,
+          "mean_constraint_score": 0.6857143044471741,
+          "failures": 0,
+          "max_actions_per_task": 1
+        },
+        "candidate": {
+          "tasks": 20,
+          "passes": 20,
+          "mean_constraint_score": 1.0,
+          "failures": 0,
+          "max_actions_per_task": 4
+        }
+      }
+    },
+    {
+      "domain": "music",
+      "package": "packages/candidates/music/cbfd8f89862d40dfa94d9eac42f6080d94ba3023",
+      "original_v02_load": true,
+      "policy_bytes": 1152,
+      "validation": {
+        "parent": {
+          "tasks": 12,
+          "passes": 0,
+          "mean_constraint_score": 0.4375000074505806,
+          "failures": 0,
+          "max_actions_per_task": 4
+        },
+        "fixed_refine": {
+          "tasks": 12,
+          "passes": 8,
+          "mean_constraint_score": 0.9166666666666666,
+          "failures": 0,
+          "max_actions_per_task": 4
+        },
+        "input_once": {
+          "tasks": 12,
+          "passes": 0,
+          "mean_constraint_score": 0.2708333358168602,
+          "failures": 0,
+          "max_actions_per_task": 1
+        },
+        "candidate": {
+          "tasks": 12,
+          "passes": 12,
+          "mean_constraint_score": 1.0,
+          "failures": 0,
+          "max_actions_per_task": 4
+        }
+      },
+      "locked_test": {
+        "parent": {
+          "tasks": 20,
+          "passes": 0,
+          "mean_constraint_score": 0.36666667461395264,
+          "failures": 0,
+          "max_actions_per_task": 4
+        },
+        "fixed_refine": {
+          "tasks": 20,
+          "passes": 4,
+          "mean_constraint_score": 0.7500000119209289,
+          "failures": 0,
+          "max_actions_per_task": 4
+        },
+        "input_once": {
+          "tasks": 20,
+          "passes": 0,
+          "mean_constraint_score": 0.36666667461395264,
+          "failures": 0,
+          "max_actions_per_task": 1
+        },
+        "candidate": {
+          "tasks": 20,
+          "passes": 18,
+          "mean_constraint_score": 0.975,
+          "failures": 0,
+          "max_actions_per_task": 4
+        }
+      }
+    }
+  ]
+}

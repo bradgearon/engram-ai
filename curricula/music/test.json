@@ -1,0 +1,1154 @@
+[
+  {
+    "family": "repair-0-3",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "music-test-0",
+      "domain": "music",
+      "artifact": {
+        "notes": [
+          {
+            "pitch": 23,
+            "duration": 2
+          },
+          {
+            "pitch": 25,
+            "duration": 2
+          },
+          {
+            "pitch": 27,
+            "duration": 2
+          },
+          {
+            "pitch": 23,
+            "duration": 2
+          },
+          {
+            "pitch": 23,
+            "duration": 2
+          },
+          {
+            "pitch": 25,
+            "duration": 2
+          },
+          {
+            "pitch": 27,
+            "duration": 2
+          },
+          {
+            "pitch": 23,
+            "duration": 2
+          }
+        ]
+      },
+      "requirements": {
+        "pitch_min": 55,
+        "pitch_max": 79,
+        "home_pc": 7,
+        "target_ticks": 16,
+        "return_home": false,
+        "repeat_motif": false,
+        "answer_interval": 8,
+        "anchors": [
+          47,
+          49,
+          51,
+          47,
+          47,
+          49,
+          51,
+          47
+        ]
+      }
+    }
+  },
+  {
+    "family": "repair-0-3",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "music-test-1",
+      "domain": "music",
+      "artifact": {
+        "notes": [
+          {
+            "pitch": 29,
+            "duration": 2
+          },
+          {
+            "pitch": 31,
+            "duration": 2
+          },
+          {
+            "pitch": 33,
+            "duration": 2
+          },
+          {
+            "pitch": 29,
+            "duration": 2
+          },
+          {
+            "pitch": 29,
+            "duration": 2
+          },
+          {
+            "pitch": 31,
+            "duration": 2
+          },
+          {
+            "pitch": 33,
+            "duration": 2
+          },
+          {
+            "pitch": 29,
+            "duration": 2
+          },
+          {
+            "pitch": 29,
+            "duration": 2
+          },
+          {
+            "pitch": 31,
+            "duration": 2
+          },
+          {
+            "pitch": 33,
+            "duration": 2
+          },
+          {
+            "pitch": 29,
+            "duration": 2
+          }
+        ]
+      },
+      "requirements": {
+        "pitch_min": 56,
+        "pitch_max": 80,
+        "home_pc": 8,
+        "target_ticks": 24,
+        "return_home": false,
+        "repeat_motif": false,
+        "answer_interval": 3,
+        "anchors": [
+          53,
+          55,
+          57,
+          53,
+          53,
+          55,
+          57,
+          53,
+          53,
+          55,
+          57,
+          53
+        ]
+      }
+    }
+  },
+  {
+    "family": "repair-0-3",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "music-test-2",
+      "domain": "music",
+      "artifact": {
+        "notes": [
+          {
+            "pitch": 29,
+            "duration": 2
+          },
+          {
+            "pitch": 31,
+            "duration": 2
+          },
+          {
+            "pitch": 33,
+            "duration": 2
+          },
+          {
+            "pitch": 29,
+            "duration": 2
+          }
+        ]
+      },
+      "requirements": {
+        "pitch_min": 57,
+        "pitch_max": 81,
+        "home_pc": 9,
+        "target_ticks": 8,
+        "return_home": false,
+        "repeat_motif": false,
+        "answer_interval": 4,
+        "anchors": [
+          53,
+          55,
+          57,
+          53
+        ]
+      }
+    }
+  },
+  {
+    "family": "repair-0-3",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "music-test-3",
+      "domain": "music",
+      "artifact": {
+        "notes": [
+          {
+            "pitch": 27,
+            "duration": 2
+          },
+          {
+            "pitch": 29,
+            "duration": 2
+          },
+          {
+            "pitch": 31,
+            "duration": 2
+          },
+          {
+            "pitch": 27,
+            "duration": 2
+          },
+          {
+            "pitch": 27,
+            "duration": 2
+          },
+          {
+            "pitch": 29,
+            "duration": 2
+          },
+          {
+            "pitch": 31,
+            "duration": 2
+          },
+          {
+            "pitch": 27,
+            "duration": 2
+          }
+        ]
+      },
+      "requirements": {
+        "pitch_min": 58,
+        "pitch_max": 82,
+        "home_pc": 10,
+        "target_ticks": 16,
+        "return_home": false,
+        "repeat_motif": false,
+        "answer_interval": 7,
+        "anchors": [
+          51,
+          53,
+          55,
+          51,
+          51,
+          53,
+          55,
+          51
+        ]
+      }
+    }
+  },
+  {
+    "family": "repair-0-4",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "music-test-4",
+      "domain": "music",
+      "artifact": {
+        "notes": [
+          {
+            "pitch": 31,
+            "duration": 2
+          },
+          {
+            "pitch": 56,
+            "duration": 2
+          },
+          {
+            "pitch": 35,
+            "duration": 2
+          },
+          {
+            "pitch": 31,
+            "duration": 2
+          },
+          {
+            "pitch": 31,
+            "duration": 2
+          },
+          {
+            "pitch": 33,
+            "duration": 2
+          },
+          {
+            "pitch": 35,
+            "duration": 2
+          },
+          {
+            "pitch": 31,
+            "duration": 2
+          }
+        ]
+      },
+      "requirements": {
+        "pitch_min": 55,
+        "pitch_max": 79,
+        "home_pc": 7,
+        "target_ticks": 16,
+        "return_home": false,
+        "repeat_motif": false,
+        "divergence_pc": 1
+      }
+    }
+  },
+  {
+    "family": "repair-0-4",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "music-test-5",
+      "domain": "music",
+      "artifact": {
+        "notes": [
+          {
+            "pitch": 32,
+            "duration": 2
+          },
+          {
+            "pitch": 57,
+            "duration": 2
+          },
+          {
+            "pitch": 36,
+            "duration": 2
+          },
+          {
+            "pitch": 32,
+            "duration": 2
+          },
+          {
+            "pitch": 32,
+            "duration": 2
+          },
+          {
+            "pitch": 34,
+            "duration": 2
+          },
+          {
+            "pitch": 36,
+            "duration": 2
+          },
+          {
+            "pitch": 32,
+            "duration": 2
+          },
+          {
+            "pitch": 32,
+            "duration": 2
+          },
+          {
+            "pitch": 34,
+            "duration": 2
+          },
+          {
+            "pitch": 36,
+            "duration": 2
+          },
+          {
+            "pitch": 32,
+            "duration": 2
+          }
+        ]
+      },
+      "requirements": {
+        "pitch_min": 56,
+        "pitch_max": 80,
+        "home_pc": 8,
+        "target_ticks": 24,
+        "return_home": false,
+        "repeat_motif": false,
+        "divergence_pc": 2
+      }
+    }
+  },
+  {
+    "family": "repair-0-4",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "music-test-6",
+      "domain": "music",
+      "artifact": {
+        "notes": [
+          {
+            "pitch": 33,
+            "duration": 2
+          },
+          {
+            "pitch": 58,
+            "duration": 2
+          },
+          {
+            "pitch": 37,
+            "duration": 2
+          },
+          {
+            "pitch": 33,
+            "duration": 2
+          }
+        ]
+      },
+      "requirements": {
+        "pitch_min": 57,
+        "pitch_max": 81,
+        "home_pc": 9,
+        "target_ticks": 8,
+        "return_home": false,
+        "repeat_motif": false,
+        "divergence_pc": 3
+      }
+    }
+  },
+  {
+    "family": "repair-0-4",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "music-test-7",
+      "domain": "music",
+      "artifact": {
+        "notes": [
+          {
+            "pitch": 34,
+            "duration": 2
+          },
+          {
+            "pitch": 59,
+            "duration": 2
+          },
+          {
+            "pitch": 38,
+            "duration": 2
+          },
+          {
+            "pitch": 34,
+            "duration": 2
+          },
+          {
+            "pitch": 34,
+            "duration": 2
+          },
+          {
+            "pitch": 36,
+            "duration": 2
+          },
+          {
+            "pitch": 38,
+            "duration": 2
+          },
+          {
+            "pitch": 34,
+            "duration": 2
+          }
+        ]
+      },
+      "requirements": {
+        "pitch_min": 58,
+        "pitch_max": 82,
+        "home_pc": 10,
+        "target_ticks": 16,
+        "return_home": false,
+        "repeat_motif": false,
+        "divergence_pc": 4
+      }
+    }
+  },
+  {
+    "family": "repair-1-4",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "music-test-8",
+      "domain": "music",
+      "artifact": {
+        "notes": [
+          {
+            "pitch": 55,
+            "duration": 1
+          },
+          {
+            "pitch": 56,
+            "duration": 1
+          },
+          {
+            "pitch": 59,
+            "duration": 1
+          },
+          {
+            "pitch": 55,
+            "duration": 1
+          },
+          {
+            "pitch": 55,
+            "duration": 1
+          },
+          {
+            "pitch": 57,
+            "duration": 1
+          },
+          {
+            "pitch": 59,
+            "duration": 1
+          },
+          {
+            "pitch": 55,
+            "duration": 1
+          }
+        ]
+      },
+      "requirements": {
+        "pitch_min": 55,
+        "pitch_max": 79,
+        "home_pc": 7,
+        "target_ticks": 16,
+        "return_home": false,
+        "repeat_motif": false,
+        "divergence_pc": 1
+      }
+    }
+  },
+  {
+    "family": "repair-1-4",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "music-test-9",
+      "domain": "music",
+      "artifact": {
+        "notes": [
+          {
+            "pitch": 56,
+            "duration": 1
+          },
+          {
+            "pitch": 57,
+            "duration": 1
+          },
+          {
+            "pitch": 60,
+            "duration": 1
+          },
+          {
+            "pitch": 56,
+            "duration": 1
+          },
+          {
+            "pitch": 56,
+            "duration": 1
+          },
+          {
+            "pitch": 58,
+            "duration": 1
+          },
+          {
+            "pitch": 60,
+            "duration": 1
+          },
+          {
+            "pitch": 56,
+            "duration": 1
+          },
+          {
+            "pitch": 56,
+            "duration": 1
+          },
+          {
+            "pitch": 58,
+            "duration": 1
+          },
+          {
+            "pitch": 60,
+            "duration": 1
+          },
+          {
+            "pitch": 56,
+            "duration": 1
+          }
+        ]
+      },
+      "requirements": {
+        "pitch_min": 56,
+        "pitch_max": 80,
+        "home_pc": 8,
+        "target_ticks": 24,
+        "return_home": false,
+        "repeat_motif": false,
+        "divergence_pc": 2
+      }
+    }
+  },
+  {
+    "family": "repair-1-4",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "music-test-10",
+      "domain": "music",
+      "artifact": {
+        "notes": [
+          {
+            "pitch": 57,
+            "duration": 1
+          },
+          {
+            "pitch": 58,
+            "duration": 1
+          },
+          {
+            "pitch": 61,
+            "duration": 1
+          },
+          {
+            "pitch": 57,
+            "duration": 1
+          }
+        ]
+      },
+      "requirements": {
+        "pitch_min": 57,
+        "pitch_max": 81,
+        "home_pc": 9,
+        "target_ticks": 8,
+        "return_home": false,
+        "repeat_motif": false,
+        "divergence_pc": 3
+      }
+    }
+  },
+  {
+    "family": "repair-1-4",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "music-test-11",
+      "domain": "music",
+      "artifact": {
+        "notes": [
+          {
+            "pitch": 58,
+            "duration": 1
+          },
+          {
+            "pitch": 59,
+            "duration": 1
+          },
+          {
+            "pitch": 62,
+            "duration": 1
+          },
+          {
+            "pitch": 58,
+            "duration": 1
+          },
+          {
+            "pitch": 58,
+            "duration": 1
+          },
+          {
+            "pitch": 60,
+            "duration": 1
+          },
+          {
+            "pitch": 62,
+            "duration": 1
+          },
+          {
+            "pitch": 58,
+            "duration": 1
+          }
+        ]
+      },
+      "requirements": {
+        "pitch_min": 58,
+        "pitch_max": 82,
+        "home_pc": 10,
+        "target_ticks": 16,
+        "return_home": false,
+        "repeat_motif": false,
+        "divergence_pc": 4
+      }
+    }
+  },
+  {
+    "family": "repair-1-5",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "music-test-12",
+      "domain": "music",
+      "artifact": {
+        "notes": [
+          {
+            "pitch": 55,
+            "duration": 1
+          },
+          {
+            "pitch": 57,
+            "duration": 1
+          },
+          {
+            "pitch": 59,
+            "duration": 1
+          },
+          {
+            "pitch": 55,
+            "duration": 1
+          },
+          {
+            "pitch": 55,
+            "duration": 1
+          },
+          {
+            "pitch": 57,
+            "duration": 1
+          },
+          {
+            "pitch": 64,
+            "duration": 1
+          },
+          {
+            "pitch": 55,
+            "duration": 1
+          }
+        ]
+      },
+      "requirements": {
+        "pitch_min": 55,
+        "pitch_max": 79,
+        "home_pc": 7,
+        "target_ticks": 16,
+        "return_home": false,
+        "repeat_motif": true
+      }
+    }
+  },
+  {
+    "family": "repair-1-5",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "music-test-13",
+      "domain": "music",
+      "artifact": {
+        "notes": [
+          {
+            "pitch": 56,
+            "duration": 1
+          },
+          {
+            "pitch": 58,
+            "duration": 1
+          },
+          {
+            "pitch": 60,
+            "duration": 1
+          },
+          {
+            "pitch": 56,
+            "duration": 1
+          },
+          {
+            "pitch": 56,
+            "duration": 1
+          },
+          {
+            "pitch": 58,
+            "duration": 1
+          },
+          {
+            "pitch": 56,
+            "duration": 1
+          },
+          {
+            "pitch": 58,
+            "duration": 1
+          },
+          {
+            "pitch": 60,
+            "duration": 1
+          },
+          {
+            "pitch": 56,
+            "duration": 1
+          },
+          {
+            "pitch": 65,
+            "duration": 1
+          },
+          {
+            "pitch": 58,
+            "duration": 1
+          }
+        ]
+      },
+      "requirements": {
+        "pitch_min": 56,
+        "pitch_max": 80,
+        "home_pc": 8,
+        "target_ticks": 24,
+        "return_home": false,
+        "repeat_motif": true
+      }
+    }
+  },
+  {
+    "family": "repair-1-5",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "music-test-14",
+      "domain": "music",
+      "artifact": {
+        "notes": [
+          {
+            "pitch": 57,
+            "duration": 1
+          },
+          {
+            "pitch": 59,
+            "duration": 1
+          },
+          {
+            "pitch": 66,
+            "duration": 1
+          },
+          {
+            "pitch": 59,
+            "duration": 1
+          }
+        ]
+      },
+      "requirements": {
+        "pitch_min": 57,
+        "pitch_max": 81,
+        "home_pc": 9,
+        "target_ticks": 8,
+        "return_home": false,
+        "repeat_motif": true
+      }
+    }
+  },
+  {
+    "family": "repair-1-5",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "music-test-15",
+      "domain": "music",
+      "artifact": {
+        "notes": [
+          {
+            "pitch": 58,
+            "duration": 1
+          },
+          {
+            "pitch": 60,
+            "duration": 1
+          },
+          {
+            "pitch": 62,
+            "duration": 1
+          },
+          {
+            "pitch": 58,
+            "duration": 1
+          },
+          {
+            "pitch": 58,
+            "duration": 1
+          },
+          {
+            "pitch": 60,
+            "duration": 1
+          },
+          {
+            "pitch": 67,
+            "duration": 1
+          },
+          {
+            "pitch": 58,
+            "duration": 1
+          }
+        ]
+      },
+      "requirements": {
+        "pitch_min": 58,
+        "pitch_max": 82,
+        "home_pc": 10,
+        "target_ticks": 16,
+        "return_home": false,
+        "repeat_motif": true
+      }
+    }
+  },
+  {
+    "family": "repair-2-5",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "music-test-16",
+      "domain": "music",
+      "artifact": {
+        "notes": [
+          {
+            "pitch": 55,
+            "duration": 2
+          },
+          {
+            "pitch": 57,
+            "duration": 2
+          },
+          {
+            "pitch": 59,
+            "duration": 2
+          },
+          {
+            "pitch": 55,
+            "duration": 2
+          },
+          {
+            "pitch": 55,
+            "duration": 2
+          },
+          {
+            "pitch": 57,
+            "duration": 2
+          },
+          {
+            "pitch": 64,
+            "duration": 2
+          },
+          {
+            "pitch": 57,
+            "duration": 2
+          }
+        ]
+      },
+      "requirements": {
+        "pitch_min": 55,
+        "pitch_max": 79,
+        "home_pc": 7,
+        "target_ticks": 16,
+        "return_home": true,
+        "repeat_motif": true
+      }
+    }
+  },
+  {
+    "family": "repair-2-5",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "music-test-17",
+      "domain": "music",
+      "artifact": {
+        "notes": [
+          {
+            "pitch": 56,
+            "duration": 2
+          },
+          {
+            "pitch": 58,
+            "duration": 2
+          },
+          {
+            "pitch": 60,
+            "duration": 2
+          },
+          {
+            "pitch": 56,
+            "duration": 2
+          },
+          {
+            "pitch": 56,
+            "duration": 2
+          },
+          {
+            "pitch": 58,
+            "duration": 2
+          },
+          {
+            "pitch": 56,
+            "duration": 2
+          },
+          {
+            "pitch": 58,
+            "duration": 2
+          },
+          {
+            "pitch": 60,
+            "duration": 2
+          },
+          {
+            "pitch": 56,
+            "duration": 2
+          },
+          {
+            "pitch": 65,
+            "duration": 2
+          },
+          {
+            "pitch": 58,
+            "duration": 2
+          }
+        ]
+      },
+      "requirements": {
+        "pitch_min": 56,
+        "pitch_max": 80,
+        "home_pc": 8,
+        "target_ticks": 24,
+        "return_home": true,
+        "repeat_motif": true
+      }
+    }
+  },
+  {
+    "family": "repair-2-5",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "music-test-18",
+      "domain": "music",
+      "artifact": {
+        "notes": [
+          {
+            "pitch": 57,
+            "duration": 2
+          },
+          {
+            "pitch": 59,
+            "duration": 2
+          },
+          {
+            "pitch": 66,
+            "duration": 2
+          },
+          {
+            "pitch": 59,
+            "duration": 2
+          }
+        ]
+      },
+      "requirements": {
+        "pitch_min": 57,
+        "pitch_max": 81,
+        "home_pc": 9,
+        "target_ticks": 8,
+        "return_home": true,
+        "repeat_motif": true
+      }
+    }
+  },
+  {
+    "family": "repair-2-5",
+    "lesson_sources": [
+      "sources/extracted/"
+    ],
+    "task": {
+      "schema": 1,
+      "id": "music-test-19",
+      "domain": "music",
+      "artifact": {
+        "notes": [
+          {
+            "pitch": 58,
+            "duration": 2
+          },
+          {
+            "pitch": 60,
+            "duration": 2
+          },
+          {
+            "pitch": 62,
+            "duration": 2
+          },
+          {
+            "pitch": 58,
+            "duration": 2
+          },
+          {
+            "pitch": 58,
+            "duration": 2
+          },
+          {
+            "pitch": 60,
+            "duration": 2
+          },
+          {
+            "pitch": 67,
+            "duration": 2
+          },
+          {
+            "pitch": 60,
+            "duration": 2
+          }
+        ]
+      },
+      "requirements": {
+        "pitch_min": 58,
+        "pitch_max": 82,
+        "home_pc": 10,
+        "target_ticks": 16,
+        "return_home": true,
+        "repeat_motif": true
+      }
+    }
+  }
+]

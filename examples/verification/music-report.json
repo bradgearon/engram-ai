@@ -1,0 +1,82 @@
+{
+  "schema": 1,
+  "run_id": "cefed33bfd36b669120438a288036533907b1f92",
+  "domain": "music",
+  "candidate_key": "wds.ai.winds.music.fc212ef1f419a0af@2:8347a599d14aaf59",
+  "parent_key": "wds.ai.winds.breeze@1:0b4c20196b781565",
+  "implementation_sha256": "dbd35b06980612ed3f7e9fccf4e8780e423b1bcc96da98c4fc02d80786b7ebdf",
+  "curriculum_sha256": "faa5074089dcd9770db227806e2f80b6f7fdacd8c39d7195423ce128eab0804e",
+  "split_pins": {
+    "train": "4a82bb6e2a494852a08290a1e4c4c127e9d447b3b0d6d9cf484a99552da10622",
+    "validation": "7b63cfdf5f054d9e65d0665ac129f3e1e1027044c93df7f022aaf7b902d1806b",
+    "test": "ce3e14fe182e69c27d34aa93bdf36407af46ab27b36a5266f3f162167840962b"
+  },
+  "validation": {
+    "parent": {
+      "tasks": 12,
+      "passes": 0,
+      "mean_constraint_score": 0.4375000074505806,
+      "failures": 0,
+      "max_actions_per_task": 4
+    },
+    "fixed_refine": {
+      "tasks": 12,
+      "passes": 8,
+      "mean_constraint_score": 0.9166666666666666,
+      "failures": 0,
+      "max_actions_per_task": 4
+    },
+    "input_once": {
+      "tasks": 12,
+      "passes": 0,
+      "mean_constraint_score": 0.2708333358168602,
+      "failures": 0,
+      "max_actions_per_task": 1
+    },
+    "candidate": {
+      "tasks": 12,
+      "passes": 12,
+      "mean_constraint_score": 1.0,
+      "failures": 0,
+      "max_actions_per_task": 4
+    }
+  },
+  "locked_test": {
+    "parent": {
+      "tasks": 20,
+      "passes": 0,
+      "mean_constraint_score": 0.36666667461395264,
+      "failures": 0,
+      "max_actions_per_task": 4
+    },
+    "fixed_refine": {
+      "tasks": 20,
+      "passes": 4,
+      "mean_constraint_score": 0.7500000119209289,
+      "failures": 0,
+      "max_actions_per_task": 4
+    },
+    "input_once": {
+      "tasks": 20,
+      "passes": 0,
+      "mean_constraint_score": 0.36666667461395264,
+      "failures": 0,
+      "max_actions_per_task": 1
+    },
+    "candidate": {
+      "tasks": 20,
+      "passes": 18,
+      "mean_constraint_score": 0.975,
+      "failures": 0,
+      "max_actions_per_task": 4
+    }
+  },
+  "accepted": true,
+  "gate": "candidate improves mean declared-constraint score over parent and fixed-order refinement at equal action limits; no candidate execution failures",
+  "scope": "symbolic repair-action selection; no general expertise or subjective quality claim",
+  "model_identity": "wds.ai.intelligence.demo/1",
+  "input_once_reference": "unchanged input fixture; not an LLM baseline",
+  "foundation_reference": "not run",
+  "activation": "not requested; this runner never activates packages",
+  "package": "packages/candidates/music/cefed33bfd36b669120438a288036533907b1f92"
+}

@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "id": "music-train-0",
+  "domain": "music",
+  "artifact": {
+    "notes": [
+      {
+        "pitch": 24,
+        "duration": 2
+      },
+      {
+        "pitch": 26,
+        "duration": 2
+      },
+      {
+        "pitch": 28,
+        "duration": 2
+      },
+      {
+        "pitch": 24,
+        "duration": 2
+      }
+    ]
+  },
+  "requirements": {
+    "pitch_min": 48,
+    "pitch_max": 72,
+    "home_pc": 0,
+    "target_ticks": 8,
+    "return_home": false,
+    "repeat_motif": false
+  }
+}

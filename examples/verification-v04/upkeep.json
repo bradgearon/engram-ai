@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "fixture": "deterministic demo and native symbolic music; no language-model/GPU performance claim",
+  "repeated_requests": 10,
+  "selective_reused": 9,
+  "identical_cached_artifact": true,
+  "practice": {
+    "initial_status": "exhausted",
+    "initial_score": 0.3333333432674408,
+    "review_status": "completed",
+    "review_score": 1.0,
+    "review_records": [
+      {
+        "attempts": 1,
+        "before_score": 1.0,
+        "due_ms": 1793919209967,
+        "engram_ids": [],
+        "key": "review-b6556495657aa59d",
+        "last_instance": "wind-134",
+        "reason": "All declared task constraints passed.",
+        "requires_material": false,
+        "root_id": "practice",
+        "signal_key": "upkeep-signal-bfff48118ad63f24",
+        "soul_id": "practice",
+        "source_instance": "wind-122",
+        "status": "satisfied",
+        "version": 3
+      }
+    ],
+    "flesh_after": {
+      "practice": {
+        "candle": 0.05,
+        "fatigue": 0.0,
+        "hunger": 0.0,
+        "kindling": 0.0375,
+        "thirst": 0.1666666641831398
+      }
+    },
+    "usage": {
+      "episodes": 1,
+      "fetches": 0,
+      "foundation_calls": 0,
+      "window_start_ms": 1793919209967
+    }
+  },
+  "episode_evaluations": {
+    "direct": 10,
+    "selective": 1
+  },
+  "activation_events": 1,
+  "activation_origin": "explicit test operator before practice"
+}

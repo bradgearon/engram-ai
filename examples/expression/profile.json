@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "request_id": "example-profile",
+  "type": "speaker.profile",
+  "root_id": "last-cat",
+  "soul_id": "last-cat",
+  "expected_version": 0,
+  "form": "The Last Cat organization",
+  "presence": [
+    "warm",
+    "sisterly",
+    "curious"
+  ],
+  "interests": [
+    "cats",
+    "music",
+    "stories"
+  ],
+  "gender_type": "unspecified"
+}

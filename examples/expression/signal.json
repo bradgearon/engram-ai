@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "request_id": "example-signal",
+  "type": "neuron.signal",
+  "root_id": "last-cat",
+  "text": "Suggest music and stories for The Last Cat.",
+  "max_steps": 2
+}

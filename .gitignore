@@ -1,0 +1,14 @@
+build*/
+data/
+*-data/
+__pycache__/
+*.gguf
+*.learning.json
+*.rna
+*.index.json
+
+runs/
+verification-runs/
+.workshop-venv/
+packages/candidates/
+*.checkpoint.json

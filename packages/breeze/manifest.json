@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "wds.ai.winds.breeze",
+  "policy_version": 1,
+  "state_schema": 1,
+  "training_version": 1,
+  "evaluator_version": "structural-rules/1",
+  "state_dim": 16,
+  "alignment": 64,
+  "dtype": "f32-le",
+  "shape": [
+    16,
+    16
+  ],
+  "checksum_fnv1a64": "0b4c20196b781565",
+  "maturity": "seeded",
+  "foundation_contract": "frozen decoder-only GGUF or deterministic demo",
+  "update_rule": "z_next=clip(z+0.25*tanh(W*(z+pooled[:16])+bias+W[:,15]*feedback),-1,1)",
+  "evidence": {},
+  "promotion": "manual only; no mature claim from surrogate loss"
+}

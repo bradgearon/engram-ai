@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "request_id": "example-preferences",
+  "type": "persona.preferences",
+  "root_id": "last-cat",
+  "expected_version": 0,
+  "preferences": {
+    "tone": "warm",
+    "familiarity": "close"
+  }
+}
