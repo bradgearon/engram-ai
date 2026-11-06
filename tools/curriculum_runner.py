@@ -1,5 +1,5 @@
 """Curriculum I/O, WebSocket episodes and native trainer supervision. No training math."""
-import asyncio,hashlib,json,os,pathlib,shutil,time,uuid
+import asyncio,hashlib,json,os,pathlib,shutil,time,uuid,contextvars
 from ws_client import Client
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 
@@ -10,7 +10,11 @@ def atomic(path,value):
     with temp.open('w') as f:json.dump(value,f,indent=2);f.write('\n');f.flush();os.fsync(f.fileno())
     os.replace(temp,path)
 def load(path):return json.loads(pathlib.Path(path).read_text())
-def publish(kind,**fields):print(json.dumps({'type':kind,**fields}),flush=True)
+event_sink=contextvars.ContextVar('training_event_sink',default=None)
+def publish(kind,**fields):
+    event={'type':kind,**fields}
+    print(json.dumps(event),flush=True)
+    if event_sink.get():event_sink.get()(event)
 def stable(*parts):return hashlib.sha256('|'.join(map(str,parts)).encode()).hexdigest()[:40]
 
 class Runner:

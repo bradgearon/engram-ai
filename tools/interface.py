@@ -1,0 +1,117 @@
+#!/usr/bin/env python3
+"""Loopback-only UI delivery, WebSocket relay and native training supervision."""
+import argparse, asyncio, contextlib, json, mimetypes, pathlib, sys, uuid
+from http import HTTPStatus
+from urllib.parse import unquote, urlsplit
+import websockets
+from websockets.asyncio.server import serve
+from websockets.http11 import Response
+from websockets.datastructures import Headers
+from curriculum_runner import Runner, ROOT, atomic, load, event_sink
+from workshop import configuration
+
+class Interface:
+    def __init__(self, config, port=8787, dev=False):
+        self.config=config; self.port=port; self.dev=dev; self.clients=set(); self.task=None
+        self.state_path=ROOT/config['runs']/'interface-job.json'
+        self.job=load(self.state_path) if self.state_path.exists() else {'status':'idle'}
+        if self.job.get('status')=='running':
+            self.job.update(status='interrupted',error='Supervisor stopped. Resume training from its checkpoint.')
+            atomic(self.state_path,self.job)
+        self.events=[]; self.endpoint=f"ws://127.0.0.1:{config['port']}"
+    def origin_allowed(self, origin):
+        if not origin:return False
+        p=urlsplit(origin)
+        return p.scheme=='http' and p.hostname in ('localhost','127.0.0.1') and p.port==self.port
+    async def http(self, connection, request):
+        host=request.headers.get('Host','').split(':')[0]
+        if host not in ('localhost','127.0.0.1') and not self.dev:
+            return connection.respond(HTTPStatus.FORBIDDEN,'Local host required')
+        if request.path in ('/runtime','/workshop'):
+            if not self.dev and not self.origin_allowed(request.headers.get('Origin')):
+                return connection.respond(HTTPStatus.FORBIDDEN,'Same-origin UI connection required')
+            return None
+        base=(ROOT/'ui/dist').resolve()
+        path=(base/unquote(urlsplit(request.path).path).lstrip('/')).resolve()
+        if not path.is_relative_to(base):return connection.respond(HTTPStatus.FORBIDDEN,'Invalid path')
+        if not path.is_file():path=base/'index.html'
+        if not path.is_file():return connection.respond(HTTPStatus.SERVICE_UNAVAILABLE,'Build the interface: cd ui && npm ci && npm run build')
+        body=path.read_bytes()
+        headers=Headers({'Content-Type':mimetypes.guess_type(path.name)[0] or 'application/octet-stream',
+            'Content-Length':str(len(body)),'Cache-Control':'no-cache','X-Content-Type-Options':'nosniff',
+            'Referrer-Policy':'no-referrer','Content-Security-Policy':"default-src 'self'; connect-src 'self' ws://127.0.0.1:* ws://localhost:*; style-src 'self' 'unsafe-inline'; img-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; object-src 'none'"})
+        return Response(200,'OK',headers,body)
+    def snapshot(self):
+        curricula=[]
+        for domain in ('music','architecture'):
+            manifest=load(ROOT/'curricula'/domain/'manifest.json')
+            curricula.append({'domain':domain,'manifest':manifest,'sample':load(ROOT/'curricula'/domain/manifest['splits']['train']['path'])[0]['task']})
+        return {'type':'training.snapshot','job':self.job,'events':self.events[-100:],'curricula':curricula}
+    def publish(self,event):
+        self.events.append(event);self.events=self.events[-200:]
+        websockets.broadcast(self.clients,json.dumps(event))
+    async def train(self, domain):
+        def capture(event):self.publish(event)
+        token=event_sink.set(capture)
+        try:
+            directory=ROOT/self.config['build_dir']
+            trainer=directory/('wds-train.exe' if sys.platform=='win32' else 'wds-train')
+            if not trainer.exists():trainer=directory/'Release'/trainer.name
+            if not trainer.is_file():raise ValueError('Native trainer missing; start via workshop.py --ui to build it.')
+            runner=Runner(self.config,domain,self.endpoint,trainer,True)
+            self.job.update(run_id=runner.identity);atomic(self.state_path,self.job)
+            await asyncio.wait_for(runner.run_all(),self.config.get('run_timeout_seconds',1800))
+            self.job.update(status='completed',candidate=str(runner.candidate.relative_to(ROOT)),report=runner.state.get('report',{}))
+        except asyncio.CancelledError:
+            self.job.update(status='cancelled',error='Training stopped; checkpoints retained. Resume to continue.')
+            raise
+        except Exception as error:self.job.update(status='failed',error=str(error) or type(error).__name__)
+        finally:
+            event_sink.reset(token);atomic(self.state_path,self.job);self.publish(self.snapshot())
+    async def handle(self,ws):
+        if ws.request.path=='/runtime':
+            try:
+                async with websockets.connect(self.endpoint,origin=None,ping_interval=None,max_size=524288) as runtime:
+                    async def relay(src,dst):
+                        async for message in src:await dst.send(message)
+                    tasks=[asyncio.create_task(relay(ws,runtime)),asyncio.create_task(relay(runtime,ws))]
+                    try:
+                        done,_=await asyncio.wait(tasks,return_when=asyncio.FIRST_COMPLETED)
+                        for t in done:t.result()
+                    finally:
+                        for t in tasks:t.cancel()
+                        await asyncio.gather(*tasks,return_exceptions=True)
+            except Exception as error:
+                with contextlib.suppress(Exception):await ws.send(json.dumps({'type':'error','message':'Runtime connection lost: '+str(error)}));await ws.close(1011)
+            return
+        if ws.request.path!='/workshop':await ws.close(1008);return
+        self.clients.add(ws)
+        try:
+            await ws.send(json.dumps(self.snapshot()))
+            async for raw in ws:
+                try:
+                    m=json.loads(raw)
+                    if m.get('type')=='training.start':
+                        if (self.task and not self.task.done()) or (getattr(self,'external_training',None) and not self.external_training.done()):raise ValueError('One training job is already running')
+                        domain=m.get('domain')
+                        if domain not in ('music','architecture'):raise ValueError('Unknown curriculum')
+                        self.job={'id':uuid.uuid4().hex,'domain':domain,'status':'running'};atomic(self.state_path,self.job)
+                        self.publish(self.snapshot());self.task=asyncio.create_task(self.train(domain))
+                    elif m.get('type')=='training.cancel':
+                        if self.task and not self.task.done():self.task.cancel();await asyncio.gather(self.task,return_exceptions=True)
+                    else:raise ValueError('Unknown training command')
+                except Exception as error:await ws.send(json.dumps({'type':'error','message':str(error)}))
+        finally:self.clients.discard(ws)
+    async def run(self):
+        async with serve(self.handle,'127.0.0.1',self.port,process_request=self.http,max_size=16384,ping_interval=None):
+            print('INTERFACE http://127.0.0.1:'+str(self.port),flush=True)
+            try:await asyncio.Future()
+            finally:
+                if self.task and not self.task.done():self.task.cancel();await asyncio.gather(self.task,return_exceptions=True)
+
+if __name__=='__main__':
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--config',default='configs/offline.json');p.add_argument('--port',type=int,default=8787)
+    p.add_argument('--dev',action='store_true',help='Allow the development preview proxy; loopback binding remains mandatory')
+    args=p.parse_args()
+    try:asyncio.run(Interface(configuration(args.config),args.port,args.dev).run())
+    except KeyboardInterrupt:pass

@@ -1,49 +1,31 @@
-# Validation record — v0.4
+# Validation record — v0.5
 
-Delivery: November 5, 2026. Linux x86-64, GCC 14.2, CMake 4.4.4, Python 3.12 and WebSocket client 16.0. Native source pin: llama.cpp `b1c902f026d32535b5e8eae55e5e47b379e57672`.
+Validated November 6, 2026 on Linux x86-64. This release adds the React workspace and its journaled C++ protocol to v0.4. Earlier evidence remains in [VALIDATION-v0.4.md](VALIDATION-v0.4.md).
 
 ## Executed checks
 
-All **9 scalar-build suites** and **10 full native llama.cpp/ggml-build suites** passed. The full native build uses static libraries and the selected native Jinja files, not the complete common HTTP/CLI stack. Logs and reports are in `examples/verification-v04/`. The earlier `examples/verification/` and `VALIDATION-v0.3.md` remain historical evidence.
+- **11/11 scalar CTest suites passed.** Includes the new durable workspace and actual HTTP/WebSocket interface tests.
+- **12/12 full native llama.cpp/ggml CTest suites passed.** Includes Gemma template rendering, existing optimizer/checkpoint/ABI tests, and the new workspace tests.
+- **3/3 JavaScript protocol tests passed.** Correlated acknowledgments, explicit rejection/disconnection without mutation replay, and visible timeout behavior.
+- **Vite production build passed.** React 19.3.1 and Vite 8.3.6, JavaScript/JSX components with default exports. Main JavaScript is approximately 285 KB, 87 KB gzipped; CSS approximately 26 KB. Fonts are local assets. The source fingerprint matches the supplied bundle.
+- **Full supervisor passed** with `start --ui --upkeep --train music,architecture --exit-after-training`. All 256 benchmark episodes finished. Neither candidate was activated. Repeating with `--resume` added zero benchmark episodes and exited cleanly.
+- **Browser checks passed** against the real local C++ demo runtime: create chat, persist reply, save attributed reflection, create bird-form soul with presence/interests, inspect memory graph, train a music candidate, run structured practice against it without activation, inspect live activity, and receive its scheduled quiet contribution in the original chat. The practice repaired the fixture's pitch range and passed all its declared constraints.
 
-| Suite | Checked behavior |
-|---|---|
-| core, heart, heart_websocket, websocket | Existing journal integrity, versioned memory, ABI, scope, declaration replay, consultation provenance, disagreement and budgets |
-| workshop_core | Explicit activation at episode boundaries; cancellation during blocked inference; late output cannot overwrite cancellation |
-| native_trainer | Native scalar/ggml optimization, deterministic checkpoint resume, numeric bounds, immutable output and package loading |
-| upkeep_core | Duplicate/queued response reuse, irrelevant evidence hold, scoped account reads, original feedback authorship, context invalidation after feedback/identity changes, profile/preferences, engram override/defer, bounded reinforcement, partial-output failure, concurrency/budget reservation, atomic RNA rejection and restart |
-| upkeep_websocket | Real timer across process restart; no idle journal writes; configured-source worker with a local fetch fixture; disabled upkeep; two-turn text chat and feedback; prior-exchange linkage; reflection/material RNA export |
-| sixstars_setup | Authoritative manifest path resolution, relocated model root, CPU/CUDA config selection and explicit missing-file failure; fixture headers are not real models |
-| gemma4_template (native build) | Render the pinned Gemma 4 template, produce the non-thinking generation suffix, preserve input markers against special-token reinterpretation |
+Logs and a machine-readable summary are in `examples/verification-v05/`. UI tests are in `ui/src/lib/client.test.js`; integration tests are in `tests/workspace_test.cpp` and `tests/interface_test.py`.
 
-The whole supervisor ran both curricula with upkeep enabled, using the CPU ggml trainer. All 256 benchmark episodes completed with **zero automatically suggested reviews, zero flesh mutations and zero activation events**. Restarting with `--resume` added **zero benchmark episodes**. The resulting candidate artifacts were each loaded by the actual original v0.2 executable: both remain **1152 bytes**, with the existing manifest, checksum, numerical bounds and maturity enum.
+## New behavioral coverage
 
-## Observable upkeep acceptance
+Workspace integration verifies durable projects/chats/replies, identical-send deduplication, conflicting request rejection, explicit guest scope, original speaker/project attribution, exact response memory references, offline review delivery, the 30-minute quiet gate, chat moves, restart recovery, paginated original provenance records, journal hashes, and no automatic activation.
 
-A separately isolated fixture explicitly activated the candidate before practice. The initial music exercise exhausted its one-step allowance at a declared-constraint score of **1/3**. One later scheduled review completed its remaining repairs, scored **1.0**, and reached `satisfied`; thirst/kindling decreased. The review used zero foundation calls. Only the explicit test operator activated a package.
+The interface integration starts the real runtime and loopback gateway, checks same-origin WebSockets, rejects a foreign Origin and path traversal, disconnects a browser client during work, and recovers the durable result from history.
 
-For ten repeated equivalent requests with unchanged evidence/context, the selective path performed **one** episode evaluation and reused exactly the same artifact **nine** times. Ten direct seeds performed ten episode evaluations. This is a bounded synthetic count comparison, not an LLM latency, energy or broad quality result. Changed attributed feedback and renamed speaker context were separately tested to invalidate reuse.
+The existing native and upkeep suites continue to verify ABI bounds/checksums, explicit activation boundaries, read-only scope, coordinator writes, output exhaustion with retained partial text, independent optimizer checkpoints, interest isolation and shared upkeep limits.
 
-## Curriculum results
+## Limits of this validation
 
-| Domain | Validation full passes | Locked-test full passes | Locked-test mean constraint score |
-|---|---:|---:|---:|
-| Music | 12/12 | 18/20 | 0.975 |
-| Architecture | 12/12 | 20/20 | 1.000 |
+No large GGUF was supplied. Real conversation with the user's exact model, GPU inference and Windows/macOS execution remain untested. Browser checks used the visibly labeled deterministic foundation; they establish integration, not conversational quality. The music/architecture curriculum scores measure small symbolic constraints, not general expertise.
 
-Both declared gates passed. These are small symbolic repair tasks, not independent demonstrations of musical quality or production architecture expertise. The two music failures remain in the report and were not used to tune the candidate or change the locked split. The supplied curricula's source/split hashes remained unchanged.
-
-## Practical limits
-
-- Your Six Stars source declares the Gemma 4 GGUF location, but its actual large GGUF was not present in the archive. No real-model inference, GPU loading, audio generation or microphone path was tested here. Native compilation and template rendering do not establish model quality or throughput.
-- Windows/macOS CI configuration is included; only Linux was executed. CUDA is a source-build option, not a tested binary included in this ZIP. Building CUDA requires its development toolkit.
-- This release includes text chat. Six Stars' Whisper/Qwen-TTS/UI and vision projector are not connected. Model file reuse does not reuse an already-running model process.
-- One compute worker serializes inference. Upkeep concurrency limits reservations; weighted queue service does not preempt a long decode.
-- The memory index scans keys within granted roots and fetches only selected payloads. It is not a distributed or approximate-nearest-neighbor index. Learning-history recall is bounded; exact full artifacts remain in checkpoints.
-- Ledger and message capacities reject or defer work explicitly. Broad evidence fan-out reports linked reviews left unchanged. No background compaction/archival daemon is implemented.
-- The software roles do not simulate biological mechanisms or expand the GGUF's neurons. Reflection changes scoped memory and response priority. Only the separate native trainer emits candidate Wind weights, and only explicit activation changes the active package.
-- Model output exhaustion preserves partial text and fails visibly. The test covers the typed limit path and malformed trailing UTF-8 through a fake foundation; real GGUF limits were not exercised without model bytes.
-- FNV1a64 is corruption detection, not a signature. Root scoping is a trusted-local data boundary, not authenticated multi-user access. Existing crash-recovery limits remain documented in DESIGN.md.
+This is a trusted local single-operator interface. Account/project scopes organize data; they do not provide authenticated remote accounts. Its real records can be inspected and changed through the coordinator, but the graph is a bounded view, not a biological simulation or exhaustive causal inference. See [INTERFACE.md](INTERFACE.md) for behavior and remaining scope limits.
 
 ## Reproduce
 
@@ -55,8 +37,10 @@ ctest --test-dir build -C Release --output-on-failure
 cmake -S . -B build-native -DWDS_LLAMA=ON -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release
 cmake --build build-native --config Release -j 4
 ctest --test-dir build-native -C Release --output-on-failure
-python tools/workshop.py start --upkeep --train music,architecture --exit-after-training
-python tools/verify_upkeep.py --binary build/wds-ai
+npm --prefix ui ci
+npm --prefix ui test
+npm --prefix ui run build
+python tools/workshop.py --config configs/offline.json start --ui --upkeep --train music,architecture --resume --exit-after-training
 ```
 
-The optional native build downloads the pinned source unless `WDS_LLAMA_SOURCE` points to that checkout. The included sample candidates remain unactivated. See GETTING_STARTED.md for actual GGUF setup and the separate activation command.
+Use a fresh, isolated data/runs configuration for acceptance testing. The native build fetches the pinned llama.cpp source unless an explicit checkout is configured. No model is downloaded automatically.

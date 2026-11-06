@@ -167,7 +167,8 @@ std::string Engine::signal_signature(const json &s) const {
                          {"memory_generations", versions},
                          {"speaker", speaker},
                          {"purpose", n.at("purpose")},
-                         {"policy", active_key(domain_of(s))},
+                         {"policy", s.value("package_key",active_key(domain_of(s)))},
+                         {"mode", s.value("mode",std::string("wind"))},
                          {"foundation", foundation_.name()},
                          {"gate_version", 1},
                          {"max_steps", s.at("max_steps")},
@@ -317,6 +318,14 @@ bool Engine::upkeep_command(const json &m, Emit emit) {
             {"kind", kind},    {"max_steps", steps}, {"status", "queued"}, {"order", store_.sequence() + 1},
             {"review_key", ""}};
         signal["max_output_tokens"] = tokens;
+        auto mode=m.value("mode",std::string("wind"));
+        require(mode=="wind" || mode=="foundation_once", "invalid signal mode");
+        signal["mode"]=mode;
+        if(m.contains("package_key")) {
+            auto key=field(m,"package_key",160);
+            require(packages_.count(key),"unknown signal package");
+            signal["package_key"]=key;
+        }
         if (m.contains("reply_to")) {
             auto prior = field(m, "reply_to", 80);
             require(store_.instances.count(prior) && store_.instances.at(prior).at("root_id") == root &&
@@ -407,6 +416,11 @@ bool Engine::upkeep_command(const json &m, Emit emit) {
             for (auto &c : checks)
                 score += c.second;
             review["before_score"] = score / checks.size();
+        }
+        if(m.contains("chat_id")) {
+            auto chat=field(m,"chat_id",80);
+            require(store_.chats.count(chat)&&store_.chats.at(chat).at("project_id")==root,"review chat outside root");
+            review["chat_id"]=chat;
         }
         auto f = upkeep::Flesh::read(store_.flesh.count(root) ? store_.flesh.at(root) : json());
         f.need(review.at("requires_material"), 0.4);
@@ -924,8 +938,9 @@ std::vector<std::string> Engine::dispatch_ready(int64_t time, Emit emit) {
                                 {"max_output_tokens", signal.value("max_output_tokens", 256)},
                                 {"work_class", signal.at("kind") == "upkeep" ? "upkeep" : "interactive"},
                                 {"allow_upkeep", signal.at("kind") != "upkeep"}};
-                if (signal.contains("task"))
-                    message["task"] = signal.at("task");
+                if (signal.contains("task")) message["task"] = signal.at("task");
+                if(signal.contains("mode")) message["mode"]=signal.at("mode");
+                if(signal.contains("package_key")) message["package_key"]=signal.at("package_key");
                 id = command(message, emit);
             } catch (const std::exception &error) {
                 signal["status"] = "failed";

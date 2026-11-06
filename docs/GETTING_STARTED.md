@@ -1,10 +1,12 @@
-# Start talking and training — wds.ai v0.4
+# Start talking and training — wds.ai v0.5
 
-This is the complete local setup guide. The release provides an interactive **text chat** terminal, a C++ runtime, native Wind training, and optional bounded background upkeep. The Six Stars microphone, VAD, Whisper and Qwen-TTS playback/UI are not connected to wds.ai in this version. Text conversation is ready through `chat.py`; do not expect `launch.cmd` from Six Stars to route its conversations into this new runtime.
+For the new React interface, follow [INTERFACE.md](INTERFACE.md). After configuring your GGUF, `python tools/workshop.py --config configs/sixstars.local.json start --ui --upkeep` opens the local workspace at http://127.0.0.1:8787. The terminal client remains available below.
+
+This is the complete local setup guide. The release provides a React browser workspace, an interactive **text chat** terminal, a C++ runtime, native Wind training, and optional bounded background upkeep. The Six Stars microphone, VAD, Whisper and Qwen-TTS playback/UI are not connected to wds.ai in this version. Text conversation is ready through `chat.py`; do not expect `launch.cmd` from Six Stars to route its conversations into this new runtime.
 
 ## 1. Unzip and install build prerequisites
 
-Extract `wds_ai_rea_v0_4.zip` and open a terminal in its `wds-ai` directory.
+Extract `wds_ai_rea_v0_5.zip` and open a terminal in its `wds-ai` directory.
 
 On Windows, use a **Developer PowerShell for Visual Studio 2022** with the Desktop development with C++ workload. Install CMake 3.20+, Git, and Python 3.11+ and ensure their commands are on PATH. On Linux, use a C++20 compiler, CMake, Git and Python 3.11+. macOS uses the corresponding compiler tools. Linux was tested here; the Windows instructions and CI build are supplied, but Windows was not executed in this environment.
 

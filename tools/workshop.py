@@ -91,8 +91,23 @@ class Server:
             if not task.done():task.cancel()
         await asyncio.gather(*self.drains,return_exceptions=True)
 
+async def build_ui():
+    import hashlib
+    ui=ROOT/'ui';h=hashlib.sha256()
+    for path in sorted([ui/'package.json',ui/'package-lock.json',ui/'index.html',ui/'vite.config.js',*list((ui/'src').rglob('*')),*list((ui/'public').rglob('*'))]):
+        if path.is_file():h.update(path.read_bytes())
+    stamp=ui/'dist/.source-sha256'
+    if stamp.exists() and stamp.read_text()==h.hexdigest():return
+    npm=shutil.which('npm.cmd' if os.name=='nt' else 'npm')
+    if not npm:raise RuntimeError('Install Node.js 22.12+ to build the React interface, or use the supplied matching ui/dist bundle.')
+    await command(npm,'--prefix',ui,'ci','--no-audit','--no-fund')
+    await command(npm,'--prefix',ui,'run','build')
+    stamp.write_text(h.hexdigest())
+
 async def start(args,config):
-    runtime,trainer=await build(config);servers=[];training=None;exits=[];fetch_worker=None
+    runtime,trainer=await build(config);servers=[];training=None;exits=[];fetch_worker=None;ui_task=None;ui_service=None
+    if getattr(args,'ui',False):
+        await build_ui()
     try:
         primary=Server(runtime,config);servers.append(primary);await primary.start()
         if config.get('teacher_model'):
@@ -105,14 +120,29 @@ async def start(args,config):
         from upkeep_worker import run as material_worker
         fetch_worker=asyncio.create_task(material_worker(primary.endpoint))
         exits=[asyncio.create_task(s.process.wait()) for s in servers]
+        if getattr(args,'ui',False):
+            from interface import Interface
+            ui_service=Interface(config,args.ui_port)
+            ui_task=asyncio.create_task(ui_service.run());exits.append(ui_task)
         async def train():
             for domain in args.train.split(','):
                 if domain not in ('music','architecture'):raise ValueError('unknown curriculum: '+domain)
+                if ui_service:
+                    ui_service.job={'status':'running','domain':domain};ui_service.publish(ui_service.snapshot())
+                    ui_service.task=asyncio.create_task(ui_service.train(domain))
+                    try:await ui_service.task
+                    except asyncio.CancelledError:
+                        if ui_service.job.get('status')=='cancelled':return
+                        raise
+                    if ui_service.job['status']!='completed':raise RuntimeError(ui_service.job.get('error','training failed'))
+                    continue
                 runner=Runner(config,domain,primary.endpoint,trainer,args.resume)
                 try:await asyncio.wait_for(runner.run_all(),config['run_timeout_seconds'])
                 except asyncio.TimeoutError:raise RuntimeError('Training time budget expired; checkpoints remain in '+str(ROOT/config['runs'])+'; rerun start --train '+args.train+' --resume')
         if args.train:
-            training=asyncio.create_task(train());done,_=await asyncio.wait([training,fetch_worker,*exits],return_when=asyncio.FIRST_COMPLETED)
+            training=asyncio.create_task(train())
+            if ui_service:ui_service.external_training=training
+            done,_=await asyncio.wait([training,fetch_worker,*exits],return_when=asyncio.FIRST_COMPLETED)
             if fetch_worker in done:await fetch_worker;raise RuntimeError('material worker stopped')
             if training not in done:raise RuntimeError('runtime exited during training')
             await training
@@ -122,6 +152,7 @@ async def start(args,config):
         if fetch_worker in done:await fetch_worker;raise RuntimeError('material worker stopped')
         if any(task.result()!=0 for task in done):raise RuntimeError('runtime process failed; see run logs')
     finally:
+        if ui_task:ui_task.cancel();await asyncio.gather(ui_task,return_exceptions=True)
         if fetch_worker:fetch_worker.cancel();await asyncio.gather(fetch_worker,return_exceptions=True)
         if training and not training.done():training.cancel();await asyncio.gather(training,return_exceptions=True)
         for server in reversed(servers):await server.stop()
@@ -155,7 +186,7 @@ async def main(args):
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--config',default='configs/local.json')
     sub=parser.add_subparsers(dest='command',required=True)
-    p=sub.add_parser('start');p.add_argument('--upkeep',action='store_true',help='Enable persisted, bounded background reviews');p.add_argument('--train',help='music,architecture');p.add_argument('--resume',action='store_true');p.add_argument('--exit-after-training',action='store_true')
+    p=sub.add_parser('start');p.add_argument('--ui',action='store_true',help='Build and serve the local React workspace');p.add_argument('--ui-port',type=int,default=8787);p.add_argument('--upkeep',action='store_true',help='Enable persisted, bounded background reviews');p.add_argument('--train',help='music,architecture');p.add_argument('--resume',action='store_true');p.add_argument('--exit-after-training',action='store_true')
     sub.add_parser('status');sub.add_parser('stop')
     p=sub.add_parser('upkeep');p.add_argument('action',choices=['status','pause','resume'])
     for action in ('cancel','resume'):

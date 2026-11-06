@@ -12,3 +12,39 @@ verification-runs/
 .workshop-venv/
 packages/candidates/
 *.checkpoint.json
+
+# React / JavaScript
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+.vite/
+playwright-report/
+test-results/
+npm-debug.log*
+
+# C++ / CMake / Visual Studio
+out/
+.cache/
+CMakeUserPresets.json
+*.obj
+*.o
+*.a
+*.so
+*.dll
+*.exe
+*.pdb
+.vs/
+
+# Python and local configuration
+.venv/
+.pytest_cache/
+*.py[cod]
+.env
+.env.*
+!.env.example
+configs/*.local.json
+*-runs/
+*.log
+.DS_Store
+Thumbs.db

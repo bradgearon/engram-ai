@@ -214,7 +214,7 @@ int main(int argc, char **argv) {
                          {"service", "wds.ai.understanding"},
                          {"foundation", foundation->name()},
                          {"protocol", 1},
-                         {"implementation", "0.4.0"},
+                         {"implementation", "0.5.0"},
                          {"capabilities",
                           {"relationship.declare", "heart.inspect", "mesh.voices", "task.run",
                            "practice.assess", "episode.attach", "package.register", "wind.activate",

@@ -20,10 +20,15 @@ class Store {
     std::string tail_ = "0000000000000000";
     uint64_t seq_ = 0;
     bool failed_ = false;
+    uint64_t journal_bytes_ = 0;
+    std::map<std::string, std::vector<std::pair<uint64_t, uint64_t>>> event_offsets_;
     void apply(const json &e);
     std::map<std::string, json> souls_, voice_interests_, declarations_;
 
   public:
+    std::map<std::string, json> projects, chats, chat_messages, workspace_requests;
+    std::map<std::string, std::vector<std::string>> messages_by_chat;
+    json provenance(const std::string &, uint64_t before, size_t limit) const;
     std::map<std::string, json> roots, engrams, instances, packages, active_packages, activation_requests;
     std::set<std::string> packet_ids, request_ids;
     std::map<std::string, json> neurons, signals, reviews, materials, upkeep_requests, flesh, scopes, ideas,
@@ -182,6 +187,8 @@ class Engine {
     std::string default_evaluator_;
     json neuron(const std::string &, const std::string &) const;
     bool scope_command(const json &, Emit);
+    bool workspace_command(const json &, Emit);
+    void workspace_event(const json &, Emit);
     json resolve_soul(const std::string &, const std::string &, const std::string &explicit_soul = "") const;
     std::vector<std::string> read_roots(const std::string &) const;
     json speaker_profile(const std::string &, const std::string &) const;

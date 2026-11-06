@@ -350,6 +350,10 @@ bool Engine::scope_command(const json &m, Emit emit) {
                                  {"actor_kind", kind},
                                  {"target_soul_id", target.at("soul_id")},
                                  {"identity_basis", "declared local identity"}};
+        if(m.contains("chat_id")) {
+            auto chat=field(m,"chat_id",80); require(store_.chats.count(chat),"unknown source chat");
+            memory["attribution"]["chat_id"]=chat;
+        }
         auto n = neuron(root, target.at("soul_id"));
         n["attention_credit"] = std::min(0.2, n.value("attention_credit", 0.) + 0.05);
         n["attention_source"] = memory.at("id");

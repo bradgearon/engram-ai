@@ -73,6 +73,18 @@ Embedding embed(const std::string &text) {
 }
 namespace chain {
 void Store::apply(const json &e) {
+    event_offsets_[e.at("root_id")].push_back({e.at("seq"), journal_bytes_});
+    if (e.at("data").contains("workspace")) {
+        const auto &w = e.at("data").at("workspace");
+        if (w.contains("project")) projects[w.at("project").at("id")] = w.at("project");
+        if (w.contains("chat")) chats[w.at("chat").at("id")] = w.at("chat");
+        if (w.contains("message")) {
+            const auto &m = w.at("message");
+            if (!chat_messages.count(m.at("id"))) messages_by_chat[m.at("chat_id")].push_back(m.at("id"));
+            chat_messages[m.at("id")] = m;
+        }
+        if (w.contains("request_key")) workspace_requests[w.at("request_key")] = e;
+    }
     auto d = e.at("data");
     auto t = e.at("type");
     auto atom = [&](const std::string &root, const std::string &kind, const std::string &id, float weight) {
@@ -223,6 +235,7 @@ Store::Store(fs::path dir) : directory_(std::move(dir)) {
                     "event chain integrity failure");
             e["hash"] = digest; // Preserve the original acknowledgment for idempotent declaration replay.
             apply(e);
+            journal_bytes_ += line.size() + 1;
             tail_ = digest;
             seq_++;
         }
@@ -275,6 +288,7 @@ json Store::append(const std::string &type, const std::string &root, const std::
     tail_ = digest;
     ++seq_;
     apply(e);
+    journal_bytes_ += bytes.size();
     return e;
 }
 } // namespace chain
@@ -487,6 +501,7 @@ json Engine::event(const std::string &t, const std::string &r, const std::string
                    Emit emit) {
     auto e = store_.append(t, r, trace, d);
     emit(e);
+    workspace_event(e, emit);
     return e;
 }
 std::string Engine::command(const json &m, Emit emit) {
@@ -494,7 +509,7 @@ std::string Engine::command(const json &m, Emit emit) {
     require(m.at("schema") == 1, "unsupported schema");
     auto op = field(m, "type", 32), trace = field(m, "request_id", 80);
     identifier(trace);
-    if (scope_command(m, emit) || upkeep_command(m, emit))
+    if (workspace_command(m, emit) || scope_command(m, emit) || upkeep_command(m, emit))
         return {};
     if (op == "package.register") {
         auto relative = field(m, "path", 512);
@@ -834,7 +849,7 @@ std::optional<Engine::Work> Engine::begin_step(const std::string &id, Emit emit)
                                  x.at("heart_score").get<float>(),
                                  ab.value("uniform_attention", false),
                                  !ab.value("no_routes", false),
-                                 ab.value("freeze_motion", false),
+                                 ab.value("freeze_motion", false) || x.value("mode",std::string{})=="foundation_once",
                                  grants};
     auto impulse = understanding::Neuron().receive(signal, *package);
     auto &focus = impulse.focus;
@@ -842,6 +857,12 @@ std::optional<Engine::Work> Engine::begin_step(const std::string &id, Emit emit)
     json refs = json::array();
     for (const auto &c : focus.candidates)
         refs.push_back({{"id", c.at("id")}, {"version", c.at("version")}, {"source", c.at("source")}});
+    x["memory_sources"]=json::array();
+    for(const auto &ref:refs) {
+        const auto &memory=store_.engrams.at(ref.at("id").get<std::string>());
+        x["memory_sources"].push_back({{"engram_id",memory.at("id")},{"root_id",memory.at("root_id")},
+            {"chat_id",memory.value("attribution",json::object()).value("chat_id",std::string{})}});
+    }
     event("attention.selected", root, trace,
           {{"instance_id", id},
            {"query", q},
@@ -866,6 +887,7 @@ std::optional<Engine::Work> Engine::begin_step(const std::string &id, Emit emit)
     auto relationship = store_.roots.at(root);
     relationship["soul_name"] = soul->name;
     relationship["purpose"] = soul->purpose;
+    speaker["display_name"]=soul->name;
     x["speaker"] = speaker;
     relationship["speaker_profile"] = speaker.at("profile");
     if (x.contains("reply_to")) {
@@ -995,6 +1017,7 @@ bool Engine::finish_step(const Work &w, Result result, Emit emit) {
         return x.at("status") == "running";
     }
     x["speaker"] = w.instance.at("speaker");
+    x["memory_sources"] = w.instance.value("memory_sources",json::array());
     if (!result.error.empty()) {
         x["status"] = "failed";
         x["error"] = result.error;
@@ -1005,6 +1028,7 @@ bool Engine::finish_step(const Work &w, Result result, Emit emit) {
         return false;
     }
     x["speaker"] = w.instance.at("speaker");
+    x["memory_sources"] = w.instance.value("memory_sources",json::array());
     auto record = result.evaluation.record();
     record["speaker"] = x.at("speaker");
     if (!result.action.is_null())

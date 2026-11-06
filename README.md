@@ -1,6 +1,8 @@
 # wds.ai — Rooted Understanding
 
-**Project milestone 0.4.0.** A small C++20 implementation of the REA v0.2 hybrid loop for We Develop Software LLC.
+**Project milestone 0.5.0.** A small C++20 implementation of the REA v0.2 hybrid loop for We Develop Software LLC.
+
+Start the React workspace with `python tools/workshop.py --config configs/sixstars.local.json start --ui --upkeep`. See [the v0.5 interface guide](docs/INTERFACE.md) for setup, conversations, soul inspection, training and live activity. The source uses JavaScript/JSX, not TypeScript. [Release changes and upgrade notes](docs/RELEASE-v0.5.md).
 
 **Seed → relationship root → attend → move → propose → heart → refine → checkpoint.**
 
