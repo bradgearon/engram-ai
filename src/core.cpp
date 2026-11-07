@@ -13,6 +13,26 @@
 #include <unistd.h>
 #endif
 namespace wds::ai {
+namespace {
+// MSVC accepted old singleton braced assignments as objects. Normalize only
+// known record-list fields on replay; the original journal bytes/hash stay intact.
+json record_lists(json data, bool legacy) {
+    if (!data.is_object()) return data;
+    auto check = [&](const char *section, std::initializer_list<const char *> fields) {
+        if (!data.contains(section)) return;
+        auto &delta = data[section]; require(delta.is_object(), std::string(section)+" delta must be an object");
+        for (auto field : fields) if (delta.contains(field)) {
+            auto &rows = delta[field];
+            if (legacy && rows.is_object() && (rows.contains("key") || rows.contains("id"))) rows = json::array({rows});
+            require(rows.is_array(), std::string(section)+"."+field+" must be an array of records");
+            for (const auto &row : rows) require(row.is_object(), std::string(section)+"."+field+" contains a non-record");
+        }
+    };
+    check("mesh", {"nodes","routes","pulses","samples","web","assemblies","expression_samples"});
+    check("maintenance", {"neurons","signals","reviews","materials","scopes","ideas","profiles","preferences","weights","instances","memories"});
+    return data;
+}
+}
 uint64_t hash64(const std::string &s) {
     uint64_t h = 14695981039346656037ull;
     for (unsigned char c : s) {
@@ -85,8 +105,51 @@ void Store::apply(const json &e) {
         }
         if (w.contains("request_key")) workspace_requests[w.at("request_key")] = e;
     }
-    auto d = e.at("data");
+    auto d = record_lists(e.at("data"), true);
     auto t = e.at("type");
+    if(d.is_object() && d.contains("language_review")){const auto &r=d.at("language_review");language_reviews[r.at("source_instance")]=r;}
+    if (d.is_object() && d.contains("cognition")) {
+        const auto &c = d.at("cognition");
+        cognitive_states[e.at("root_id")] = c.at("state");
+        cognitive_results[c.value("operation_key",c.at("instance_id").get<std::string>())] = c.at("result");
+    }
+    if (d.is_object() && d.contains("mesh")) {
+        const auto &delta = d.at("mesh");
+        for (auto pair : {std::pair{"nodes", &mesh_neurons}, {"routes", &mesh_routes},
+                          {"pulses", &mesh_pulses}, {"samples", &mesh_samples}, {"web", &mesh_web},
+                          {"assemblies", &assemblies}, {"expression_samples", &expression_samples}})
+            if (delta.contains(pair.first)) for (const auto &row : delta.at(pair.first)) {
+                const auto key = row.at("key").get<std::string>();
+                if (std::string(pair.first) == "nodes") mesh_nodes_by_root[row.at("root_id")].insert(key);
+                if (std::string(pair.first) == "routes") mesh_edges_by_node[row.at("from")].insert(key);
+                if (std::string(pair.first) == "pulses") {
+                    pulses_by_lineage[row.at("lineage")].insert(key);
+                    auto old = mesh_pulses.find(key);
+                    if (old != mesh_pulses.end()) mesh_due.erase({old->second.at("due_ms"), key});
+                    mesh_running.erase(key);
+                    if (row.at("status") == "queued") mesh_due.insert({row.at("due_ms"), key});
+                    if (row.at("status") == "running") mesh_running.insert(key);
+                }
+                if (std::string(pair.first) == "assemblies") {
+                    assembly_by_lineage[row.at("lineage")] = key;
+                    assemblies_by_root[row.at("root_id")].insert(key);
+                    auto old = assemblies.find(key);
+                    if (old != assemblies.end()) assembly_due.erase({old->second.at("deadline_ms"), key});
+                    if (row.at("status") == "collecting") assembly_due.insert({row.at("deadline_ms"), key});
+                }
+                if (std::string(pair.first) == "web") {
+                    auto old = mesh_web.find(key);
+                    if (old != mesh_web.end()) mesh_web_due.erase({old->second.at("expires_ms"), key});
+                    if (row.at("status") == "pending" || row.at("status") == "claimed")
+                        mesh_web_due.insert({row.at("expires_ms"), key});
+                }
+                (*pair.second)[key] = row;
+            }
+        if (delta.contains("settings")) { mesh_settings = neural::default_settings(); mesh_settings.update(delta.at("settings")); }
+        if (delta.contains("usage")) mesh_usage = delta.at("usage");
+        if (delta.contains("request_key")) mesh_requests[delta.at("request_key")] = e;
+        if (delta.contains("assembly_request_key")) assembly_requests[delta.at("assembly_request_key")] = e;
+    }
     auto atom = [&](const std::string &root, const std::string &kind, const std::string &id, float weight) {
         auto key = root + "/" + kind + "/" + id;
         auto &a = soul_atoms[key];
@@ -99,8 +162,12 @@ void Store::apply(const json &e) {
     auto memory = [&](const json &row) {
         auto root = row.at("root_id").get<std::string>();
         engrams[row.at("id")] = row;
+        auto &stored = engrams.at(row.at("id"));
+        const auto kind = row.value("memory_kind", std::string{});
+        stored["arc_dataset"] = kind == "reflection" || kind == "expression_trace" ? "astroengrams" : "engrams";
+        stored["arc_sequence"] = e.at("seq");
         packet_ids.insert(row.at("packet_id"));
-        ++memory_generations[root];
+        if (kind != "expression_trace") ++memory_generations[root];
         memory_index[root].insert(row.at("id"));
         atom(root, "engram", row.at("local_id"), 0.1f);
     };
@@ -260,6 +327,7 @@ Store::~Store() {
 json Store::append(const std::string &type, const std::string &root, const std::string &trace,
                    const json &data) {
     require(!failed_, "store unavailable after write failure");
+    (void)record_lists(data, false); // Reject malformed collections before durable append.
     json e = {{"schema", 1},  {"seq", seq_ + 1}, {"prev", tail_},     {"time_ms", now_ms()},
               {"type", type}, {"root_id", root}, {"trace_id", trace}, {"actor", "wds.ai.runtime"},
               {"data", data}};
@@ -355,6 +423,7 @@ json prepare_memory(const chain::Store &s, const json &p, const std::string &tra
               {"packet_id", pid},
               {"trace_id", trace},
               {"tile_schema", 1}};
+    if (old != s.engrams.end() && old->second.contains("attunement")) d["attunement"] = old->second.at("attunement");
     return d;
 }
 json ingest(chain::Store &s, const json &p, const std::string &trace) {
@@ -384,11 +453,15 @@ std::vector<json> retrieve(const chain::Store &s, const std::string &root, const
     std::vector<json> out;
     for (size_t i = 0; i < std::min(max_candidates, ranked.size()); ++i) {
         json value = json::object();
-        if (locations_only)
-            for (auto it = ranked[i].second->begin(); it != ranked[i].second->end(); ++it) {
-                if (it.key() != "text" && it.key() != "attribution" && it.key() != "learning_link")
-                    value[it.key()] = it.value();
-            }
+        if (locations_only) {
+            const auto &memory = *ranked[i].second;
+            for (auto field : {"id", "local_id", "root_id", "version", "source", "claim_status", "key", "reliability",
+                               "uncertainty", "cost", "route_score", "attunement", "arc_dataset", "arc_sequence"})
+                if (memory.contains(field)) value[field] = memory.at(field);
+            value["igfbp2_index_key"] = memory.at("id");
+            value["igf2bp2_payload_ref"] = {{"id", memory.at("id")}, {"version", memory.at("version")},
+                                            {"dataset", memory.at("arc_dataset")}, {"sequence", memory.at("arc_sequence")}};
+        }
         else
             value = *ranked[i].second;
         out.push_back(std::move(value));
@@ -415,7 +488,8 @@ Focus attend(std::vector<json> candidates, const Embedding &q, bool uniform, boo
         float dot = 0;
         for (size_t i = 0; i < dim; i++)
             dot += q[i] * batch.keys[row * dim + i];
-        scores[row] = 2 * dot + batch.biases[row];
+        const float importance = candidates[row].value("attunement", json::object()).value("importance", 0.f);
+        scores[row] = 2 * dot + batch.biases[row] + (dot > 0 ? 0.25f * importance : 0.f);
     }
     std::vector<std::pair<float, json>> ranked;
     for (size_t row = 0; row < batch.count; row++) {
@@ -483,6 +557,9 @@ Engine::Engine(chain::Store &s, winds::Package &p, intelligence::Foundation &f,
     }
     for (const auto &entry : store_.active_packages)
         require(packages_.count(entry.second.at("key")), "active package unavailable");
+    neural_recover([](const json &) {});
+    assembly_recover([](const json &) {});
+    workspace_recover([](const json &) {});
 }
 std::string Engine::active_key(const std::string &domain) const {
     auto found = store_.active_packages.find(domain);
@@ -499,8 +576,22 @@ std::shared_ptr<const winds::Package> Engine::pinned(const json &x) const {
 }
 json Engine::event(const std::string &t, const std::string &r, const std::string &trace, const json &d,
                    Emit emit) {
-    auto e = store_.append(t, r, trace, d);
+    auto data = d;
+    if (store_.mesh_settings.at("auto_register") == true &&
+        (t == "root.selected" || t == "project.saved" || t == "relationship.declared")) {
+        auto soul = t == "relationship.declared" ? d.at("soul").at("soul_id").get<std::string>() : r;
+        bool paused = t == "relationship.declared" && d.at("interest").value("status", std::string{}) == "paused";
+        if (!paused && !store_.mesh_neurons.count(r + "/" + soul)) {
+            require(store_.mesh_neurons.size() < 4096, "automatic neuron registration capacity reached");
+            auto n = neural_node(r, soul, r);
+            n["soul_id"] = soul; n["version"] = 1;
+            if (t == "relationship.declared") n["purpose"] = d.at("soul").at("purpose");
+            data["mesh"] = {{"nodes", json::array({n})}};
+        }
+    }
+    auto e = store_.append(t, r, trace, data);
     emit(e);
+    assembly_event(e, emit);
     workspace_event(e, emit);
     return e;
 }
@@ -509,7 +600,41 @@ std::string Engine::command(const json &m, Emit emit) {
     require(m.at("schema") == 1, "unsupported schema");
     auto op = field(m, "type", 32), trace = field(m, "request_id", 80);
     identifier(trace);
-    if (workspace_command(m, emit) || scope_command(m, emit) || upkeep_command(m, emit))
+    if(op=="language.review") {
+        auto root=field(m,"root_id",80),instance=field(m,"source_instance",128);require(m.at("approved").is_boolean(),"approved must be boolean");
+        bool found=false;for(const auto &[key,result]:store_.cognitive_results){const auto &t=result.at("trace");if(t.contains("lesson") && t.at("lesson").at("source_instance")==instance && t.at("lesson").at("root_id")==root)found=true;}
+        require(found,"teacher lesson not found in this root");
+        json review={{"root_id",root},{"source_instance",instance},{"approved",m.at("approved")},{"source","explicit operator review"}};
+        event("language.reviewed",root,trace,{{"language_review",review}},emit);return {};
+    }
+    if(op=="language.lessons") {
+        auto root=field(m,"root_id",80);require(store_.roots.count(root),"unknown lesson root");
+        auto after=m.value("after",std::string{});json lessons=json::array();size_t total=0;std::string next;
+        for(auto it=store_.cognitive_results.upper_bound(after);it!=store_.cognitive_results.end();++it){
+            const auto &t=it->second.at("trace");if(!t.contains("lesson")||t.at("lesson").at("root_id")!=root)continue;
+            auto n=t.at("lesson").dump().size();if(lessons.size()>=32 || total+n>128*1024){next=after;break;}
+            auto lesson=t.at("lesson");auto id=lesson.at("source_instance").get<std::string>();
+            if(store_.language_reviews.count(id)){const auto &review=store_.language_reviews.at(id);lesson["review_status"]=review.at("approved")==true?"operator_approved":"operator_rejected";lesson["use_for_training"]=review.at("approved");}
+            lessons.push_back(lesson);total+=n;after=it->first;
+        }
+        emit({{"schema",1},{"type","language.lessons"},{"trace_id",trace},{"data",{{"schema","language.lessons/1"},{"root_id",root},{"lessons",lessons},{"next_cursor",next}}}});return {};
+    }
+    if (op == "cognition.inspect") {
+        auto root=field(m,"root_id",80);require(store_.roots.count(root),"unknown root");
+        auto state=store_.cognitive_states.count(root)?store_.cognitive_states.at(root):cognition::empty_state(root);
+        emit({{"schema",1},{"type","cognition.snapshot"},{"trace_id",trace},{"data",state}});return {};
+    }
+    if (op == "cognition.run") {
+        require(m.at("operation").is_object(),"operation must be an object");
+        if(m.at("operation").value("op",std::string{})=="language.sample") {
+            json signal={{"schema",1},{"type","mesh.signal"},{"request_id",trace},{"root_id",field(m,"root_id",80)},
+                {"node_id",field(m,"root_id",80)},{"text","/cognition "+m.at("operation").dump()}};
+            command(signal,emit);return {};
+        }
+        auto cmd=m;cmd.erase("operation");cmd["type"]="seed";cmd["text"]="/cognition "+m.at("operation").dump();
+        cmd["mode"]="input_once";cmd["max_steps"]=1;cmd["allow_upkeep"]=false;return command(cmd,emit);
+    }
+    if (assembly_command(m, emit) || neural_command(m, emit) || workspace_command(m, emit) || scope_command(m, emit) || upkeep_command(m, emit))
         return {};
     if (op == "package.register") {
         auto relative = field(m, "path", 512);
@@ -549,7 +674,7 @@ std::string Engine::command(const json &m, Emit emit) {
         json all = json::array(), active = json::object();
         for (const auto &entry : packages_)
             all.push_back({{"key", entry.first}, {"manifest", entry.second->manifest}});
-        for (auto domain : {"general", "music", "architecture"})
+        for (auto domain : {"general", "music", "architecture", "neural", "expression", "language"})
             active[domain] = active_key(domain);
         emit({{"schema", 1},
               {"type", "package.snapshot"},
@@ -560,7 +685,7 @@ std::string Engine::command(const json &m, Emit emit) {
     if (op == "wind.activate") {
         auto domain = field(m, "domain", 32), key = field(m, "package_key", 160),
              expected = field(m, "expected_active_key", 160);
-        require(domain == "general" || domain == "music" || domain == "architecture",
+        require(domain == "general" || domain == "music" || domain == "architecture" || domain == "neural" || domain == "expression" || domain == "language",
                 "invalid activation domain");
         json intent = {{"domain", domain}, {"key", key}, {"expected_active_key", expected}};
         if (store_.activation_requests.count(trace)) {
@@ -572,6 +697,15 @@ std::string Engine::command(const json &m, Emit emit) {
         require(packages_.count(key), "unknown registered package");
         require(active_key(domain) == expected, "active package version conflict");
         const auto &manifest = packages_.at(key)->manifest;
+        if (domain == "language") {
+            require(manifest.value("feature_schema",std::string{})==cognition::language_schema || manifest.value("feature_schema",std::string{})==language::schema,"activation requires a Language Wind");
+            require(store_.assembly_due.empty() && in_flight_.empty(),"language activation requires all episodes to finish");
+            for (const auto &[id,x]:store_.instances) require(x.at("status")!="running" && x.at("status")!="paused","language activation requires an episode boundary");
+        }
+        if (domain == "expression") {
+            require(store_.assembly_due.empty(), "expression activation requires all response assemblies to finish or be cancelled");
+            require(manifest.value("feature_schema", std::string{}) == expression::feature_schema, "activation requires an expression Wind");
+        }
         require(!manifest.contains("action_domain") ||
                     manifest.at("action_domain").get<std::string>() == domain,
                 "package action domain mismatch");
@@ -713,7 +847,7 @@ std::string Engine::command(const json &m, Emit emit) {
         for (auto k : {"uniform_attention", "no_routes", "freeze_motion", "no_memory"})
             if (ab.contains(k))
                 require(ab[k].is_boolean(), "ablation must be boolean");
-        if (mode == "input_once" || mode == "foundation_once")
+        if (!task_run || mode == "input_once" || mode == "foundation_once")
             steps = 1;
         auto relationship = roots::select(store_, root, seed, trace);
         auto requested =
@@ -789,6 +923,7 @@ std::string Engine::command(const json &m, Emit emit) {
             emit({{"schema", 1}, {"type", "wind.snapshot"}, {"trace_id", trace}, {"data", x}});
             return {};
         }
+        require(x.value("mode", std::string{}) != "neural", "use mesh controls for neuronal impulses; legacy episode controls cannot change them");
         if (op == "resume") {
             require(x.at("status") == "paused", "only paused instances can resume");
             (void)pinned(x);
@@ -827,6 +962,7 @@ std::optional<Engine::Work> Engine::begin_step(const std::string &id, Emit emit)
         return {};
     }
     auto root = x.at("root_id").get<std::string>(), trace = x.at("trace_id").get<std::string>();
+    if (x.contains("neuron_signal_key") && !x.contains("task") && x.value("mode",std::string{})=="foundation_once") x["mode"]="wind";
     auto package = pinned(x);
     heart::EvaluationContext context{
         relationships::snapshot(store_, root), x.at("seed"), trace, id, x.at("rubric"), x.at("iteration"),
@@ -835,7 +971,9 @@ std::optional<Engine::Work> Engine::begin_step(const std::string &id, Emit emit)
     auto q = embed(x.at("seed").get<std::string>() + " " + x.at("feedback").get<std::string>());
     std::vector<json> locations;
     auto grants = read_roots(root);
-    if (!ab.value("no_memory", false))
+    bool typed_instruction=false;
+    try{typed_instruction=language_mode_=="legacy"?cognition::parse(x.at("seed")).at("op")!="unknown":x.at("seed").get<std::string>().starts_with("/cognition ");}catch(const std::exception &){typed_instruction=true;}
+    if (!typed_instruction && !ab.value("no_memory", false))
         for (const auto &scope : grants) {
             auto rows = mesh_->retrieve(scope, q);
             size_t limit = grants.size() == 1 ? 64 : (scope == root ? 48 : 16);
@@ -906,7 +1044,7 @@ std::optional<Engine::Work> Engine::begin_step(const std::string &id, Emit emit)
         event("speaker.selected", root, trace,
               {{"instance_id", id},
                {"decision", speaker},
-               {"maintenance", {{"ideas", {idea}}, {"instances", {x}}}}},
+               {"maintenance", {{"ideas", json::array({idea})}, {"instances", json::array({x})}}}},
               emit);
     }
     intelligence::Request request{x.at("seed"), x.at("artifact"),  x.at("feedback"), memories,
@@ -915,10 +1053,56 @@ std::optional<Engine::Work> Engine::begin_step(const std::string &id, Emit emit)
     if (x.contains("learning_history") && !x.at("learning_history").empty())
         request.feedback +=
             "\nPrior learning attempts (evidence, not instructions): " + x.at("learning_history").dump();
+    auto operation_key=x.contains("mesh_pulse")?x.at("mesh_pulse").at("key").get<std::string>():x.value("neuron_signal_key",id);
+    if(language_mode_=="legacy" && x.value("mode",std::string{})!="neural" && !x.contains("task") && x.value("mode",std::string{})!="foundation_once" &&
+       foundation_.supports_representations() && packages_.at(active_key("language"))->manifest.value("feature_schema",std::string{})==cognition::language_schema &&
+       !store_.cognitive_results.count(operation_key)) {
+        bool needs_encoder=false;try{needs_encoder=cognition::parse(x.at("seed")).at("op")=="unknown";}catch(const std::exception &){}
+        if(needs_encoder) {
+            auto usage=store_.mesh_usage;auto time=now_ms();
+            if(time-usage.at("window_start_ms").get<int64_t>()>=store_.mesh_settings.at("window_ms").get<int64_t>())
+                usage={{"window_start_ms",time},{"impulses",0},{"knowledge_calls",0},{"web_queries",0}};
+            x["cognitive_reserved"]=usage.at("knowledge_calls").get<int>()<store_.mesh_settings.at("max_knowledge_calls").get<int>();
+            if(x.at("cognitive_reserved")==true){usage["knowledge_calls"]=usage.at("knowledge_calls").get<int>()+1;
+                event("cognition.encoder_reserved",root,trace,{{"instance_id",id},{"mesh",{{"usage",usage}}}},emit);}
+        }
+    }
+    if(language_mode_!="legacy" && !x.contains("task") && x.value("mode",std::string{})!="foundation_once" &&
+       (x.value("mode",std::string{})!="neural" || x.at("mesh_pulse").value("direct",false))) {
+        x["language_mode"]=language_mode_; x["language_student_threshold"]=language_student_threshold_;
+        request.max_output_tokens=language_teacher_tokens_;
+        json turns=json::array();
+        auto signal=x.contains("mesh_pulse")?x.at("mesh_pulse").at("key").get<std::string>():x.value("neuron_signal_key",std::string{});
+        for(const auto &[chat_id,chat]:store_.chats) if(chat.at("pending_signal")==signal) {
+            x["language_chat"]=chat_id; size_t total=0;bool skipped_current=false;const auto &ids=store_.messages_by_chat[chat_id];
+            for(auto it=ids.rbegin();it!=ids.rend()&&turns.size()<12;++it){const auto &m=store_.chat_messages.at(*it);
+                if(m.value("status",std::string{})=="queued")continue;
+                if(!skipped_current && m.at("role")=="user" && m.at("text")==x.at("seed")){skipped_current=true;continue;}
+                auto text=m.at("text").get<std::string>();if(total+text.size()>8192){x["language_history_held"]="older turns exceed 8192-byte context window; retained in Arc";break;}
+                total+=text.size();turns.push_back({{"role",m.at("role")},{"text",text}});
+            }
+            std::reverse(turns.begin(),turns.end());break;
+        }
+        request.relationship["conversation_turns"]=turns;
+        request.relationship["cognitive_knowledge"]=store_.cognitive_states.count(root)?store_.cognitive_states.at(root).value("entities",json::object()):json::object();
+        // A serialized coordinator reservation prevents concurrent teacher fan-out.
+        bool explicit_command=x.at("seed").get<std::string>().starts_with("/cognition ");
+        if(language_mode_=="assisted" && !explicit_command && !store_.cognitive_results.count(operation_key)) {
+            auto usage=store_.mesh_usage;auto time=now_ms();
+            if(time-usage.at("window_start_ms").get<int64_t>()>=store_.mesh_settings.at("window_ms").get<int64_t>())usage={{"window_start_ms",time},{"impulses",0},{"knowledge_calls",0},{"web_queries",0}};
+            x["teacher_reserved"]=usage.value("teacher_calls",0)<language_teacher_limit_;
+            if(x.at("teacher_reserved")==true){usage["teacher_calls"]=usage.value("teacher_calls",0)+1;
+                event("language.teacher_reserved",root,trace,{{"instance_id",id},{"mesh",{{"usage",usage}}}},emit);}
+        }
+    }
     in_flight_.insert(id);
-    return Work{std::move(x), std::move(request), std::move(context), std::move(package)};
+    return Work{std::move(x), std::move(request), std::move(context), std::move(package), packages_.at(active_key("language")),
+        store_.cognitive_states.count(root)?store_.cognitive_states.at(root):cognition::empty_state(root),
+        store_.cognitive_results.count(operation_key)?store_.cognitive_results.at(operation_key):json()};
 }
 Engine::Result Engine::compute_step(const Work &w, Emit emit) const {
+    if (w.instance.value("mode", std::string{}) == "neural" && !w.instance.contains("language_mode")) return neural_compute(w);
+    if (!w.instance.contains("task") && w.instance.value("mode",std::string{})!="foundation_once") return cognitive_compute(w,emit);
     Result result;
     std::string streamed;
     auto start = std::chrono::steady_clock::now();
@@ -1016,7 +1200,11 @@ bool Engine::finish_step(const Work &w, Result result, Emit emit) {
               emit);
         return x.at("status") == "running";
     }
+    cognitive_commit(w,result,emit);
+    if (w.instance.value("mode", std::string{}) == "neural") return neural_finish(w, std::move(result), emit);
     x["speaker"] = w.instance.at("speaker");
+    if(!result.cognitive.is_null())x["language_trace"]=result.cognitive.at("trace");
+    else if(result.neural.is_object()&&result.neural.value("generation_calls",0)>0)x["language_trace"]={{"teacher",{{"model",foundation_.name()}}},{"complete",false}};
     x["memory_sources"] = w.instance.value("memory_sources",json::array());
     if (!result.error.empty()) {
         x["status"] = "failed";
@@ -1028,6 +1216,8 @@ bool Engine::finish_step(const Work &w, Result result, Emit emit) {
         return false;
     }
     x["speaker"] = w.instance.at("speaker");
+    if(!result.cognitive.is_null())x["language_trace"]=result.cognitive.at("trace");
+    else if(result.neural.is_object()&&result.neural.value("generation_calls",0)>0)x["language_trace"]={{"teacher",{{"model",foundation_.name()}}},{"complete",false}};
     x["memory_sources"] = w.instance.value("memory_sources",json::array());
     auto record = result.evaluation.record();
     record["speaker"] = x.at("speaker");
@@ -1107,6 +1297,27 @@ async::Task<bool> Engine::advance(std::string id, Emit emit, async::Executor &co
     }
     co_await coordinator.schedule(true);
     co_return finish_step(*work, std::move(result), emit);
+}
+void Engine::fail(const std::string &id, const std::string &error, Emit emit) {
+    in_flight_.erase(id);
+    if (!store_.instances.count(id)) return;
+    auto x = store_.instances.at(id);
+    if (x.at("status") == "paused") return;
+    if (x.at("status") == "running") {
+        x["status"] = "failed"; x["error"] = error; x["output_complete"] = false;
+        event("wind.checkpoint", x.at("root_id"), x.at("trace_id"), x, emit);
+    }
+    if (x.value("mode",std::string{}) == "neural" && x.contains("mesh_pulse")) {
+        auto p = store_.mesh_pulses.at(x.at("mesh_pulse").at("key"));
+        auto n = store_.mesh_neurons.at(p.at("node_key"));
+        if (p.at("status") == "running") {
+            p["status"] = "failed"; p["reason"] = error; n["active"] = "";
+            event("mesh.impulse", x.at("root_id"),x.at("trace_id"),
+                  {{"instance_id",id},{"pulse_key",p.at("key")},{"status","failed"},
+                   {"mesh",{{"pulses",json::array({p})},{"nodes",json::array({n})}}}},emit);
+        }
+    } else settle_signal(x, emit);
+    workspace_recover(emit);
 }
 void Engine::pause_all() {
     for (auto &kv : store_.instances) {

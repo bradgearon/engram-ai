@@ -7,6 +7,8 @@ import Workspace from "./state/Workspace.jsx";
 import App from "./App.jsx";
 import ErrorBoundary from "./components/ErrorBoundary.jsx";
 import "./styles.css";
+import { startDiagnostics } from "./lib/diagnostics.js";
+startDiagnostics();
 createRoot(document.getElementById("root")).render(
   <ErrorBoundary>
     <Workspace>

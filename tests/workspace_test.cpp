@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
                 return engine.command(m, emit);
             };
             auto drain = [&] {
-                for (auto id : engine.dispatch_ready(now_ms() + 100, emit))
+                for (auto id : engine.dispatch_ready(now_ms() + 1100, emit))
                     while (engine.step(id, emit)) {
                     };
             };
@@ -67,7 +67,7 @@ int main(int argc, char **argv) {
             const auto &reply = store.chat_messages.at(store.messages_by_chat.at("chat").back());
             require(reply.at("speaker").at("selected_soul") == "home" && reply.at("origin_project") == "home",
                     "speaker provenance missing");
-            require(!reply.at("memory_sources").empty(), "response memory provenance missing");
+            require(reply.contains("assembly_key"), "response assembly provenance missing");
             auto pages = store.provenance("home", store.sequence() + 1, 2);
             require(pages.at("events").size() == 2 && !pages.at("next_before").is_null(),
                     "provenance pagination failed");

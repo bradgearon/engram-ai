@@ -32,14 +32,14 @@ export default function Conversation({ chat, root, onNew, onInspect }) {
     scroll = useRef(),
     follow = useRef(true);
   useEffect(() => {
-    if (w.status === "connected")
+    if (w.status === "connected" && w.snapshot.projects.some((p) => p.id === root))
       w.run(async () => {
         const r = await w.call("heart.inspect", "heart.snapshot", {
           root_id: root,
         });
         setScope(r.data);
       });
-  }, [root, w.revision, w.status]);
+  }, [root, w.revision, w.status, w.snapshot.projects.length]);
   useEffect(() => {
     setSource("");
     setText("");
@@ -62,7 +62,7 @@ export default function Conversation({ chat, root, onNew, onInspect }) {
   const last = [...messages].reverse().find((m) => m.role === "assistant");
   const profile = selected?.expression || {};
   const wind = w.packages.packages.find(
-    (p) => p.key === (chat?.wind_key || w.packages.active.general),
+    (p) => p.key === (chat?.wind_key || w.packages.active.neural),
   );
   const update = (values) =>
     w.run(() =>
@@ -84,7 +84,7 @@ export default function Conversation({ chat, root, onNew, onInspect }) {
         ...(source ? { source_root: source } : {}),
       }),
     );
-    if (ok) setText("");
+    if (ok) setText((current) => current === draft ? "" : current);
     setBusy(false);
   }
   return (
@@ -96,7 +96,7 @@ export default function Conversation({ chat, root, onNew, onInspect }) {
               <button
                 className={chat.mode === "host" ? "active" : ""}
                 onClick={() => update({ mode: "host" })}
-                disabled={!!chat.pending_signal}
+                disabled={!!chat.pending_signal || !!chat.queued_messages?.length}
               >
                 <UserRound size={14} />
                 AI host
@@ -104,10 +104,10 @@ export default function Conversation({ chat, root, onNew, onInspect }) {
               <button
                 className={chat.mode === "wind" ? "active" : ""}
                 onClick={() => update({ mode: "wind" })}
-                disabled={!!chat.pending_signal}
+                disabled={!!chat.pending_signal || !!chat.queued_messages?.length}
               >
                 <Wind size={15} />
-                Let a Wind speak
+                Neuronal response
               </button>
             </div>
             <label className="inline-select">
@@ -116,7 +116,7 @@ export default function Conversation({ chat, root, onNew, onInspect }) {
                 aria-label="Focused soul"
                 value={chat.soul_id}
                 onChange={(e) => update({ soul_id: e.target.value })}
-                disabled={!!chat.pending_signal}
+                disabled={!!chat.pending_signal || !!chat.queued_messages?.length}
               >
                 <option value="">Automatic</option>
                 {souls
@@ -134,7 +134,7 @@ export default function Conversation({ chat, root, onNew, onInspect }) {
                 aria-label="Focused Wind"
                 value={chat.wind_key}
                 onChange={(e) => update({ wind_key: e.target.value })}
-                disabled={!!chat.pending_signal}
+                disabled={!!chat.pending_signal || !!chat.queued_messages?.length}
               >
                 <option value="">
                   {wind?.manifest?.name ||
@@ -143,7 +143,7 @@ export default function Conversation({ chat, root, onNew, onInspect }) {
                   · active
                 </option>
                 {w.packages.packages
-                  .filter((p) => p.manifest?.domain === "general")
+                  .filter((p) => p.manifest?.action_domain === "neural")
                   .map((p) => (
                     <option key={p.key} value={p.key}>
                       {p.manifest.name || p.manifest.id}
@@ -234,6 +234,7 @@ export default function Conversation({ chat, root, onNew, onInspect }) {
                       Quiet contribution
                     </span>
                   )}
+                  {m.status === "queued" && <span className="pill">Queued</span>}
                   {m.kind === "reflection" && (
                     <span className="pill">Saved reflection</span>
                   )}
@@ -241,6 +242,8 @@ export default function Conversation({ chat, root, onNew, onInspect }) {
                 {m.role === "assistant" && (
                   <div className="attribution">
                     <span>{shortKey(m.wind_key)}</span>
+                    {(m.language_trace?.teacher || m.expression?.cognition?.teacher) && <span className="pill">Qwen teacher · generated assistance</span>}
+                    {m.language_trace?.student && !m.language_trace?.teacher && <span className="pill">Experimental language student</span>}
                     {m.origin_project !== root && (
                       <span className="guest">
                         <ArrowUpRight size={12} />
@@ -265,7 +268,7 @@ export default function Conversation({ chat, root, onNew, onInspect }) {
                 <div className="message-text">
                   {m.text || "No complete output was produced."}
                 </div>
-                {["failed", "cancelled", "exhausted"].includes(m.status) && (
+                {["failed", "cancelled", "exhausted", "held"].includes(m.status) && (
                   <div className="message-outcome">
                     {m.status === "exhausted"
                       ? "Evaluator did not pass this response"
@@ -279,6 +282,9 @@ export default function Conversation({ chat, root, onNew, onInspect }) {
                       <Bookmark size={13} />
                       Reflect on this
                     </button>
+                    {(m.language_trace?.lesson || m.expression?.cognition?.lesson) && <button onClick={() => w.run(() => w.call("language.review", "language.reviewed", {
+                      root_id: m.origin_project, source_instance: (m.language_trace?.lesson || m.expression?.cognition?.lesson).source_instance, approved: true
+                    }))}><Bookmark size={13} /> Approve language example</button>}
                     <button onClick={onInspect}>
                       <NetworkIcon />
                       Trace understanding
@@ -295,7 +301,7 @@ export default function Conversation({ chat, root, onNew, onInspect }) {
                 <div className="message-byline">
                   <b>{selected?.name || "AI host"}</b>
                   <span className="busy-dot" />
-                  Responding
+                  {w.streamSources?.[chat.pending_instance] === "language_teacher" ? "Qwen teacher · streaming assistance" : "Responding"}
                 </div>
                 <div className="message-text">
                   {chat.pending_status === "paused"
@@ -347,7 +353,7 @@ export default function Conversation({ chat, root, onNew, onInspect }) {
                     !e.nativeEvent.isComposing
                   ) {
                     e.preventDefault();
-                    if (text.trim() && !chat.pending_signal && !busy)
+                    if (text.trim() && !busy && w.status === "connected")
                       e.currentTarget.form.requestSubmit();
                   }
                 }}
@@ -363,16 +369,16 @@ export default function Conversation({ chat, root, onNew, onInspect }) {
                     : "Soul selected automatically"}
                 </span>
                 <div>
-                  {chat.pending_instance && (
+                  {chat.pending_signal && (chat.mode === "wind" || chat.pending_instance) && (
                     <button
                       type="button"
                       className="icon"
                       aria-label="Stop response"
                       onClick={() =>
                         w.run(() =>
-                          w.call("cancel", "wind.checkpoint", {
-                            instance_id: chat.pending_instance,
-                          }),
+                          chat.mode === "wind"
+                            ? w.call("mesh.pulse.cancel", "mesh.pulse_changed", { root_id: chat.pending_source_root || chat.project_id, pulse_key: chat.pending_signal })
+                            : w.call("cancel", "wind.checkpoint", { instance_id: chat.pending_instance }),
                         )
                       }
                     >
@@ -381,11 +387,10 @@ export default function Conversation({ chat, root, onNew, onInspect }) {
                   )}
                   <button
                     className="send"
-                    aria-label="Send message"
+                    aria-label={chat.pending_signal ? "Queue message" : "Send message"}
                     disabled={
                       !text.trim() ||
                       busy ||
-                      !!chat.pending_signal ||
                       w.status !== "connected"
                     }
                   >
@@ -395,7 +400,7 @@ export default function Conversation({ chat, root, onNew, onInspect }) {
               </div>
             </form>
             <div className="composer-hint">
-              <span>Enter to send · Shift + Enter for a new line</span>
+              <span>{chat.queued_messages?.length ? `${chat.queued_messages.length} queued · ` : ""}Enter to send · Shift + Enter for a new line</span>
               <span>
                 <Leaf size={12} />
                 {chat.background
@@ -439,19 +444,19 @@ export default function Conversation({ chat, root, onNew, onInspect }) {
           </h3>
           <p>
             {chat?.mode === "host"
-              ? "Host conversation uses the foundation directly."
-              : "The selected policy guides response movement."}
+              ? "Teacher assistance is labeled on each reply. Train and activate local language candidates in Winds & learning."
+              : "Engrams assemble neuronal contributions into sourced replies. Teach relationships and inspect responses in Activity."}
           </p>
           {chat && (
             <select
               aria-label="Focused Wind"
               value={chat.wind_key}
               onChange={(e) => update({ wind_key: e.target.value })}
-              disabled={!!chat.pending_signal}
+              disabled={!!chat.pending_signal || !!chat.queued_messages?.length}
             >
-              <option value="">Active general Wind</option>
+              <option value="">Active neural Wind</option>
               {w.packages.packages
-                .filter((p) => !p.manifest.action_domain)
+                .filter((p) => p.manifest.action_domain === "neural")
                 .map((p) => (
                   <option key={p.key} value={p.key}>
                     {p.manifest.id} · v{p.manifest.policy_version}
@@ -472,7 +477,7 @@ export default function Conversation({ chat, root, onNew, onInspect }) {
             <button
               className="text-button"
               onClick={() => update({ background: !chat.background })}
-              disabled={!!chat.pending_signal}
+              disabled={!!chat.pending_signal || !!chat.queued_messages?.length}
             >
               {chat.background ? "Pause contributions" : "Allow contributions"}
             </button>
@@ -518,7 +523,7 @@ export default function Conversation({ chat, root, onNew, onInspect }) {
               the destination project’s memory.
             </p>
             <footer>
-              <button className="primary" disabled={!!chat.pending_signal}>
+              <button className="primary" disabled={!!chat.pending_signal || !!chat.queued_messages?.length}>
                 Save changes
               </button>
             </footer>

@@ -1,0 +1,9 @@
+{
+  "version": "0.5.1",
+  "scalar_ctest": 11,
+  "native_ctest": 12,
+  "javascript_tests": 3,
+  "setup": "supplied manifests, root/config/file inputs, runtime-pack diagnostics, relocated models, explicit mismatches and safe reuse",
+  "windows_shortcut": "target joining tested with mocked resolver; COM not executed on Linux",
+  "real_model_inference": "not tested; no model bytes supplied"
+}

@@ -1,0 +1,61 @@
+{
+  "version": 3,
+  "gpuPolicy": {
+    "requireCuda": true,
+    "allowCpuFallback": false,
+    "hostedServiceMessage": "A compatible NVIDIA GPU/driver is required for the bundled native CUDA runtime. The full CUDA Toolkit is not required when the redistributed engine pack includes its CUDA runtime DLLs."
+  },
+  "ports": {
+    "llm": 8080,
+    "asr": 8000,
+    "tts": 8101
+  },
+  "selectionOrder": {
+    "llm": [
+      "llamacpp-native-nvidia"
+    ],
+    "asr": [
+      "whispercpp-native-nvidia"
+    ],
+    "tts": [
+      "qwenttscpp-native-nvidia"
+    ]
+  },
+  "packs": [
+    {
+      "id": "llamacpp-native-nvidia",
+      "kind": "llm",
+      "runtime": "llamacpp",
+      "vendor": "nvidia",
+      "path": "engines/llm/llama-cpp-dynamic-win-x64/llama-server.exe",
+      "workingDirectory": "engines/llm/llama-cpp-dynamic-win-x64",
+      "args": "--host 127.0.0.1 --port 8080 --ctx-size 16384 --flash-attn on --jinja",
+      "healthUrl": "http://127.0.0.1:8080/health",
+      "openAiChatUrl": "http://127.0.0.1:8080/v1/chat/completions",
+      "supportsVision": true
+    },
+    {
+      "id": "whispercpp-native-nvidia",
+      "kind": "asr",
+      "runtime": "whispercpp",
+      "vendor": "nvidia",
+      "path": "engines/asr/whispercpp-nvidia-win-x64/whisper-server.exe",
+      "workingDirectory": "engines/asr/whispercpp-nvidia-win-x64",
+      "args": "--host 127.0.0.1 --port 8000 --language en",
+      "healthTcpHost": "127.0.0.1",
+      "healthTcpPort": 8000,
+      "asrUrl": "http://127.0.0.1:8000/inference"
+    },
+    {
+      "id": "qwenttscpp-native-nvidia",
+      "kind": "tts",
+      "runtime": "qwenttscpp",
+      "vendor": "nvidia",
+      "path": "engines/tts/qwenttscpp-nvidia-win-x64/tts-server.exe",
+      "workingDirectory": "engines/tts/qwenttscpp-nvidia-win-x64",
+      "args": "--host 127.0.0.1 --port 8101",
+      "healthUrl": "http://127.0.0.1:8101/health",
+      "ttsHttpUrl": "http://127.0.0.1:8101"
+    }
+  ]
+}

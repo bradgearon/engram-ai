@@ -16,5 +16,6 @@
   "max_teacher_calls": 1,
   "max_foundation_calls": 0,
   "run_timeout_seconds": 1800,
-  "trainer_backend": "auto"
+  "trainer_backend": "auto",
+  "network_enabled": false
 }

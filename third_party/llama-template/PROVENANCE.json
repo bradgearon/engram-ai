@@ -1,0 +1,24 @@
+{
+  "repository": "https://github.com/ggml-org/llama.cpp",
+  "commit": "b1c902f026d32535b5e8eae55e5e47b379e57672",
+  "files": [
+    "json.h",
+    "json.cpp",
+    "unicode.h",
+    "unicode.cpp",
+    "jinja/runtime.cpp",
+    "jinja/parser.h",
+    "jinja/parser.cpp",
+    "jinja/value.h",
+    "jinja/utils.h",
+    "jinja/runtime.h",
+    "jinja/string.cpp",
+    "jinja/value.cpp",
+    "jinja/string.h",
+    "jinja/lexer.cpp",
+    "jinja/lexer.h"
+  ],
+  "modifications": [
+    "json.cpp: use explicit local exception instead of GGML assertion; template helper has no GGML binary dependency"
+  ]
+}

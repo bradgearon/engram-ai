@@ -41,6 +41,7 @@ Package::Package(const fs::path &dir) {
         policy.weight[i] = f32(64 + 4 * i);
     for (size_t i = 0; i < 16; i++)
         policy.bias[i] = f32(1088 + 4 * i);
+    sequence = language::load(dir, manifest);
 }
 State Package::step(const State &z, const Embedding &active, float feedback, bool frozen) const {
     if (frozen)

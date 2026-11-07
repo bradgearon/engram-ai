@@ -1,0 +1,341 @@
+Start testing: Nov 06 02:15 UTC
+----------------------------------------------------------
+1/14 Testing: core
+1/14 Test: core
+Command: "/workspace/scratch/599c77d0dd47/wds-ai/build-v06/wds-tests" "/workspace/scratch/599c77d0dd47/wds-ai/packages/breeze"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-v06
+"core" start time: Nov 06 02:15 UTC
+Output:
+----------------------------------------------------------
+core tests passed
+<end of output>
+Test time =   0.07 sec
+----------------------------------------------------------
+Test Passed.
+"core" end time: Nov 06 02:15 UTC
+"core" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/14 Testing: heart
+2/14 Test: heart
+Command: "/workspace/scratch/599c77d0dd47/wds-ai/build-v06/wds-heart-tests" "/workspace/scratch/599c77d0dd47/wds-ai/packages/breeze"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-v06
+"heart" start time: Nov 06 02:15 UTC
+Output:
+----------------------------------------------------------
+heart, declarations, budgets, isolation, disagreement and replay passed
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"heart" end time: Nov 06 02:15 UTC
+"heart" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/14 Testing: heart_websocket
+3/14 Test: heart_websocket
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/599c77d0dd47/wds-ai/tests/heart_websocket_test.py" "/workspace/scratch/599c77d0dd47/wds-ai/build-v06/wds-ai" "/workspace/scratch/599c77d0dd47/wds-ai/packages/breeze"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-v06
+"heart_websocket" start time: Nov 06 02:15 UTC
+Output:
+----------------------------------------------------------
+declaration/restart/consultation WebSocket acceptance passed
+<end of output>
+Test time =   0.38 sec
+----------------------------------------------------------
+Test Passed.
+"heart_websocket" end time: Nov 06 02:15 UTC
+"heart_websocket" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/14 Testing: websocket
+4/14 Test: websocket
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/599c77d0dd47/wds-ai/tests/websocket_test.py" "/workspace/scratch/599c77d0dd47/wds-ai/build-v06/wds-ai" "/workspace/scratch/599c77d0dd47/wds-ai/packages/breeze"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-v06
+"websocket" start time: Nov 06 02:15 UTC
+Output:
+----------------------------------------------------------
+{
+  "status": "memory_only",
+  "accepted": false,
+  "source": "teacher:fixture-teacher/1:trace:a47faf8dc5f84dc3aa610657d39545a5",
+  "reason": "Use workshop structured curricula and native wds-train for policy learning."
+}
+websocket, live memory, learning, URL guard and replay tests passed
+<end of output>
+Test time =   1.04 sec
+----------------------------------------------------------
+Test Passed.
+"websocket" end time: Nov 06 02:15 UTC
+"websocket" time elapsed: 00:00:01
+----------------------------------------------------------
+
+5/14 Testing: workshop_core
+5/14 Test: workshop_core
+Command: "/workspace/scratch/599c77d0dd47/wds-ai/build-v06/wds-workshop-tests" "/workspace/scratch/599c77d0dd47/wds-ai/packages/breeze"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-v06
+"workshop_core" start time: Nov 06 02:15 UTC
+Output:
+----------------------------------------------------------
+task actions, explicit activation, ABI and coroutine cancellation passed
+<end of output>
+Test time =   0.05 sec
+----------------------------------------------------------
+Test Passed.
+"workshop_core" end time: Nov 06 02:15 UTC
+"workshop_core" time elapsed: 00:00:00
+----------------------------------------------------------
+
+6/14 Testing: neural_training
+6/14 Test: neural_training
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/599c77d0dd47/wds-ai/tests/neural_training_test.py" "/workspace/scratch/599c77d0dd47/wds-ai/build-v06/wds-train" "/workspace/scratch/599c77d0dd47/wds-ai/build-v06/wds-ai" "/workspace/scratch/599c77d0dd47/wds-ai/packages/breeze"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-v06
+"neural_training" start time: Nov 06 02:15 UTC
+Output:
+----------------------------------------------------------
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 1, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 1.4520524578354506}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 2, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.9070503437215441}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 3, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.638000734431709}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 4, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.4819019793637174}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 5, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.3821869420218324}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 6, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.31407858933040145}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 7, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.26515438510130473}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 8, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.2285945093586692}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 9, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.20039266017148594}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 10, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.17806516615297102}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 11, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.16000246004496244}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 12, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.14512182860303272}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 13, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.13267152381820996}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 14, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.12211504579390775}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 15, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.11306036975661692}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 16, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.10521492781027847}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 17, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.09835643571776591}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 18, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.0923130863988136}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 19, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.08695031946622134}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 20, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.08216122310812565}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 21, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.07785984300948234}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 22, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.07397645813571765}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 23, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.07045388955318987}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 24, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.06724475768465875}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 25, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.06430955404465645}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 26, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.061615122946064735}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 27, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.05913335448119171}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 28, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.056840346776716455}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 29, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.05471561142779283}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 30, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.052741468143339944}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 31, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.05090261827327404}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 32, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.04923194888350402}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 33, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.047833065751018054}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 34, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.04654032249686699}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 35, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.045813390012517025}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 36, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.045113416044856774}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 37, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.04443005808566753}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 38, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.04383858327268343}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 39, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.04343421770338211}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 40, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.04303639265899514}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 41, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.04264497342669937}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 42, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.04225988738284365}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 43, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.04188108062306833}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 44, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.04150850582827273}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 45, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.04114213155897348}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 46, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.04078184248706876}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 47, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.0404275819291323}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 48, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.04007922711645243}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 49, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03973670997640393}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 50, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.039399886156208326}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 51, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.0390686676598277}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 52, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03874290166046422}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 53, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03842250527327609}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 54, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.038107327847767464}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 55, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.037797277414570236}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 56, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03749223806732324}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 57, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.037192058482197865}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 58, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.036896657776152794}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 59, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03660593679966167}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 60, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03631975775180892}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 61, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03603802503367248}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 62, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03576063666521269}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 63, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.035487497240537506}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 64, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03521849092640834}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 65, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.034953541181959875}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 66, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.034692551860133904}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 67, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.034435462372550386}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 68, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.034182145017288286}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 69, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03393254910198746}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 70, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03368653731227895}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 71, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.033444077475149804}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 72, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.0332050960858535}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 73, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.032969508898091054}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 74, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03273723130430802}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 75, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03250819494858649}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 76, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03228235397653004}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 77, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.0320596380890899}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 78, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03183996075660092}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 79, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.031623286548570974}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 80, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03140953019634561}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 81, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.031198651969009825}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 82, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03099054757640913}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 83, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.030785201580318944}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 84, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.030582554461060802}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 85, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.030382568434705683}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 86, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.030185178818824446}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 87, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.02999035862139696}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 88, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.029798014211663098}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 89, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.029608093547198018}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 90, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.029420596944890704}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 91, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.029235441380658637}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 92, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.02905259459491442}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 93, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.02887201810983046}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 94, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.028693669323273923}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 95, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.028517498748959518}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 96, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.028343465795338404}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 97, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.028171555445069687}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 98, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.028001700864477484}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 99, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.027833870393672563}}
+{"type": "neural.native", "event": {"backend": "scalar-sgd", "epoch": 100, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.027668034594841757}}
+{"type": "neural.native", "event": {"activated": false, "backend": "scalar-sgd", "best_epoch": 100, "checksum": "d54ffe93b853ead7", "output": "/tmp/tmpbs83ymml/candidates/neural-b681a4eeb099a076", "type": "training.finished", "validation_cross_entropy": 0.027668034594841757}}
+{"type": "neural.native", "event": {"accepted": 18, "accepted_correct": 18, "accuracy": 1.0, "activated": false, "classes": {"hold": {"accepted": 0, "correct": 0, "rows": 0}, "propagate": {"accepted": 9, "correct": 9, "rows": 9}, "recall": {"accepted": 5, "correct": 5, "rows": 5}, "request_knowledge": {"accepted": 0, "correct": 0, "rows": 0}, "rest": {"accepted": 4, "correct": 4, "rows": 4}, "review": {"accepted": 0, "correct": 0, "rows": 0}, "suggest": {"accepted": 0, "correct": 0, "rows": 0}}, "correct": 18, "coverage": 1.0, "generated_tokens": 0, "knowledge_calls": 0, "rows": 18}}
+{"type": "neural.training_finished", "candidate": "candidates/neural-b681a4eeb099a076", "report": {"accepted": 18, "accepted_correct": 18, "accuracy": 1.0, "activated": false, "classes": {"hold": {"accepted": 0, "correct": 0, "rows": 0}, "propagate": {"accepted": 9, "correct": 9, "rows": 9}, "recall": {"accepted": 5, "correct": 5, "rows": 5}, "request_knowledge": {"accepted": 0, "correct": 0, "rows": 0}, "rest": {"accepted": 4, "correct": 4, "rows": 4}, "review": {"accepted": 0, "correct": 0, "rows": 0}, "suggest": {"accepted": 0, "correct": 0, "rows": 0}}, "correct": 18, "coverage": 1.0, "generated_tokens": 0, "knowledge_calls": 0, "rows": 18, "split_counts": {"train": 54, "validation": 18, "test": 18}, "candidate": "candidates/neural-b681a4eeb099a076", "activation": "explicit command only"}, "activated": false}
+{"type": "neural.native", "event": {"activated": false, "backend": "scalar-sgd", "best_epoch": 100, "checksum": "d54ffe93b853ead7", "output": "/tmp/tmpbs83ymml/candidates/neural-b681a4eeb099a076", "type": "training.finished", "validation_cross_entropy": 0.027668034594841757}}
+{"type": "neural.training_finished", "candidate": "candidates/neural-b681a4eeb099a076", "report": {"accepted": 18, "accepted_correct": 18, "accuracy": 1.0, "activated": false, "classes": {"hold": {"accepted": 0, "correct": 0, "rows": 0}, "propagate": {"accepted": 9, "correct": 9, "rows": 9}, "recall": {"accepted": 5, "correct": 5, "rows": 5}, "request_knowledge": {"accepted": 0, "correct": 0, "rows": 0}, "rest": {"accepted": 4, "correct": 4, "rows": 4}, "review": {"accepted": 0, "correct": 0, "rows": 0}, "suggest": {"accepted": 0, "correct": 0, "rows": 0}}, "correct": 18, "coverage": 1.0, "generated_tokens": 0, "knowledge_calls": 0, "rows": 18, "split_counts": {"train": 54, "validation": 18, "test": 18}, "candidate": "candidates/neural-b681a4eeb099a076", "activation": "explicit command only"}, "activated": false}
+Native neural training, disjoint groups, held-out gate, unchanged ABI, explicit activation and fresh-unit inference passed.
+<end of output>
+Test time =   5.84 sec
+----------------------------------------------------------
+Test Passed.
+"neural_training" end time: Nov 06 02:15 UTC
+"neural_training" time elapsed: 00:00:05
+----------------------------------------------------------
+
+7/14 Testing: native_trainer
+7/14 Test: native_trainer
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/599c77d0dd47/wds-ai/tests/trainer_test.py" "/workspace/scratch/599c77d0dd47/wds-ai/build-v06/wds-train" "/workspace/scratch/599c77d0dd47/wds-ai/build-v06/wds-ai" "/workspace/scratch/599c77d0dd47/wds-ai/packages/breeze"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-v06
+"native_trainer" start time: Nov 06 02:15 UTC
+Output:
+----------------------------------------------------------
+Native training/resume, ABI, bounded inputs, candidate isolation, activation and replay passed.
+<end of output>
+Test time =   0.66 sec
+----------------------------------------------------------
+Test Passed.
+"native_trainer" end time: Nov 06 02:15 UTC
+"native_trainer" time elapsed: 00:00:00
+----------------------------------------------------------
+
+8/14 Testing: upkeep_core
+8/14 Test: upkeep_core
+Command: "/workspace/scratch/599c77d0dd47/wds-ai/build-v06/wds-upkeep-tests" "/workspace/scratch/599c77d0dd47/wds-ai/packages/breeze"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-v06
+"upkeep_core" start time: Nov 06 02:15 UTC
+Output:
+----------------------------------------------------------
+upkeep, cache, scope, expression, reflection, limits, reinforcement and restart passed
+<end of output>
+Test time =   0.60 sec
+----------------------------------------------------------
+Test Passed.
+"upkeep_core" end time: Nov 06 02:15 UTC
+"upkeep_core" time elapsed: 00:00:00
+----------------------------------------------------------
+
+9/14 Testing: workspace_core
+9/14 Test: workspace_core
+Command: "/workspace/scratch/599c77d0dd47/wds-ai/build-v06/wds-workspace-tests" "/workspace/scratch/599c77d0dd47/wds-ai/packages/breeze"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-v06
+"workspace_core" start time: Nov 06 02:15 UTC
+Output:
+----------------------------------------------------------
+workspace chat, idempotency, scopes, offline contributions, quiet gate, provenance and restart passed
+<end of output>
+Test time =   0.07 sec
+----------------------------------------------------------
+Test Passed.
+"workspace_core" end time: Nov 06 02:15 UTC
+"workspace_core" time elapsed: 00:00:00
+----------------------------------------------------------
+
+10/14 Testing: neural_mesh
+10/14 Test: neural_mesh
+Command: "/workspace/scratch/599c77d0dd47/wds-ai/build-v06/wds-neural-tests" "/workspace/scratch/599c77d0dd47/wds-ai/packages/breeze"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-v06
+"neural_mesh" start time: Nov 06 02:15 UTC
+Output:
+----------------------------------------------------------
+Local decisions, routed impulses, cycle suppression, scoped representation reuse, budget deferral, web provenance, feedback and restart passed.
+<end of output>
+Test time =   0.41 sec
+----------------------------------------------------------
+Test Passed.
+"neural_mesh" end time: Nov 06 02:15 UTC
+"neural_mesh" time elapsed: 00:00:00
+----------------------------------------------------------
+
+11/14 Testing: neural_websocket
+11/14 Test: neural_websocket
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/599c77d0dd47/wds-ai/tests/neural_websocket_test.py" "/workspace/scratch/599c77d0dd47/wds-ai/build-v06/wds-ai" "/workspace/scratch/599c77d0dd47/wds-ai/packages/breeze"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-v06
+"neural_websocket" start time: Nov 06 02:15 UTC
+Output:
+----------------------------------------------------------
+{"type": "mesh.web_result", "key": "web-f6a3757a63b3b013", "status": "completed"}
+{"type": "mesh.web_result", "key": "web-ea86062628b8e501", "status": "completed"}
+WebSocket mesh traversal, one-shot timer, web worker, provenance and no generation/activation passed.
+<end of output>
+Test time =   0.45 sec
+----------------------------------------------------------
+Test Passed.
+"neural_websocket" end time: Nov 06 02:15 UTC
+"neural_websocket" time elapsed: 00:00:00
+----------------------------------------------------------
+
+12/14 Testing: upkeep_websocket
+12/14 Test: upkeep_websocket
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/599c77d0dd47/wds-ai/tests/upkeep_websocket_test.py" "/workspace/scratch/599c77d0dd47/wds-ai/build-v06/wds-ai" "/workspace/scratch/599c77d0dd47/wds-ai/packages/breeze"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-v06
+"upkeep_websocket" start time: Nov 06 02:15 UTC
+Output:
+----------------------------------------------------------
+{"type": "worker.material_result", "key": "material-d139212502b5c6b9", "status": "completed", "extraction_limited": false, "reason": ""}
+timer restart, quiet idle, expression, material worker and paused upkeep passed
+<end of output>
+Test time =   1.83 sec
+----------------------------------------------------------
+Test Passed.
+"upkeep_websocket" end time: Nov 06 02:15 UTC
+"upkeep_websocket" time elapsed: 00:00:01
+----------------------------------------------------------
+
+13/14 Testing: sixstars_setup
+13/14 Test: sixstars_setup
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/599c77d0dd47/wds-ai/tests/setup_test.py"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-v06
+"sixstars_setup" start time: Nov 06 02:15 UTC
+Output:
+----------------------------------------------------------
+Six Stars supplied manifests, root/config paths, pack diagnostics, model relocation, shortcut target joining, safe reuse and one-command setup passed
+<end of output>
+Test time =   0.20 sec
+----------------------------------------------------------
+Test Passed.
+"sixstars_setup" end time: Nov 06 02:15 UTC
+"sixstars_setup" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/14 Testing: interface_websocket
+14/14 Test: interface_websocket
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/599c77d0dd47/wds-ai/tests/interface_test.py" "/workspace/scratch/599c77d0dd47/wds-ai/build-v06/wds-ai" "/workspace/scratch/599c77d0dd47/wds-ai/packages/breeze"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-v06
+"interface_websocket" start time: Nov 06 02:15 UTC
+Output:
+----------------------------------------------------------
+same-origin relay, traversal rejection and browser-independent chat passed
+<end of output>
+Test time =   0.30 sec
+----------------------------------------------------------
+Test Passed.
+"interface_websocket" end time: Nov 06 02:15 UTC
+"interface_websocket" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Nov 06 02:15 UTC

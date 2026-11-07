@@ -37,7 +37,9 @@ json topology(const relationships::HeartScope &scope) {
                {{"purpose", "propose growth of an existing endpoint's understanding"},
                 {"commit_path", "memory.upsert"},
                 {"writes_garden", false}}}}},
-            {"storage_role", "Arc: authoritative append-only journal"},
+            {"storage_role", "Arc: authoritative append-only journal for engrams and astroengrams"},
+            {"index_role", "IGFBP2: scoped locations, versions and numeric attention metadata"},
+            {"payload_role", "IGF2BP2: bounded lazy payload fetch and validated RNA preparation"},
             {"growth", "explicit relationship declarations within capacity"},
             {"interpretation",
              "software topology and proposed biological analogy; no biological mechanism simulated"}};
@@ -103,13 +105,22 @@ double relevance(const std::string &query, const std::string &purpose) {
     return double(shared) / double(p.size());
 }
 std::vector<json> LocalScanIndex::retrieve(const std::string &root, const Embedding &q) const {
-    return mesh::retrieve(store_, root, q, true);
+    return indexer_.locate(root, q);
 }
 std::vector<json> LocalScanIndex::fetch(const std::string &root, const std::vector<json> &refs) const {
+    return handler_.fetch(root, refs);
+}
+std::vector<json> IGFBP2Indexer::locate(const std::string &root, const Embedding &q) const {
+    return mesh::retrieve(arc_, root, q, true);
+}
+json IGF2BP2Handler::prepare_rna(const json &packet, const std::string &trace) const {
+    return mesh::prepare_memory(arc_, packet, trace);
+}
+std::vector<json> IGF2BP2Handler::fetch(const std::string &root, const std::vector<json> &refs) const {
     require(refs.size() <= top_k, "payload fetch exceeds top-k budget");
     std::vector<json> out;
     for (const auto &ref : refs) {
-        const auto &row = store_.engrams.at(ref.at("id").get<std::string>());
+        const auto &row = arc_.engrams.at(ref.at("id").get<std::string>());
         require(row.at("root_id") == root && row.at("version") == ref.at("version"),
                 "payload scope/version mismatch");
         out.push_back(row);

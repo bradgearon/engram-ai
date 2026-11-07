@@ -1,0 +1,156 @@
+{
+  "schema": 1,
+  "description": "Small read-only intent curriculum, not broad language understanding. Locked tests never enter optimizer.",
+  "examples": [
+    {
+      "text": "Good morning",
+      "label": "greeting",
+      "split": "train"
+    },
+    {
+      "text": "Hey there",
+      "label": "greeting",
+      "split": "train"
+    },
+    {
+      "text": "Hello friend",
+      "label": "greeting",
+      "split": "train"
+    },
+    {
+      "text": "Good evening",
+      "label": "greeting",
+      "split": "train"
+    },
+    {
+      "text": "Nice to meet you",
+      "label": "greeting",
+      "split": "train"
+    },
+    {
+      "text": "Greetings",
+      "label": "greeting",
+      "split": "train"
+    },
+    {
+      "text": "Hello again",
+      "label": "greeting",
+      "split": "validation"
+    },
+    {
+      "text": "Hi there",
+      "label": "greeting",
+      "split": "validation"
+    },
+    {
+      "text": "A warm hello",
+      "label": "greeting",
+      "split": "test"
+    },
+    {
+      "text": "Howdy",
+      "label": "greeting",
+      "split": "test"
+    },
+    {
+      "text": "Explain the available commands",
+      "label": "help",
+      "split": "train"
+    },
+    {
+      "text": "How can I use this system?",
+      "label": "help",
+      "split": "train"
+    },
+    {
+      "text": "Show the instruction syntax",
+      "label": "help",
+      "split": "train"
+    },
+    {
+      "text": "What commands do you understand?",
+      "label": "help",
+      "split": "train"
+    },
+    {
+      "text": "Teach me how to use the interface",
+      "label": "help",
+      "split": "train"
+    },
+    {
+      "text": "Help me get started",
+      "label": "help",
+      "split": "train"
+    },
+    {
+      "text": "List the commands I can type",
+      "label": "help",
+      "split": "validation"
+    },
+    {
+      "text": "What is the grammar?",
+      "label": "help",
+      "split": "validation"
+    },
+    {
+      "text": "Show instructions for using this app",
+      "label": "help",
+      "split": "test"
+    },
+    {
+      "text": "What can I ask you to do?",
+      "label": "help",
+      "split": "test"
+    },
+    {
+      "text": "List the knowledge in this project",
+      "label": "inspect",
+      "split": "train"
+    },
+    {
+      "text": "What entities have you learned?",
+      "label": "inspect",
+      "split": "train"
+    },
+    {
+      "text": "Show my recorded operations",
+      "label": "inspect",
+      "split": "train"
+    },
+    {
+      "text": "List learned skills and entities",
+      "label": "inspect",
+      "split": "train"
+    },
+    {
+      "text": "What is in this scope?",
+      "label": "inspect",
+      "split": "train"
+    },
+    {
+      "text": "Summarize the stored knowledge counts",
+      "label": "inspect",
+      "split": "train"
+    },
+    {
+      "text": "Show the project knowledge inventory",
+      "label": "inspect",
+      "split": "validation"
+    },
+    {
+      "text": "Which operations are recorded here?",
+      "label": "inspect",
+      "split": "validation"
+    },
+    {
+      "text": "List the entities and operations",
+      "label": "inspect",
+      "split": "test"
+    },
+    {
+      "text": "Inspect this project memory inventory",
+      "label": "inspect",
+      "split": "test"
+    }
+  ]
+}

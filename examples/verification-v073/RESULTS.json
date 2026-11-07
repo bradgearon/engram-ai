@@ -1,0 +1,26 @@
+{
+  "version": "0.7.3",
+  "pack_ctest": "20/20",
+  "source_ctest": "20/20",
+  "ui": "production build only; no browser UI tests",
+  "user_journal": "83-event prefix byte-identical; three conversations released with deterministic test foundation",
+  "windows_cuda": "not rerun here",
+  "evidence": {
+    "source-ctest.txt": {
+      "bytes": 2185,
+      "sha256": "bdf7867d9a5ffc21c2aebf0c21895bd36b3569305c41e349f078482a5d88e22b"
+    },
+    "pack-ctest.txt": {
+      "bytes": 2174,
+      "sha256": "7ae03f11140c354d5ba27751c534f1b4f9d7883c566cade856f400a31901f5d1"
+    },
+    "ui-build.txt": {
+      "bytes": 1227,
+      "sha256": "a1218b4515d9086eeb3fd8187f9dbea24556087cc90bc7fc345ff82ca0647540"
+    },
+    "replay-summary.txt": {
+      "bytes": 185,
+      "sha256": "01d50b37f887fe179b479858527f6344fb68ac2ab2c31c3aa25cf41be33fb329"
+    }
+  }
+}

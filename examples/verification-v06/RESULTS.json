@@ -1,0 +1,65 @@
+{
+  "version": "0.6.0",
+  "recorded_at": "2026-11-06T02:16:53.792399+00:00",
+  "platform": "Linux x86_64 CPU",
+  "scalar_ctest": {
+    "passed": 14,
+    "failed": 0
+  },
+  "native_ctest": {
+    "passed": 16,
+    "failed": 0
+  },
+  "native_source_commit": "b1c902f026d32535b5e8eae55e5e47b379e57672",
+  "frontend": {
+    "production_build": "passed",
+    "transport_unit_tests_before_user_requested_skip": 3,
+    "browser_visual_tests": "skipped at user request"
+  },
+  "native_representation": {
+    "fixture": "tiny random Qwen3 GGUF, real native graph",
+    "normalized_hidden_state": true,
+    "scope_cache": true,
+    "context_reset": true,
+    "oversize_input_rejected": true,
+    "generated_tokens": 0,
+    "pretrained_qwen3_4b_tested": false,
+    "cuda_tested": false
+  },
+  "feedback_training": {
+    "journaled_labels": 90,
+    "synthetic": true,
+    "split_counts": {
+      "train": 54,
+      "validation": 18,
+      "test": 18
+    },
+    "held_out_correct": 18,
+    "held_out_accepted": 18,
+    "report_scope": "synthetic three-class transport/optimizer fixture; not a real-world capability benchmark",
+    "same_dataset_reuses_candidate": true,
+    "automatic_activations": 0,
+    "fresh_unit_inference": true,
+    "policy_bytes": 1152
+  },
+  "web": {
+    "deterministic_end_to_end_protocol": "passed",
+    "live_https_provider": "Wikipedia REST search",
+    "live_query": "orbital resonance",
+    "live_result_count": 3,
+    "source_urls": [
+      "https://en.wikipedia.org/wiki/Orbital_resonance",
+      "https://en.wikipedia.org/wiki/Tidal_locking",
+      "https://en.wikipedia.org/wiki/Resonant_trans-Neptunian_object"
+    ],
+    "evidence_status": "hypothetical",
+    "question_does_not_answer_itself": "passed"
+  },
+  "untested": [
+    "Windows/macOS execution",
+    "pretrained Qwen3 4B semantic accuracy",
+    "CUDA throughput",
+    "browser layout/interaction",
+    "multi-host inference (not implemented)"
+  ]
+}

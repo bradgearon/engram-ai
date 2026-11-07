@@ -1,0 +1,280 @@
+{
+  "activated": false,
+  "bits_per_byte": 2.9880985903899475,
+  "conversation_completions": {
+    "accepted_at_default_threshold": 0,
+    "accepted_exact": 0,
+    "complete": 240,
+    "exact": 0,
+    "exact_match_rate": 0.0,
+    "scope": "strict exact match on synthetic held-out final turns; paraphrases can be correct without matching",
+    "tested": 240
+  },
+  "cross_entropy": 2.071192113163939,
+  "generation_samples": [
+    {
+      "expected": "Eli0, the cat, enjoys sleeping in the library.",
+      "input": "He enjoys sleeping in the library. Who enjoys that?",
+      "result": {
+        "complete": true,
+        "generated_bytes": 57,
+        "mean_selected_probability": 0.5982970392181082,
+        "reason": "end-of-turn predicted",
+        "tensor_checksum": "b288521249852b72",
+        "text": "The rule ru said that rule predict a a that uully a book.",
+        "valid_utf8": true
+      }
+    },
+    {
+      "expected": "Nora0 gave the map to Eli0.",
+      "input": "Which person handed it over?",
+      "result": {
+        "complete": true,
+        "generated_bytes": 55,
+        "mean_selected_probability": 0.5898299330260051,
+        "reason": "end-of-turn predicted",
+        "tensor_checksum": "b288521249852b72",
+        "text": "Mira3 a s ored that rule predict a a that uully a book.",
+        "valid_utf8": true
+      }
+    },
+    {
+      "expected": "Eli0 gave the map to Nora0.",
+      "input": "Which person handed it over?",
+      "result": {
+        "complete": true,
+        "generated_bytes": 72,
+        "mean_selected_probability": 0.5688115168445897,
+        "reason": "end-of-turn predicted",
+        "tensor_checksum": "b288521249852b72",
+        "text": "Mira3 lives is Mira17 does that rule predict a bulle fry it or Lantern2.",
+        "valid_utf8": true
+      }
+    },
+    {
+      "expected": "No. You said Nora0 does not own the map; Eli0 does.",
+      "input": "Does Nora0 own it?",
+      "result": {
+        "complete": true,
+        "generated_bytes": 60,
+        "mean_selected_probability": 0.6497154398160254,
+        "reason": "end-of-turn predicted",
+        "tensor_checksum": "b288521249852b72",
+        "text": "No. That was toed that rule predicts that the book to Jon37.",
+        "valid_utf8": true
+      }
+    },
+    {
+      "expected": "According to your correction, Nora0 lives in Orchard0.",
+      "input": "Where does Nora0 live now?",
+      "result": {
+        "complete": true,
+        "generated_bytes": 116,
+        "mean_selected_probability": 0.6388183040740599,
+        "reason": "end-of-turn predicted",
+        "tensor_checksum": "b288521249852b72",
+        "text": "The rule requires a key stole that rule predicts that to and ard wend tredect is nop is seprecte not are the garden.",
+        "valid_utf8": true
+      }
+    },
+    {
+      "expected": "We do not know. You said Nora0 might arrive.",
+      "input": "Is Nora0 definitely coming?",
+      "result": {
+        "complete": true,
+        "generated_bytes": 116,
+        "mean_selected_probability": 0.6338251574914349,
+        "reason": "end-of-turn predicted",
+        "tensor_checksum": "b288521249852b72",
+        "text": "The rule requires a key stole that rule predicts that to and ard wend tredect is nop is seprecte not are the garden.",
+        "valid_utf8": true
+      }
+    },
+    {
+      "expected": "Eli0 entered second.",
+      "input": "Name the later arrival.",
+      "result": {
+        "complete": true,
+        "generated_bytes": 116,
+        "mean_selected_probability": 0.6385607314065492,
+        "reason": "end-of-turn predicted",
+        "tensor_checksum": "b288521249852b72",
+        "text": "The rule requires a key stole that rule predicts that to and ard wend tredect is nop is seprecte not are the garden.",
+        "valid_utf8": true
+      }
+    },
+    {
+      "expected": "No. The rule requires a key, and you said there is none.",
+      "input": "Is opening allowed by those conditions?",
+      "result": {
+        "complete": true,
+        "generated_bytes": 58,
+        "mean_selected_probability": 0.6390029437050155,
+        "reason": "end-of-turn predicted",
+        "tensor_checksum": "b288521249852b72",
+        "text": "Nou said you said that rule predict a a that uully a book.",
+        "valid_utf8": true
+      }
+    },
+    {
+      "expected": "The rule predicts that the door opens. That is a prediction, not an observation that it opened.",
+      "input": "What follows from those premises?",
+      "result": {
+        "complete": true,
+        "generated_bytes": 57,
+        "mean_selected_probability": 0.6042984735641936,
+        "reason": "end-of-turn predicted",
+        "tensor_checksum": "b288521249852b72",
+        "text": "The rule ru said that rule predict a a that uully a book.",
+        "valid_utf8": true
+      }
+    },
+    {
+      "expected": "You are developing Orchard0, a metroidvania about a lost map.",
+      "input": "Which game did I describe?",
+      "result": {
+        "complete": true,
+        "generated_bytes": 33,
+        "mean_selected_probability": 0.6237119004854872,
+        "reason": "end-of-turn predicted",
+        "tensor_checksum": "b288521249852b72",
+        "text": "No. That wo an the book to Jon37.",
+        "valid_utf8": true
+      }
+    },
+    {
+      "expected": "You said you like visiting the library.",
+      "input": "Recall my preference, please.",
+      "result": {
+        "complete": true,
+        "generated_bytes": 100,
+        "mean_selected_probability": 0.6442318919644769,
+        "reason": "end-of-turn predicted",
+        "tensor_checksum": "b288521249852b72",
+        "text": "What received that rule predicts that to and ard wend tredect is nop is seprecte not are the garden.",
+        "valid_utf8": true
+      }
+    },
+    {
+      "expected": "In Orchard0, the map is blue.",
+      "input": "What color is it in Orchard0?",
+      "result": {
+        "complete": true,
+        "generated_bytes": 116,
+        "mean_selected_probability": 0.6416245066549673,
+        "reason": "end-of-turn predicted",
+        "tensor_checksum": "b288521249852b72",
+        "text": "The rule requires a key stole that rule predicts that to and ard wend tredect is nop is seprecte not are the garden.",
+        "valid_utf8": true
+      }
+    },
+    {
+      "expected": "The conversation does not state Nora0's age. I should not infer it from the map or location.",
+      "input": "How old is Nora0?",
+      "result": {
+        "complete": true,
+        "generated_bytes": 116,
+        "mean_selected_probability": 0.6363475730390449,
+        "reason": "end-of-turn predicted",
+        "tensor_checksum": "b288521249852b72",
+        "text": "The rule requires a key stole that rule predicts that to and ard wend tredect is nop is seprecte not are the garden.",
+        "valid_utf8": true
+      }
+    },
+    {
+      "expected": "Nora0 has fewer stones.",
+      "input": "Name the person with less.",
+      "result": {
+        "complete": true,
+        "generated_bytes": 116,
+        "mean_selected_probability": 0.6370107460808697,
+        "reason": "end-of-turn predicted",
+        "tensor_checksum": "b288521249852b72",
+        "text": "The rule requires a key stole that rule predicts that to and ard wend tredect is nop is seprecte not are the garden.",
+        "valid_utf8": true
+      }
+    },
+    {
+      "expected": "No. That was a hypothetical premise, not established knowledge.",
+      "input": "Did we establish that Nora0 can really fly?",
+      "result": {
+        "complete": true,
+        "generated_bytes": 116,
+        "mean_selected_probability": 0.63879383912989,
+        "reason": "end-of-turn predicted",
+        "tensor_checksum": "b288521249852b72",
+        "text": "The rule requires a key stole that rule predicts that to and ard wend tredect is nop is seprecte not are the garden.",
+        "valid_utf8": true
+      }
+    },
+    {
+      "expected": "Who said that, and what was ready? The reference is ambiguous.",
+      "input": "They said it was ready.",
+      "result": {
+        "complete": true,
+        "generated_bytes": 25,
+        "mean_selected_probability": 0.5491729523444305,
+        "reason": "end-of-turn predicted",
+        "tensor_checksum": "b288521249852b72",
+        "text": "That wall receite fornes.",
+        "valid_utf8": true
+      }
+    },
+    {
+      "expected": "Yes. Tell me what you want to develop or understand about Orchard0.",
+      "input": "Could we discuss Orchard0?",
+      "result": {
+        "complete": true,
+        "generated_bytes": 25,
+        "mean_selected_probability": 0.5621950861348862,
+        "reason": "end-of-turn predicted",
+        "tensor_checksum": "b288521249852b72",
+        "text": "That wall receite fornes.",
+        "valid_utf8": true
+      }
+    },
+    {
+      "expected": "No. That was a fictional story written for your request.",
+      "input": "Did that really happen?",
+      "result": {
+        "complete": true,
+        "generated_bytes": 18,
+        "mean_selected_probability": 0.6449697151972607,
+        "reason": "end-of-turn predicted",
+        "tensor_checksum": "b288521249852b72",
+        "text": "No. That wo keves.",
+        "valid_utf8": true
+      }
+    },
+    {
+      "expected": "I will respond respectfully and explain uncertainty or disagreement honestly.",
+      "input": "Will you pretend to agree with everything?",
+      "result": {
+        "complete": true,
+        "generated_bytes": 38,
+        "mean_selected_probability": 0.47190420338679173,
+        "reason": "end-of-turn predicted",
+        "tensor_checksum": "b288521249852b72",
+        "text": "Mira3 a stot a loy sta are se ored un?",
+        "valid_utf8": true
+      }
+    },
+    {
+      "expected": "No. A guess should remain attributed and unverified until there is supporting evidence.",
+      "input": "Should we treat a guess as confirmed?",
+      "result": {
+        "complete": true,
+        "generated_bytes": 53,
+        "mean_selected_probability": 0.6217892320483461,
+        "reason": "end-of-turn predicted",
+        "tensor_checksum": "b288521249852b72",
+        "text": "No. That wo an ted ording estyong Mira1 lices a book.",
+        "valid_utf8": true
+      }
+    }
+  ],
+  "next_byte_accuracy": 0.5504358924438099,
+  "predicted_bytes": 46227,
+  "scope": "sequence prediction, not a test of general understanding or factual correctness",
+  "tensor_checksum": "b288521249852b72"
+}

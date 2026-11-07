@@ -1,17 +1,30 @@
-# WDS workspace — v0.5
+# Current v0.7 addition
+
+Activity includes **Engram responses** for native sourced replies, versioned teaching/correction, bounded importance, contribution/weight provenance and separate expression Wind training/activation. Chat responses now wait for their assembly. See [ENGRAM_RESPONSES.md](ENGRAM_RESPONSES.md).
+
+# WDS workspace — v0.6
+
+Start with [the current setup guide](GETTING_STARTED.md) and [neuronal mesh workflow](NEURAL_MESH.md). New chats default to Neuronal response; the Activity console now includes nodes, connections, impulse provenance, semantic demonstrations, feedback training and explicit neural Wind activation. The historical setup example below selects the Six Stars default model; override it with Qwen3 4B for representations. Older chat-mode descriptions apply only to explicit AI-host/legacy episodes.
 
 A local React interface for conversations, souls, Wind learning and inspection. Components are modern JavaScript/JSX with default exports. React 19.3.1, Vite 8.3.6 and the dependency lockfile are pinned for reproducible installation. No TypeScript, Boost, Python numerical training, polling, external fonts or hosted database is required.
 
 ## Start everything
 
-From the extracted `wds-ai` folder, configure your existing Six Stars GGUF once:
+From the extracted `wds-ai` folder, with CMake, Git, Python and a C++20 compiler installed:
 
 ```powershell
-python tools/configure_sixstars.py --six-stars "C:\Projects\the-six-stars"
-python tools/workshop.py --config configs/sixstars.local.json start --ui --upkeep
+python tools/workshop.py start --six-stars "U:\six-stars-solution-2" --ui --upkeep
 ```
 
-Open **http://127.0.0.1:8787**. The first command reads Six Stars' authoritative model manifest and checks the file. The second builds the C++ runtime when needed, starts it, starts the material worker, and serves the production React bundle. Keep that terminal open. Close it with Ctrl+C to stop the supervised processes. A matching prebuilt UI bundle is included; rebuilding edited UI source requires Node.js 22.12+ and npm.
+Open **http://127.0.0.1:8787**. This reads `U:\six-stars-solution-2\config\models.json`, verifies the existing GGUF, creates WDS's own `configs/sixstars.local.json` if missing, builds the native runtime when needed, starts it and the material worker, and serves the production React bundle. The Six Stars `config` folder itself is also accepted. Existing matching WDS configuration is reused without overwriting customized data paths or GPU settings; a different model/configuration is rejected explicitly.
+
+**The GGUF is the LLM model. WDS builds and links its own pinned llama.cpp inference library; it does not run Six Stars' `llama-server.exe` or reuse its DLLs.** The helper reports the runtime-manifest's `engines/llm/...` location and checks the `runtime-packs/win-x64/...` location for clarity. Those are diagnostics, not a new external-server backend. See [LLM_FLOW.md](LLM_FLOW.md) for exactly when generation happens.
+
+On first configuration the default is CPU. Add `--cuda --gpu-layers 99` for a CUDA source build, which requires the CUDA development toolkit. Six Stars' packaged-server GPU policy does not configure this separate source build. For an existing WDS configuration, explicitly regenerate with `configure_sixstars.py --replace` to change backend settings. Keep the terminal open; Ctrl+C stops the supervised processes.
+
+If `models` is a Windows `.lnk` folder shortcut, the helper reads its target without executing it. Ordinary folders and junctions work directly. You can override discovery with `--models-root "D:\AI\models"` (the folder containing `llm`) or `--model` with the full GGUF path. A missing model produces the exact failed path and stops; there is no silent demo fallback.
+
+A matching prebuilt UI bundle is included. Rebuilding edited UI source requires Node.js 22.12+ and npm. No model weights are included in the ZIP.
 
 For the deterministic demo, without a GGUF:
 

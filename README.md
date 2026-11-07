@@ -1,14 +1,37 @@
-# wds.ai — Rooted Understanding
+# WDS AI v0.9.1
 
-**Project milestone 0.5.0.** A small C++20 implementation of the REA v0.2 hybrid loop for We Develop Software LLC.
+For the Windows language-training completion fix and checkpoint recovery, read [the v0.9.1 recovery guide](docs/RECOVERY-v0.9.1.md).
 
-Start the React workspace with `python tools/workshop.py --config configs/sixstars.local.json start --ui --upkeep`. See [the v0.5 interface guide](docs/INTERFACE.md) for setup, conversations, soul inspection, training and live activity. The source uses JavaScript/JSX, not TypeScript. [Release changes and upgrade notes](docs/RELEASE-v0.5.md).
+Start with [the v0.9 quickstart](docs/QUICKSTART-v0.9.md) for streamed local teacher assistance and experimental sequence learning. Read [the Qwen training boundary](docs/QWEN-LANGUAGE-TRAINING.md) before interpreting the student as general language understanding.
 
-**Seed → relationship root → attend → move → propose → heart → refine → checkpoint.**
+An event-driven C++20 neuronal mesh, native Wind training and React workspace for We Develop Software LLC.
 
-The foundation is a frozen llama.cpp GGUF model. External memory changes independently through bounded, source-linked RNA packets. Small Wind policies are separate aligned artifacts. The default build uses an explicitly labeled deterministic demo so the core works without downloading model weights.
+[Start speaking and training](docs/QUICKSTART-v0.9.md) · [Qwen training research](docs/QWEN-LANGUAGE-TRAINING.md) · [Runtime-pack setup](docs/RUNTIME_PACKS.md) · [Diagnostics and recovery](docs/DIAGNOSTICS.md) · [Release changes](docs/RELEASE-v0.9.md)
 
-Read [the complete talking and training setup guide](docs/GETTING_STARTED.md), including reuse of your Six Stars GGUF. Interactive text chat is included; microphone/TTS integration is not yet connected.
+```sh
+python tools/workshop.py --config configs/sixstars.local.json start --ui --trace --language-mode assisted
+```
+
+Open http://127.0.0.1:8787. The new English path uses learned sequence parameters, with optional, visibly attributed local Qwen generation when the student cannot supply a response. Both chat modes remain open across turns and partial failures. The included 64-unit student is experimental: it matched 0/240 held-out answers and should not be used as a general English model. Qwen teacher assistance currently supplies the useful conversation.
+
+Strict mode is the default and makes no teacher calls. Select assisted mode explicitly as above. The older phrase/grammar language path is available only in explicit legacy mode; it is not the new learner. Existing mesh location retrieval remains numerical/lexical. Internet acquisition remains bounded; `--offline` disables it while retaining local archives.
+
+Use [the Qwen3/Six Stars startup command](docs/GETTING_STARTED.md#3-use-your-qwen3-4b-gguf-and-six-stars-layout) to configure your model. The b9870 native-library adapter reuses Six Stars' llama/GGML/CUDA DLLs without compiling CUDA. It does not launch llama-server, extract facts by random weight lookup, skip transformer layers, or implement distributed multi-host inference.
+
+Arc stores both engram and astroengram records. IGFBP2 indexes locations; IGF2BP2 fetches payloads and prepares RNA; the coordinator owns durable writes. Bounded importance affects attention, and response traces link source versions to exact learned Wind readouts.
+
+Teaching feedback produces a compatible candidate Wind. Activation remains a separate operator command at an episode boundary. C++ owns math, attention and durable coordination; Python is thin process/WebSocket/HTTPS orchestration. The frontend is JavaScript/JSX.
+
+## Existing structured engram tools
+
+These v0.8 examples use the explicit `--language-mode legacy` compatibility workflow. Prefer the v0.9 quickstart for sequence learning and ordinary conversation.
+
+```sh
+python tools/engram.py --root demo demo
+python tools/engram.py --root demo ask "What is The Last Cat?"
+```
+
+Use **Activity → Engram responses** to teach/correct relationships, inspect contributions and label expression feedback. [The complete guide](docs/ENGRAM_RESPONSES.md) covers importance, Wind artifact attachments, training and explicit activation. The native renderer is intentionally limited: it realizes supplied relationships and quotes sources; it is not a general learned language generator.
 
 ## Start the Wind workshop
 
@@ -94,7 +117,7 @@ cmake --build build-llama --config Release -j 4
 
 This downloads pinned llama.cpp source, not a model. Supply a licensed decoder-only GGUF with a llama.cpp-supported chat template. Unknown templates and oversized contexts fail explicitly. Use separate data directories when switching foundations: resume checks the model content identity.
 
-For a local checkout, add `-DWDS_LLAMA_SOURCE=/path/to/llama.cpp`. The tested revision is `b1c902f026d32535b5e8eae55e5e47b379e57672`; APIs are pinned deliberately. CUDA: add `-DGGML_CUDA=ON` and choose `--gpu-layers 99`; Metal/Vulkan use the corresponding llama.cpp CMake options and installed SDKs. The compact REA attention/policy kernels currently run on CPU; alignment prepares them for a later backend without implying measured GPU acceleration.
+For a local checkout, add `-DWDS_LLAMA_SOURCE=/path/to/llama.cpp`. The tested revision is `b1c902f026d32535b5e8eae55e5e47b379e57672`; APIs are pinned deliberately. CUDA source builds: with CMake 3.24+ add `-DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=native` and choose `--gpu-layers 99`; Metal/Vulkan use the corresponding llama.cpp CMake options and installed SDKs. The compact REA attention/policy kernels currently run on CPU; alignment prepares them for a later backend without implying measured GPU acceleration.
 
 ## Teach from a URL
 
@@ -135,7 +158,9 @@ python tools/export_rna.py data/events.jsonl memory.rna
 | `include/wds/ai/` | Types, relationships, evaluation, mesh, heart and runtime contracts |
 | `src/core.cpp` | Roots, memory ingestion, attention, chain and episode coordinator |
 | `src/relationships.cpp` | Read-only heart snapshots and atomic declaration preparation |
-| `src/mesh.cpp` | Memory index adapter, voice dispatch and bounded deterministic voices |
+| `src/mesh.cpp` | IGFBP2 indexer, IGF2BP2 handler, voice dispatch and bounded voices |
+| `src/assembly.cpp` | Persistent response assembly, direct teaching, importance and learning provenance |
+| `src/expression.cpp` | Native sourced sentences and learned reply-plan readout |
 | `src/heart.cpp` | Evaluator registry, structural baseline and composite aggregation |
 | `src/winds.cpp` | Versioned package loader and movement kernel |
 | `src/intelligence.cpp` | Demo and frozen llama.cpp adapters |

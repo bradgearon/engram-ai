@@ -1,0 +1,731 @@
+Start testing: Nov 06 03:05 UTC
+----------------------------------------------------------
+1/18 Testing: core
+1/18 Test: core
+Command: "/workspace/scratch/599c77d0dd47/wds-ai/build-llama/wds-tests" "/workspace/scratch/599c77d0dd47/wds-ai/packages/breeze"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-llama
+"core" start time: Nov 06 03:05 UTC
+Output:
+----------------------------------------------------------
+core tests passed
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"core" end time: Nov 06 03:05 UTC
+"core" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/18 Testing: heart
+2/18 Test: heart
+Command: "/workspace/scratch/599c77d0dd47/wds-ai/build-llama/wds-heart-tests" "/workspace/scratch/599c77d0dd47/wds-ai/packages/breeze"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-llama
+"heart" start time: Nov 06 03:05 UTC
+Output:
+----------------------------------------------------------
+heart, declarations, budgets, isolation, disagreement and replay passed
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"heart" end time: Nov 06 03:05 UTC
+"heart" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/18 Testing: heart_websocket
+3/18 Test: heart_websocket
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3" "/workspace/scratch/599c77d0dd47/wds-ai/tests/heart_websocket_test.py" "/workspace/scratch/599c77d0dd47/wds-ai/build-llama/wds-ai" "/workspace/scratch/599c77d0dd47/wds-ai/packages/breeze"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-llama
+"heart_websocket" start time: Nov 06 03:05 UTC
+Output:
+----------------------------------------------------------
+declaration/restart/consultation WebSocket acceptance passed
+<end of output>
+Test time =   0.31 sec
+----------------------------------------------------------
+Test Passed.
+"heart_websocket" end time: Nov 06 03:05 UTC
+"heart_websocket" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/18 Testing: websocket
+4/18 Test: websocket
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3" "/workspace/scratch/599c77d0dd47/wds-ai/tests/websocket_test.py" "/workspace/scratch/599c77d0dd47/wds-ai/build-llama/wds-ai" "/workspace/scratch/599c77d0dd47/wds-ai/packages/breeze"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-llama
+"websocket" start time: Nov 06 03:05 UTC
+Output:
+----------------------------------------------------------
+{
+  "status": "memory_only",
+  "accepted": false,
+  "source": "teacher:fixture-teacher/1:trace:131607f0662f47a59660b1ddd5262f9a",
+  "reason": "Use workshop structured curricula and native wds-train for policy learning."
+}
+websocket, live memory, learning, URL guard and replay tests passed
+<end of output>
+Test time =   1.07 sec
+----------------------------------------------------------
+Test Passed.
+"websocket" end time: Nov 06 03:05 UTC
+"websocket" time elapsed: 00:00:01
+----------------------------------------------------------
+
+5/18 Testing: workshop_core
+5/18 Test: workshop_core
+Command: "/workspace/scratch/599c77d0dd47/wds-ai/build-llama/wds-workshop-tests" "/workspace/scratch/599c77d0dd47/wds-ai/packages/breeze"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-llama
+"workshop_core" start time: Nov 06 03:05 UTC
+Output:
+----------------------------------------------------------
+task actions, explicit activation, ABI and coroutine cancellation passed
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"workshop_core" end time: Nov 06 03:05 UTC
+"workshop_core" time elapsed: 00:00:00
+----------------------------------------------------------
+
+6/18 Testing: neural_training
+6/18 Test: neural_training
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3" "/workspace/scratch/599c77d0dd47/wds-ai/tests/neural_training_test.py" "/workspace/scratch/599c77d0dd47/wds-ai/build-llama/wds-train" "/workspace/scratch/599c77d0dd47/wds-ai/build-llama/wds-ai" "/workspace/scratch/599c77d0dd47/wds-ai/packages/breeze"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-llama
+"neural_training" start time: Nov 06 03:05 UTC
+Output:
+----------------------------------------------------------
+{"type": "neural.native", "event": {"abi": 1, "backends": ["ggml-sgd", "scalar-sgd"], "default_backend": "ggml-sgd"}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 1, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 1.452052410325584}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 2, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.9070504301977977}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 3, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.6380007399984865}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 4, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.4819019905107563}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 5, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.382186972112616}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 6, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.3140786231281109}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 7, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.2651543656349079}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 8, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.22859447427221655}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 9, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.20039268620993378}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 10, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.17806516171791303}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 11, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.16000247255835587}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 12, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.14512182951882202}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 13, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.1326715142725362}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 14, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.12211502604975008}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 15, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.1130603396530731}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 16, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.10521491919185506}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 17, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.09835643384904867}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 18, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.09231308072959982}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 19, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.08695031654398012}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 20, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.08216120744809545}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 21, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.07785984358504851}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 22, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.07397646140434248}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 23, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.0704538967448678}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 24, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.06724475204819995}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 25, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.06430956291467894}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 26, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.06161513478345965}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 27, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.05913335133791699}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 28, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.05684035143739896}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 29, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.054715618049393094}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 30, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.05274146631607864}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 31, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.05090261219692449}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 32, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.049231966847027527}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 33, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.04783307087157048}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 34, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.046540343730624906}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 35, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.04581338800679576}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 36, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.045113431333438876}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 37, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.04443004535894938}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 38, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.04383858895257515}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 39, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.043434225248908734}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 40, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.04303639257632498}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 41, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.04264496988303416}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 42, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.04225988268415307}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 43, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.04188108609416227}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 44, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.04150851037494219}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 45, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.04114213300954751}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 46, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.040781842840632306}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 47, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.040427584326688484}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 48, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.04007922737589049}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 49, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.039736707991096853}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 50, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03939989657938758}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 51, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03906866379397177}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 52, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03874289934106049}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 53, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03842251420609477}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 54, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.0381073481573822}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 55, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.037797291253570106}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 56, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03749224518972784}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 57, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03719207425934131}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 58, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.036896671486941104}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 59, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03660594404542028}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 60, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.036319769365566676}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 61, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.036038037956881604}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 62, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.035760645390207194}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 63, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03548749568606994}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 64, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03521849985966741}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 65, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03495354608639234}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 66, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.034692573750897085}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 67, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03443547893193023}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 68, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03418214703571717}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 69, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03393254821906799}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 70, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.033686542969914884}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 71, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03344408560191973}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 72, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03320509720307675}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 73, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.032969516381838794}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 74, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03273724743296228}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 75, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03250820778639854}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 76, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.032282374178703895}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 77, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03205964445672772}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 78, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.031839969755689555}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 79, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03162329034682671}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 80, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.031409518655711434}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 81, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.031198644448501414}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 82, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.030990541908291203}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 83, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.030785199253246926}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 84, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.030582546696151593}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 85, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.030382576623905224}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 86, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.03018520697041982}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 87, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.029990359864796565}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 88, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.02979801437869388}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 89, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.029608094727824625}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 90, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.02942059012049134}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 91, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.029235436643277782}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 92, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.02905259325099527}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 93, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.028872007695405433}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 94, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.028693660974275295}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 95, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.028517502960095007}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 96, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.028343465065612052}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 97, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.02817155840879362}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 98, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.02800169925466574}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 99, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.027833880669558927}}
+{"type": "neural.native", "event": {"backend": "ggml-sgd", "epoch": 100, "epochs": 100, "type": "training.progress", "validation_cross_entropy": 0.02766804359788915}}
+{"type": "neural.native", "event": {"activated": false, "backend": "ggml-sgd", "best_epoch": 100, "checksum": "1e362824be0bb047", "output": "/tmp/tmpwxcsezh9/candidates/neural-04034f0644daf021", "type": "training.finished", "validation_cross_entropy": 0.02766804359788915}}
+{"type": "neural.native", "event": {"accepted": 18, "accepted_correct": 18, "accuracy": 1.0, "activated": false, "classes": {"hold": {"accepted": 0, "correct": 0, "rows": 0}, "propagate": {"accepted": 9, "correct": 9, "rows": 9}, "recall": {"accepted": 5, "correct": 5, "rows": 5}, "request_knowledge": {"accepted": 0, "correct": 0, "rows": 0}, "rest": {"accepted": 4, "correct": 4, "rows": 4}, "review": {"accepted": 0, "correct": 0, "rows": 0}, "suggest": {"accepted": 0, "correct": 0, "rows": 0}}, "correct": 18, "coverage": 1.0, "feature_schema": "neural.features/1", "generated_tokens": 0, "knowledge_calls": 0, "rows": 18, "scope": "readout classification; expression source contract is checked separately at runtime"}}
+{"type": "neural.training_finished", "candidate": "candidates/neural-04034f0644daf021", "report": {"accepted": 18, "accepted_correct": 18, "accuracy": 1.0, "activated": false, "classes": {"hold": {"accepted": 0, "correct": 0, "rows": 0}, "propagate": {"accepted": 9, "correct": 9, "rows": 9}, "recall": {"accepted": 5, "correct": 5, "rows": 5}, "request_knowledge": {"accepted": 0, "correct": 0, "rows": 0}, "rest": {"accepted": 4, "correct": 4, "rows": 4}, "review": {"accepted": 0, "correct": 0, "rows": 0}, "suggest": {"accepted": 0, "correct": 0, "rows": 0}}, "correct": 18, "coverage": 1.0, "feature_schema": "neural.features/1", "generated_tokens": 0, "knowledge_calls": 0, "rows": 18, "scope": "readout classification; expression source contract is checked separately at runtime", "split_counts": {"train": 54, "validation": 18, "test": 18}, "candidate": "candidates/neural-04034f0644daf021", "activation": "explicit command only"}, "activated": false}
+{"type": "neural.native", "event": {"abi": 1, "backends": ["ggml-sgd", "scalar-sgd"], "default_backend": "ggml-sgd"}}
+{"type": "neural.native", "event": {"activated": false, "backend": "ggml-sgd", "best_epoch": 100, "checksum": "1e362824be0bb047", "output": "/tmp/tmpwxcsezh9/candidates/neural-04034f0644daf021", "type": "training.finished", "validation_cross_entropy": 0.02766804359788915}}
+{"type": "neural.training_finished", "candidate": "candidates/neural-04034f0644daf021", "report": {"accepted": 18, "accepted_correct": 18, "accuracy": 1.0, "activated": false, "classes": {"hold": {"accepted": 0, "correct": 0, "rows": 0}, "propagate": {"accepted": 9, "correct": 9, "rows": 9}, "recall": {"accepted": 5, "correct": 5, "rows": 5}, "request_knowledge": {"accepted": 0, "correct": 0, "rows": 0}, "rest": {"accepted": 4, "correct": 4, "rows": 4}, "review": {"accepted": 0, "correct": 0, "rows": 0}, "suggest": {"accepted": 0, "correct": 0, "rows": 0}}, "correct": 18, "coverage": 1.0, "feature_schema": "neural.features/1", "generated_tokens": 0, "knowledge_calls": 0, "rows": 18, "scope": "readout classification; expression source contract is checked separately at runtime", "split_counts": {"train": 54, "validation": 18, "test": 18}, "candidate": "candidates/neural-04034f0644daf021", "activation": "explicit command only"}, "activated": false}
+Native neural training, disjoint groups, held-out gate, unchanged ABI, explicit activation and fresh-unit inference passed.
+<end of output>
+Test time =   5.55 sec
+----------------------------------------------------------
+Test Passed.
+"neural_training" end time: Nov 06 03:05 UTC
+"neural_training" time elapsed: 00:00:05
+----------------------------------------------------------
+
+7/18 Testing: expression_workflow
+7/18 Test: expression_workflow
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3" "/workspace/scratch/599c77d0dd47/wds-ai/tests/expression_workflow_test.py" "/workspace/scratch/599c77d0dd47/wds-ai/build-llama/wds-train" "/workspace/scratch/599c77d0dd47/wds-ai/build-llama/wds-ai" "/workspace/scratch/599c77d0dd47/wds-ai/packages/breeze"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-llama
+"expression_workflow" start time: Nov 06 03:05 UTC
+Output:
+----------------------------------------------------------
+Native expression candidate ABI/gate, explicit boundary activation, CLI teaching/correction, Arc weights references and exactly-once restart delivery passed.
+<end of output>
+Test time =   3.48 sec
+----------------------------------------------------------
+Test Passed.
+"expression_workflow" end time: Nov 06 03:05 UTC
+"expression_workflow" time elapsed: 00:00:03
+----------------------------------------------------------
+
+8/18 Testing: native_trainer
+8/18 Test: native_trainer
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3" "/workspace/scratch/599c77d0dd47/wds-ai/tests/trainer_test.py" "/workspace/scratch/599c77d0dd47/wds-ai/build-llama/wds-train" "/workspace/scratch/599c77d0dd47/wds-ai/build-llama/wds-ai" "/workspace/scratch/599c77d0dd47/wds-ai/packages/breeze"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-llama
+"native_trainer" start time: Nov 06 03:05 UTC
+Output:
+----------------------------------------------------------
+Native training/resume, ABI, bounded inputs, candidate isolation, activation and replay passed.
+<end of output>
+Test time =   0.28 sec
+----------------------------------------------------------
+Test Passed.
+"native_trainer" end time: Nov 06 03:05 UTC
+"native_trainer" time elapsed: 00:00:00
+----------------------------------------------------------
+
+9/18 Testing: upkeep_core
+9/18 Test: upkeep_core
+Command: "/workspace/scratch/599c77d0dd47/wds-ai/build-llama/wds-upkeep-tests" "/workspace/scratch/599c77d0dd47/wds-ai/packages/breeze"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-llama
+"upkeep_core" start time: Nov 06 03:05 UTC
+Output:
+----------------------------------------------------------
+upkeep, cache, scope, expression, reflection, limits, reinforcement and restart passed
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"upkeep_core" end time: Nov 06 03:05 UTC
+"upkeep_core" time elapsed: 00:00:00
+----------------------------------------------------------
+
+10/18 Testing: workspace_core
+10/18 Test: workspace_core
+Command: "/workspace/scratch/599c77d0dd47/wds-ai/build-llama/wds-workspace-tests" "/workspace/scratch/599c77d0dd47/wds-ai/packages/breeze"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-llama
+"workspace_core" start time: Nov 06 03:05 UTC
+Output:
+----------------------------------------------------------
+workspace chat, idempotency, scopes, offline contributions, quiet gate, provenance and restart passed
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"workspace_core" end time: Nov 06 03:05 UTC
+"workspace_core" time elapsed: 00:00:00
+----------------------------------------------------------
+
+11/18 Testing: neural_mesh
+11/18 Test: neural_mesh
+Command: "/workspace/scratch/599c77d0dd47/wds-ai/build-llama/wds-neural-tests" "/workspace/scratch/599c77d0dd47/wds-ai/packages/breeze"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-llama
+"neural_mesh" start time: Nov 06 03:05 UTC
+Output:
+----------------------------------------------------------
+Local decisions, routed impulses, cycle suppression, scoped representation reuse, budget deferral, web provenance, feedback and restart passed.
+<end of output>
+Test time =   0.04 sec
+----------------------------------------------------------
+Test Passed.
+"neural_mesh" end time: Nov 06 03:05 UTC
+"neural_mesh" time elapsed: 00:00:00
+----------------------------------------------------------
+
+12/18 Testing: engram_assembly
+12/18 Test: engram_assembly
+Command: "/workspace/scratch/599c77d0dd47/wds-ai/build-llama/wds-assembly-tests" "/workspace/scratch/599c77d0dd47/wds-ai/packages/breeze"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-llama
+"engram_assembly" start time: Nov 06 03:05 UTC
+Output:
+----------------------------------------------------------
+Multi-neuron assembly, native replies, corrected knowledge, scope, source deduplication, conflicts, deadline, feedback and restart passed.
+<end of output>
+Test time =   0.06 sec
+----------------------------------------------------------
+Test Passed.
+"engram_assembly" end time: Nov 06 03:05 UTC
+"engram_assembly" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/18 Testing: neural_websocket
+13/18 Test: neural_websocket
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3" "/workspace/scratch/599c77d0dd47/wds-ai/tests/neural_websocket_test.py" "/workspace/scratch/599c77d0dd47/wds-ai/build-llama/wds-ai" "/workspace/scratch/599c77d0dd47/wds-ai/packages/breeze"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-llama
+"neural_websocket" start time: Nov 06 03:05 UTC
+Output:
+----------------------------------------------------------
+{"type": "mesh.web_result", "key": "web-43ce3eb255e3c0c2", "status": "completed"}
+{"type": "mesh.web_claim_rejected", "key": "web-43ce3eb255e3c0c2", "reason": "{'message': 'web request already claimed', 'request_id': '9acbed87ec6f4ba987fcb475491ce65c', 'schema': 1, 'type': 'error'}"}
+{"type": "mesh.web_result", "key": "web-87c7c0d9eec6970d", "status": "completed"}
+WebSocket mesh traversal, one-shot timer, web worker, provenance and no generation/activation passed.
+<end of output>
+Test time =   0.45 sec
+----------------------------------------------------------
+Test Passed.
+"neural_websocket" end time: Nov 06 03:05 UTC
+"neural_websocket" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/18 Testing: upkeep_websocket
+14/18 Test: upkeep_websocket
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3" "/workspace/scratch/599c77d0dd47/wds-ai/tests/upkeep_websocket_test.py" "/workspace/scratch/599c77d0dd47/wds-ai/build-llama/wds-ai" "/workspace/scratch/599c77d0dd47/wds-ai/packages/breeze"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-llama
+"upkeep_websocket" start time: Nov 06 03:05 UTC
+Output:
+----------------------------------------------------------
+{"type": "worker.material_result", "key": "material-2e7bfdd1fa4eb4ae", "status": "completed", "extraction_limited": false, "reason": ""}
+timer restart, quiet idle, expression, material worker and paused upkeep passed
+<end of output>
+Test time =   1.69 sec
+----------------------------------------------------------
+Test Passed.
+"upkeep_websocket" end time: Nov 06 03:05 UTC
+"upkeep_websocket" time elapsed: 00:00:01
+----------------------------------------------------------
+
+15/18 Testing: sixstars_setup
+15/18 Test: sixstars_setup
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3" "/workspace/scratch/599c77d0dd47/wds-ai/tests/setup_test.py"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-llama
+"sixstars_setup" start time: Nov 06 03:05 UTC
+Output:
+----------------------------------------------------------
+Six Stars supplied manifests, root/config paths, pack diagnostics, model relocation, shortcut target joining, safe reuse and one-command setup passed
+<end of output>
+Test time =   0.27 sec
+----------------------------------------------------------
+Test Passed.
+"sixstars_setup" end time: Nov 06 03:05 UTC
+"sixstars_setup" time elapsed: 00:00:00
+----------------------------------------------------------
+
+16/18 Testing: interface_websocket
+16/18 Test: interface_websocket
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3" "/workspace/scratch/599c77d0dd47/wds-ai/tests/interface_test.py" "/workspace/scratch/599c77d0dd47/wds-ai/build-llama/wds-ai" "/workspace/scratch/599c77d0dd47/wds-ai/packages/breeze"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-llama
+"interface_websocket" start time: Nov 06 03:05 UTC
+Output:
+----------------------------------------------------------
+same-origin relay, traversal rejection and browser-independent chat passed
+<end of output>
+Test time =   0.30 sec
+----------------------------------------------------------
+Test Passed.
+"interface_websocket" end time: Nov 06 03:05 UTC
+"interface_websocket" time elapsed: 00:00:00
+----------------------------------------------------------
+
+17/18 Testing: qwen_native_representation
+17/18 Test: qwen_native_representation
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3" "/workspace/scratch/599c77d0dd47/wds-ai/tests/qwen_fixture_test.py" "/workspace/scratch/599c77d0dd47/wds-ai/build-llama/wds-representation-tests" "/workspace/scratch/599c77d0dd47/llama-v02-source"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-llama
+"qwen_native_representation" start time: Nov 06 03:05 UTC
+Output:
+----------------------------------------------------------
+llama_model_loader: loaded meta data with 20 key-value pairs and 25 tensors from /tmp/tmpkrdj_eev/random-qwen.gguf (version GGUF V3 (latest))
+llama_model_loader: Dumping metadata keys/values. Note: KV overrides do not apply in this output.
+llama_model_loader: - kv   0:                       general.architecture str              = qwen3
+llama_model_loader: - kv   1:                               general.name str              = wds-qwen-api-fixture-random-no-knowledge
+llama_model_loader: - kv   2:                       qwen3.context_length u32              = 2048
+llama_model_loader: - kv   3:                     qwen3.embedding_length u32              = 32
+llama_model_loader: - kv   4:                          qwen3.block_count u32              = 2
+llama_model_loader: - kv   5:                  qwen3.feed_forward_length u32              = 64
+llama_model_loader: - kv   6:                 qwen3.attention.head_count u32              = 4
+llama_model_loader: - kv   7:              qwen3.attention.head_count_kv u32              = 2
+llama_model_loader: - kv   8:     qwen3.attention.layer_norm_rms_epsilon f32              = 0.000001
+llama_model_loader: - kv   9:                 qwen3.rope.dimension_count u32              = 8
+llama_model_loader: - kv  10:                       qwen3.rope.freq_base f32              = 1000000.000000
+llama_model_loader: - kv  11:                       tokenizer.ggml.model str              = llama
+llama_model_loader: - kv  12:                      tokenizer.ggml.tokens arr[str,259]     = ["<unk>", "<s>", "</s>", "<0x00>", "<...
+llama_model_loader: - kv  13:                      tokenizer.ggml.scores arr[f32,259]     = [0.000000, 0.000000, 0.000000, 0.0000...
+llama_model_loader: - kv  14:                  tokenizer.ggml.token_type arr[i32,259]     = [2, 3, 3, 6, 6, 6, 6, 6, 6, 6, 6, 6, ...
+llama_model_loader: - kv  15:            tokenizer.ggml.unknown_token_id u32              = 0
+llama_model_loader: - kv  16:                tokenizer.ggml.bos_token_id u32              = 1
+llama_model_loader: - kv  17:                tokenizer.ggml.eos_token_id u32              = 2
+llama_model_loader: - kv  18:               tokenizer.ggml.add_bos_token bool             = true
+llama_model_loader: - kv  19:                    tokenizer.chat_template str              = {% for message in messages %}{{ messa...
+llama_model_loader: - type  f32:   25 tensors
+print_info: file format = GGUF V3 (latest)
+print_info: file type   = (guessed) all F32
+print_info: file size   = 0.13 MiB (32.00 BPW) 
+init_tokenizer: initializing tokenizer for type 1
+load: 0 unused tokens
+load: control token:      1 '<s>' is not marked as EOG
+load: printing all EOG tokens:
+load:   - 2 ('</s>')
+load: special tokens cache size = 3
+load: token to piece cache size = 0.0003 MB
+print_info: arch                  = qwen3
+print_info: vocab_only            = 0
+print_info: no_alloc              = 0
+print_info: n_ctx_train           = 2048
+print_info: n_embd_inp            = 32
+print_info: n_embd                = 32
+print_info: n_embd_out            = 32
+print_info: n_layer               = 2
+print_info: n_layer_all           = 2
+print_info: n_head                = 4
+print_info: n_head_kv             = 2
+print_info: n_rot                 = 8
+print_info: n_swa                 = 0
+print_info: is_swa_any            = 0
+print_info: non_causal_type       = 0
+print_info: n_embd_head_k         = 8
+print_info: n_embd_head_v         = 8
+print_info: n_gqa                 = 2
+print_info: n_embd_k_gqa          = 16
+print_info: n_embd_v_gqa          = 16
+print_info: f_norm_eps            = 0.0e+00
+print_info: f_norm_rms_eps        = 1.0e-06
+print_info: f_clamp_kqv           = 0.0e+00
+print_info: f_max_alibi_bias      = 0.0e+00
+print_info: f_logit_scale         = 0.0e+00
+print_info: f_attn_scale          = 0.0e+00
+print_info: f_attn_value_scale    = 0.0000
+print_info: n_ff                  = 64
+print_info: n_expert              = 0
+print_info: n_expert_used         = 0
+print_info: n_expert_groups       = 0
+print_info: n_group_used          = 0
+print_info: causal attn           = 1
+print_info: pooling type          = -1
+print_info: rope type             = 2
+print_info: rope scaling          = linear
+print_info: freq_base_train       = 1000000.0
+print_info: freq_scale_train      = 1
+print_info: n_ctx_orig_yarn       = 2048
+print_info: rope_yarn_log_mul     = 0.0000
+print_info: rope_finetuned        = unknown
+print_info: model type            = ?B
+print_info: model params          = 35.20 K
+print_info: general.name          = wds-qwen-api-fixture-random-no-knowledge
+print_info: vocab type            = SPM
+print_info: n_vocab               = 259
+print_info: n_merges              = 0
+print_info: BOS token             = 1 '<s>'
+print_info: EOS token             = 2 '</s>'
+print_info: UNK token             = 0 '<unk>'
+print_info: LF token              = 13 '<0x0A>'
+print_info: EOG token             = 2 '</s>'
+print_info: max token length      = 6
+load_tensors: loading model tensors, this can take a while... (load_mode = mmap)
+load_tensors: layer   0 assigned to device CPU, is_swa = 0
+load_tensors: layer   1 assigned to device CPU, is_swa = 0
+load_tensors: layer   2 assigned to device CPU, is_swa = 0
+create_tensor: loading tensor token_embd.weight
+create_tensor: loading tensor output_norm.weight
+create_tensor: loading tensor output.weight
+create_tensor: loading tensor cls.output.weight
+create_tensor: loading tensor dense_2.weight
+create_tensor: loading tensor dense_2.bias
+create_tensor: loading tensor blk.0.attn_norm.weight
+create_tensor: loading tensor blk.0.attn_qkv.weight
+create_tensor: loading tensor blk.0.attn_q.weight
+create_tensor: loading tensor blk.0.attn_k.weight
+create_tensor: loading tensor blk.0.attn_v.weight
+create_tensor: loading tensor blk.0.attn_q.bias
+create_tensor: loading tensor blk.0.attn_k.bias
+create_tensor: loading tensor blk.0.attn_v.bias
+create_tensor: loading tensor blk.0.attn_output.weight
+create_tensor: loading tensor blk.0.attn_k_norm.weight
+create_tensor: loading tensor blk.0.attn_q_norm.weight
+create_tensor: loading tensor blk.0.ffn_norm.weight
+create_tensor: loading tensor blk.0.ffn_gate.weight
+create_tensor: loading tensor blk.0.ffn_down.weight
+create_tensor: loading tensor blk.0.ffn_up.weight
+create_tensor: loading tensor blk.1.attn_norm.weight
+create_tensor: loading tensor blk.1.attn_qkv.weight
+create_tensor: loading tensor blk.1.attn_q.weight
+create_tensor: loading tensor blk.1.attn_k.weight
+create_tensor: loading tensor blk.1.attn_v.weight
+create_tensor: loading tensor blk.1.attn_q.bias
+create_tensor: loading tensor blk.1.attn_k.bias
+create_tensor: loading tensor blk.1.attn_v.bias
+create_tensor: loading tensor blk.1.attn_output.weight
+create_tensor: loading tensor blk.1.attn_k_norm.weight
+create_tensor: loading tensor blk.1.attn_q_norm.weight
+create_tensor: loading tensor blk.1.ffn_norm.weight
+create_tensor: loading tensor blk.1.ffn_gate.weight
+create_tensor: loading tensor blk.1.ffn_down.weight
+create_tensor: loading tensor blk.1.ffn_up.weight
+create_tensor: loading tensor blk.0.attn_q.scale
+create_tensor: loading tensor blk.0.attn_k.scale
+create_tensor: loading tensor blk.0.attn_v.scale
+create_tensor: loading tensor blk.0.attn_output.scale
+create_tensor: loading tensor blk.0.ffn_gate.scale
+create_tensor: loading tensor blk.0.ffn_down.scale
+create_tensor: loading tensor blk.0.ffn_up.scale
+create_tensor: loading tensor blk.0.attn_q.input_scale
+create_tensor: loading tensor blk.0.attn_k.input_scale
+create_tensor: loading tensor blk.0.attn_v.input_scale
+create_tensor: loading tensor blk.0.attn_output.input_scale
+create_tensor: loading tensor blk.0.ffn_gate.input_scale
+create_tensor: loading tensor blk.0.ffn_down.input_scale
+create_tensor: loading tensor blk.0.ffn_up.input_scale
+create_tensor: loading tensor blk.1.attn_q.scale
+create_tensor: loading tensor blk.1.attn_k.scale
+create_tensor: loading tensor blk.1.attn_v.scale
+create_tensor: loading tensor blk.1.attn_output.scale
+create_tensor: loading tensor blk.1.ffn_gate.scale
+create_tensor: loading tensor blk.1.ffn_down.scale
+create_tensor: loading tensor blk.1.ffn_up.scale
+create_tensor: loading tensor blk.1.attn_q.input_scale
+create_tensor: loading tensor blk.1.attn_k.input_scale
+create_tensor: loading tensor blk.1.attn_v.input_scale
+create_tensor: loading tensor blk.1.attn_output.input_scale
+create_tensor: loading tensor blk.1.ffn_gate.input_scale
+create_tensor: loading tensor blk.1.ffn_down.input_scale
+create_tensor: loading tensor blk.1.ffn_up.input_scale
+done_getting_tensors: tensor 'token_embd.weight' (f32) (and 24 others) cannot be used with preferred buffer type CPU_REPACK, using CPU instead
+load_tensors:   CPU_Mapped model buffer size =     0.13 MiB
+................
+llama_init_from_model: model default pooling_type is [-1], but [3] was specified
+llama_context: constructing llama_context
+llama_context: n_seq_max             = 1
+llama_context: n_ctx                 = 2048
+llama_context: n_ctx_seq             = 2048
+llama_context: n_batch               = 2048
+llama_context: n_ubatch              = 512
+llama_context: causal_attn           = 1
+llama_context: flash_attn            = auto
+llama_context: kv_unified            = false
+llama_context: freq_base             = 1000000.0
+llama_context: freq_scale            = 1
+llama_context: n_rs_seq              = 0
+llama_context: n_outputs_max         = 2048
+llama_context: n_outputs_max_per_seq = 1
+set_abort_callback: call
+llama_context:        CPU  output buffer size =     0.00 MiB
+llama_kv_cache: layer   0: dev = CPU
+llama_kv_cache: layer   1: dev = CPU
+llama_kv_cache:        CPU KV buffer size =     0.25 MiB
+llama_kv_cache: size =    0.25 MiB (  2048 cells,   2 layers,  1/1 seqs), K (f16):    0.12 MiB, V (f16):    0.12 MiB
+llama_kv_cache: n_rot_k = 0, n_embd_head_k_all = 8
+llama_kv_cache: n_rot_v = 0, n_embd_head_k_all = 8
+llama_context: enumerating backends
+llama_context: backend_ptrs.size() = 1
+sched_reserve: reserving ...
+sched_reserve: max_nodes = 1024
+sched_reserve: reserving full memory module
+sched_reserve: worst-case: n_tokens = 512, n_seqs = 1, n_outputs = 1
+graph_reserve: reserving a graph for ubatch with n_tokens =    1, n_seqs =  1, n_outputs =    1
+llama_graph_n_input_tensors: input tensor '                attn_inp_kq_mask' [f16, ne = {  2048,     1,     1,     1 }] is used by node 'node_28' (FLASH_ATTN_EXT)
+llama_graph_n_input_tensors: input tensor '                attn_inp_kq_mask' [f16, ne = {  2048,     1,     1,     1 }] is used by node 'node_63' (FLASH_ATTN_EXT)
+llama_graph_n_input_tensors: input tensor '                             cls' [i32, ne = {     1,     1,     1,     1 }] is used by node 'result_embd_pooled' (GET_ROWS)
+llama_graph_n_input_tensors: input tensor '                 attn_inp_v_idxs' [i64, ne = {     1,     1,     1,     1 }] is used by node 'cache_v_l0 (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                 attn_inp_v_idxs' [i64, ne = {     1,     1,     1,     1 }] is used by node 'cache_v_l1 (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                 attn_inp_k_idxs' [i64, ne = {     1,     1,     1,     1 }] is used by node 'cache_k_l0 (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                 attn_inp_k_idxs' [i64, ne = {     1,     1,     1,     1 }] is used by node 'cache_k_l1 (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                         inp_pos' [i32, ne = {     1,     1,     1,     1 }] is used by node 'Qcur-0' (ROPE)
+llama_graph_n_input_tensors: input tensor '                         inp_pos' [i32, ne = {     1,     1,     1,     1 }] is used by node 'Kcur-0' (ROPE)
+llama_graph_n_input_tensors: input tensor '                         inp_pos' [i32, ne = {     1,     1,     1,     1 }] is used by node 'Qcur-1' (ROPE)
+llama_graph_n_input_tensors: input tensor '                         inp_pos' [i32, ne = {     1,     1,     1,     1 }] is used by node 'Kcur-1' (ROPE)
+llama_graph_n_input_tensors: input tensor '                 inp_mixed_slots' [i64, ne = {     1,     1,     1,     1 }] is used by node ' (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                  inp_mixed_embd' [f32, ne = {    32,     1,     1,     1 }] is used by node 'node_2' (DUP)
+llama_graph_n_input_tensors: input tensor '                inp_mixed_tokens' [i32, ne = {     1,     1,     1,     1 }] is used by node 'node_1' (GET_ROWS)
+llama_graph_n_input_tensors: input tensor '                         out_ids' [i32, ne = {     1,     1,     1,     1 }] is used by node 'node_66' (GET_ROWS)
+llama_graph_n_input_tensors: input tensor '                         out_ids' [i32, ne = {     1,     1,     1,     1 }] is used by node 'node_67' (GET_ROWS)
+llama_graph_n_input_tensors: input tensor '                      inp_tokens' [i32, ne = {     1,     1,     1,     1 }] is used by node 'embd' (GET_ROWS)
+resolve_fused_ops: Flash Attention enabled
+resolve_fused_ops: resolving fused DeepSeek V4 HC support:
+graph_reserve: reserving a graph for ubatch with n_tokens =    1, n_seqs =  1, n_outputs =    1
+llama_graph_n_input_tensors: input tensor '                attn_inp_kq_mask' [f16, ne = {  2048,     1,     1,     1 }] is used by node 'node_28' (FLASH_ATTN_EXT)
+llama_graph_n_input_tensors: input tensor '                attn_inp_kq_mask' [f16, ne = {  2048,     1,     1,     1 }] is used by node 'node_63' (FLASH_ATTN_EXT)
+llama_graph_n_input_tensors: input tensor '                             cls' [i32, ne = {     1,     1,     1,     1 }] is used by node 'result_embd_pooled' (GET_ROWS)
+llama_graph_n_input_tensors: input tensor '                 attn_inp_v_idxs' [i64, ne = {     1,     1,     1,     1 }] is used by node 'cache_v_l0 (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                 attn_inp_v_idxs' [i64, ne = {     1,     1,     1,     1 }] is used by node 'cache_v_l1 (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                 attn_inp_k_idxs' [i64, ne = {     1,     1,     1,     1 }] is used by node 'cache_k_l0 (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                 attn_inp_k_idxs' [i64, ne = {     1,     1,     1,     1 }] is used by node 'cache_k_l1 (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                         inp_pos' [i32, ne = {     1,     1,     1,     1 }] is used by node 'Qcur-0' (ROPE)
+llama_graph_n_input_tensors: input tensor '                         inp_pos' [i32, ne = {     1,     1,     1,     1 }] is used by node 'Kcur-0' (ROPE)
+llama_graph_n_input_tensors: input tensor '                         inp_pos' [i32, ne = {     1,     1,     1,     1 }] is used by node 'Qcur-1' (ROPE)
+llama_graph_n_input_tensors: input tensor '                         inp_pos' [i32, ne = {     1,     1,     1,     1 }] is used by node 'Kcur-1' (ROPE)
+llama_graph_n_input_tensors: input tensor '                 inp_mixed_slots' [i64, ne = {     1,     1,     1,     1 }] is used by node ' (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                  inp_mixed_embd' [f32, ne = {    32,     1,     1,     1 }] is used by node 'node_2' (DUP)
+llama_graph_n_input_tensors: input tensor '                inp_mixed_tokens' [i32, ne = {     1,     1,     1,     1 }] is used by node 'node_1' (GET_ROWS)
+llama_graph_n_input_tensors: input tensor '                         out_ids' [i32, ne = {     1,     1,     1,     1 }] is used by node 'node_66' (GET_ROWS)
+llama_graph_n_input_tensors: input tensor '                         out_ids' [i32, ne = {     1,     1,     1,     1 }] is used by node 'node_67' (GET_ROWS)
+llama_graph_n_input_tensors: input tensor '                      inp_tokens' [i32, ne = {     1,     1,     1,     1 }] is used by node 'embd' (GET_ROWS)
+resolve_fused_ops: fused DeepSeek V4 HC pre enabled
+graph_reserve: reserving a graph for ubatch with n_tokens =    1, n_seqs =  1, n_outputs =    1
+llama_graph_n_input_tensors: input tensor '                attn_inp_kq_mask' [f16, ne = {  2048,     1,     1,     1 }] is used by node 'node_28' (FLASH_ATTN_EXT)
+llama_graph_n_input_tensors: input tensor '                attn_inp_kq_mask' [f16, ne = {  2048,     1,     1,     1 }] is used by node 'node_63' (FLASH_ATTN_EXT)
+llama_graph_n_input_tensors: input tensor '                             cls' [i32, ne = {     1,     1,     1,     1 }] is used by node 'result_embd_pooled' (GET_ROWS)
+llama_graph_n_input_tensors: input tensor '                 attn_inp_v_idxs' [i64, ne = {     1,     1,     1,     1 }] is used by node 'cache_v_l0 (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                 attn_inp_v_idxs' [i64, ne = {     1,     1,     1,     1 }] is used by node 'cache_v_l1 (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                 attn_inp_k_idxs' [i64, ne = {     1,     1,     1,     1 }] is used by node 'cache_k_l0 (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                 attn_inp_k_idxs' [i64, ne = {     1,     1,     1,     1 }] is used by node 'cache_k_l1 (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                         inp_pos' [i32, ne = {     1,     1,     1,     1 }] is used by node 'Qcur-0' (ROPE)
+llama_graph_n_input_tensors: input tensor '                         inp_pos' [i32, ne = {     1,     1,     1,     1 }] is used by node 'Kcur-0' (ROPE)
+llama_graph_n_input_tensors: input tensor '                         inp_pos' [i32, ne = {     1,     1,     1,     1 }] is used by node 'Qcur-1' (ROPE)
+llama_graph_n_input_tensors: input tensor '                         inp_pos' [i32, ne = {     1,     1,     1,     1 }] is used by node 'Kcur-1' (ROPE)
+llama_graph_n_input_tensors: input tensor '                 inp_mixed_slots' [i64, ne = {     1,     1,     1,     1 }] is used by node ' (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                  inp_mixed_embd' [f32, ne = {    32,     1,     1,     1 }] is used by node 'node_2' (DUP)
+llama_graph_n_input_tensors: input tensor '                inp_mixed_tokens' [i32, ne = {     1,     1,     1,     1 }] is used by node 'node_1' (GET_ROWS)
+llama_graph_n_input_tensors: input tensor '                         out_ids' [i32, ne = {     1,     1,     1,     1 }] is used by node 'node_66' (GET_ROWS)
+llama_graph_n_input_tensors: input tensor '                         out_ids' [i32, ne = {     1,     1,     1,     1 }] is used by node 'node_67' (GET_ROWS)
+llama_graph_n_input_tensors: input tensor '                      inp_tokens' [i32, ne = {     1,     1,     1,     1 }] is used by node 'embd' (GET_ROWS)
+resolve_fused_ops: fused DeepSeek V4 HC comb enabled
+graph_reserve: reserving a graph for ubatch with n_tokens =    1, n_seqs =  1, n_outputs =    1
+llama_graph_n_input_tensors: input tensor '                attn_inp_kq_mask' [f16, ne = {  2048,     1,     1,     1 }] is used by node 'node_28' (FLASH_ATTN_EXT)
+llama_graph_n_input_tensors: input tensor '                attn_inp_kq_mask' [f16, ne = {  2048,     1,     1,     1 }] is used by node 'node_63' (FLASH_ATTN_EXT)
+llama_graph_n_input_tensors: input tensor '                             cls' [i32, ne = {     1,     1,     1,     1 }] is used by node 'result_embd_pooled' (GET_ROWS)
+llama_graph_n_input_tensors: input tensor '                 attn_inp_v_idxs' [i64, ne = {     1,     1,     1,     1 }] is used by node 'cache_v_l0 (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                 attn_inp_v_idxs' [i64, ne = {     1,     1,     1,     1 }] is used by node 'cache_v_l1 (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                 attn_inp_k_idxs' [i64, ne = {     1,     1,     1,     1 }] is used by node 'cache_k_l0 (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                 attn_inp_k_idxs' [i64, ne = {     1,     1,     1,     1 }] is used by node 'cache_k_l1 (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                         inp_pos' [i32, ne = {     1,     1,     1,     1 }] is used by node 'Qcur-0' (ROPE)
+llama_graph_n_input_tensors: input tensor '                         inp_pos' [i32, ne = {     1,     1,     1,     1 }] is used by node 'Kcur-0' (ROPE)
+llama_graph_n_input_tensors: input tensor '                         inp_pos' [i32, ne = {     1,     1,     1,     1 }] is used by node 'Qcur-1' (ROPE)
+llama_graph_n_input_tensors: input tensor '                         inp_pos' [i32, ne = {     1,     1,     1,     1 }] is used by node 'Kcur-1' (ROPE)
+llama_graph_n_input_tensors: input tensor '                 inp_mixed_slots' [i64, ne = {     1,     1,     1,     1 }] is used by node ' (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                  inp_mixed_embd' [f32, ne = {    32,     1,     1,     1 }] is used by node 'node_2' (DUP)
+llama_graph_n_input_tensors: input tensor '                inp_mixed_tokens' [i32, ne = {     1,     1,     1,     1 }] is used by node 'node_1' (GET_ROWS)
+llama_graph_n_input_tensors: input tensor '                         out_ids' [i32, ne = {     1,     1,     1,     1 }] is used by node 'node_66' (GET_ROWS)
+llama_graph_n_input_tensors: input tensor '                         out_ids' [i32, ne = {     1,     1,     1,     1 }] is used by node 'node_67' (GET_ROWS)
+llama_graph_n_input_tensors: input tensor '                      inp_tokens' [i32, ne = {     1,     1,     1,     1 }] is used by node 'embd' (GET_ROWS)
+resolve_fused_ops: fused DeepSeek V4 HC post enabled
+graph_reserve: reserving a graph for ubatch with n_tokens =  512, n_seqs =  1, n_outputs =  512
+llama_graph_n_input_tensors: input tensor '                attn_inp_kq_mask' [f16, ne = {  2048,   512,     1,     1 }] is used by node 'node_28' (FLASH_ATTN_EXT)
+llama_graph_n_input_tensors: input tensor '                attn_inp_kq_mask' [f16, ne = {  2048,   512,     1,     1 }] is used by node 'node_63' (FLASH_ATTN_EXT)
+llama_graph_n_input_tensors: input tensor '                             cls' [i32, ne = {     1,     1,     1,     1 }] is used by node 'result_embd_pooled' (GET_ROWS)
+llama_graph_n_input_tensors: input tensor '                 attn_inp_v_idxs' [i64, ne = {   512,     1,     1,     1 }] is used by node 'cache_v_l0 (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                 attn_inp_v_idxs' [i64, ne = {   512,     1,     1,     1 }] is used by node 'cache_v_l1 (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                 attn_inp_k_idxs' [i64, ne = {   512,     1,     1,     1 }] is used by node 'cache_k_l0 (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                 attn_inp_k_idxs' [i64, ne = {   512,     1,     1,     1 }] is used by node 'cache_k_l1 (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                         inp_pos' [i32, ne = {   512,     1,     1,     1 }] is used by node 'Qcur-0' (ROPE)
+llama_graph_n_input_tensors: input tensor '                         inp_pos' [i32, ne = {   512,     1,     1,     1 }] is used by node 'Kcur-0' (ROPE)
+llama_graph_n_input_tensors: input tensor '                         inp_pos' [i32, ne = {   512,     1,     1,     1 }] is used by node 'Qcur-1' (ROPE)
+llama_graph_n_input_tensors: input tensor '                         inp_pos' [i32, ne = {   512,     1,     1,     1 }] is used by node 'Kcur-1' (ROPE)
+llama_graph_n_input_tensors: input tensor '                 inp_mixed_slots' [i64, ne = {   512,     1,     1,     1 }] is used by node ' (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                  inp_mixed_embd' [f32, ne = {    32,   512,     1,     1 }] is used by node 'node_2' (DUP)
+llama_graph_n_input_tensors: input tensor '                inp_mixed_tokens' [i32, ne = {   512,     1,     1,     1 }] is used by node 'node_1' (GET_ROWS)
+llama_graph_n_input_tensors: input tensor '                         out_ids' [i32, ne = {   512,     1,     1,     1 }] is used by node 'node_66' (GET_ROWS)
+llama_graph_n_input_tensors: input tensor '                         out_ids' [i32, ne = {   512,     1,     1,     1 }] is used by node 'node_67' (GET_ROWS)
+llama_graph_n_input_tensors: input tensor '                      inp_tokens' [i32, ne = {   512,     1,     1,     1 }] is used by node 'embd' (GET_ROWS)
+graph_reserve: reserving a graph for ubatch with n_tokens =    1, n_seqs =  1, n_outputs =    1
+llama_graph_n_input_tensors: input tensor '                attn_inp_kq_mask' [f16, ne = {  2048,     1,     1,     1 }] is used by node 'node_28' (FLASH_ATTN_EXT)
+llama_graph_n_input_tensors: input tensor '                attn_inp_kq_mask' [f16, ne = {  2048,     1,     1,     1 }] is used by node 'node_63' (FLASH_ATTN_EXT)
+llama_graph_n_input_tensors: input tensor '                             cls' [i32, ne = {     1,     1,     1,     1 }] is used by node 'result_embd_pooled' (GET_ROWS)
+llama_graph_n_input_tensors: input tensor '                 attn_inp_v_idxs' [i64, ne = {     1,     1,     1,     1 }] is used by node 'cache_v_l0 (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                 attn_inp_v_idxs' [i64, ne = {     1,     1,     1,     1 }] is used by node 'cache_v_l1 (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                 attn_inp_k_idxs' [i64, ne = {     1,     1,     1,     1 }] is used by node 'cache_k_l0 (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                 attn_inp_k_idxs' [i64, ne = {     1,     1,     1,     1 }] is used by node 'cache_k_l1 (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                         inp_pos' [i32, ne = {     1,     1,     1,     1 }] is used by node 'Qcur-0' (ROPE)
+llama_graph_n_input_tensors: input tensor '                         inp_pos' [i32, ne = {     1,     1,     1,     1 }] is used by node 'Kcur-0' (ROPE)
+llama_graph_n_input_tensors: input tensor '                         inp_pos' [i32, ne = {     1,     1,     1,     1 }] is used by node 'Qcur-1' (ROPE)
+llama_graph_n_input_tensors: input tensor '                         inp_pos' [i32, ne = {     1,     1,     1,     1 }] is used by node 'Kcur-1' (ROPE)
+llama_graph_n_input_tensors: input tensor '                 inp_mixed_slots' [i64, ne = {     1,     1,     1,     1 }] is used by node ' (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                  inp_mixed_embd' [f32, ne = {    32,     1,     1,     1 }] is used by node 'node_2' (DUP)
+llama_graph_n_input_tensors: input tensor '                inp_mixed_tokens' [i32, ne = {     1,     1,     1,     1 }] is used by node 'node_1' (GET_ROWS)
+llama_graph_n_input_tensors: input tensor '                         out_ids' [i32, ne = {     1,     1,     1,     1 }] is used by node 'node_66' (GET_ROWS)
+llama_graph_n_input_tensors: input tensor '                         out_ids' [i32, ne = {     1,     1,     1,     1 }] is used by node 'node_67' (GET_ROWS)
+llama_graph_n_input_tensors: input tensor '                      inp_tokens' [i32, ne = {     1,     1,     1,     1 }] is used by node 'embd' (GET_ROWS)
+graph_reserve: reserving a graph for ubatch with n_tokens =  512, n_seqs =  1, n_outputs =  512
+llama_graph_n_input_tensors: input tensor '                attn_inp_kq_mask' [f16, ne = {  2048,   512,     1,     1 }] is used by node 'node_28' (FLASH_ATTN_EXT)
+llama_graph_n_input_tensors: input tensor '                attn_inp_kq_mask' [f16, ne = {  2048,   512,     1,     1 }] is used by node 'node_63' (FLASH_ATTN_EXT)
+llama_graph_n_input_tensors: input tensor '                             cls' [i32, ne = {     1,     1,     1,     1 }] is used by node 'result_embd_pooled' (GET_ROWS)
+llama_graph_n_input_tensors: input tensor '                 attn_inp_v_idxs' [i64, ne = {   512,     1,     1,     1 }] is used by node 'cache_v_l0 (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                 attn_inp_v_idxs' [i64, ne = {   512,     1,     1,     1 }] is used by node 'cache_v_l1 (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                 attn_inp_k_idxs' [i64, ne = {   512,     1,     1,     1 }] is used by node 'cache_k_l0 (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                 attn_inp_k_idxs' [i64, ne = {   512,     1,     1,     1 }] is used by node 'cache_k_l1 (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                         inp_pos' [i32, ne = {   512,     1,     1,     1 }] is used by node 'Qcur-0' (ROPE)
+llama_graph_n_input_tensors: input tensor '                         inp_pos' [i32, ne = {   512,     1,     1,     1 }] is used by node 'Kcur-0' (ROPE)
+llama_graph_n_input_tensors: input tensor '                         inp_pos' [i32, ne = {   512,     1,     1,     1 }] is used by node 'Qcur-1' (ROPE)
+llama_graph_n_input_tensors: input tensor '                         inp_pos' [i32, ne = {   512,     1,     1,     1 }] is used by node 'Kcur-1' (ROPE)
+llama_graph_n_input_tensors: input tensor '                 inp_mixed_slots' [i64, ne = {   512,     1,     1,     1 }] is used by node ' (view)' (SET_ROWS)
+llama_graph_n_input_tensors: input tensor '                  inp_mixed_embd' [f32, ne = {    32,   512,     1,     1 }] is used by node 'node_2' (DUP)
+llama_graph_n_input_tensors: input tensor '                inp_mixed_tokens' [i32, ne = {   512,     1,     1,     1 }] is used by node 'node_1' (GET_ROWS)
+llama_graph_n_input_tensors: input tensor '                         out_ids' [i32, ne = {   512,     1,     1,     1 }] is used by node 'node_66' (GET_ROWS)
+llama_graph_n_input_tensors: input tensor '                         out_ids' [i32, ne = {   512,     1,     1,     1 }] is used by node 'node_67' (GET_ROWS)
+llama_graph_n_input_tensors: input tensor '                      inp_tokens' [i32, ne = {   512,     1,     1,     1 }] is used by node 'embd' (GET_ROWS)
+sched_reserve:        CPU compute buffer size =     2.58 MiB
+sched_reserve: graph: nodes = 79, splits = 1, input objects = 5, input tensors = 10
+sched_reserve: reserve took 12.07 ms, sched copies = 1
+init: embeddings required but some input tokens were not marked as outputs -> overriding
+init: embeddings required but some input tokens were not marked as outputs -> overriding
+~llama_context:        CPU compute buffer size is   2.5821 MiB, matches expectation of   2.5821 MiB
+Native Qwen graph, pooled hidden state, scoped cache, context reset and explicit token-limit rejection passed. No sampled tokens.
+<end of output>
+Test time =   0.63 sec
+----------------------------------------------------------
+Test Passed.
+"qwen_native_representation" end time: Nov 06 03:05 UTC
+"qwen_native_representation" time elapsed: 00:00:00
+----------------------------------------------------------
+
+18/18 Testing: gemma4_template
+18/18 Test: gemma4_template
+Command: "/workspace/scratch/599c77d0dd47/wds-ai/build-llama/wds-prompt-tests" "/workspace/scratch/599c77d0dd47/llama-v02-source/models/templates/google-gemma-4-31B-it.jinja"
+Directory: /workspace/scratch/599c77d0dd47/wds-ai/build-llama
+"gemma4_template" start time: Nov 06 03:05 UTC
+Output:
+----------------------------------------------------------
+native Gemma 4 Jinja rendering, thinking off and token-input markers passed
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"gemma4_template" end time: Nov 06 03:05 UTC
+"gemma4_template" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Nov 06 03:05 UTC

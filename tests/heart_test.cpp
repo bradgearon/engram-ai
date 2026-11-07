@@ -201,7 +201,7 @@ int main(int argc, char **argv) {
             engine.command(
                 d, [&](const json &e) { require(e == first_ack, "original retry changed after updates"); });
             auto cmd = json{{"schema", 1},
-                            {"type", "seed"},
+                            {"type", "seed"}, {"mode", "foundation_once"},
                             {"request_id", "episode1"},
                             {"root_id", "composer"},
                             {"text", "music composition"},
@@ -289,7 +289,7 @@ int main(int argc, char **argv) {
             require(store.sequence() == before, "restart retry mutated interest");
             foundation.text = "Music composition creates a coherent melodic phrase.";
             auto id = engine.command({{"schema", 1},
-                                      {"type", "seed"},
+                                      {"type", "seed"}, {"mode", "foundation_once"},
                                       {"request_id", "after-restart"},
                                       {"root_id", "composer"},
                                       {"text", "music composition"},

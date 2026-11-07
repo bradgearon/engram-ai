@@ -1,0 +1,45 @@
+Test project /workspace/scratch/599c77d0dd47/wds-ai/build-pack
+      Start 15: sixstars_setup
+      Start  6: neural_training
+      Start  7: expression_workflow
+      Start 14: upkeep_websocket
+ 1/20 Test #15: sixstars_setup ...................   Passed    0.16 sec
+      Start  4: websocket
+ 2/20 Test  #4: websocket ........................   Passed    1.03 sec
+      Start 20: diagnostics
+ 3/20 Test #14: upkeep_websocket .................   Passed    1.63 sec
+      Start 13: neural_websocket
+ 4/20 Test #20: diagnostics ......................   Passed    0.71 sec
+      Start 19: chat_recovery
+ 5/20 Test #13: neural_websocket .................   Passed    0.41 sec
+      Start  8: native_trainer
+ 6/20 Test #19: chat_recovery ....................   Passed    0.29 sec
+      Start 12: engram_assembly
+ 7/20 Test  #8: native_trainer ...................   Passed    0.28 sec
+      Start  3: heart_websocket
+ 8/20 Test #12: engram_assembly ..................   Passed    0.32 sec
+      Start 11: neural_mesh
+ 9/20 Test  #3: heart_websocket ..................   Passed    0.25 sec
+      Start 16: interface_websocket
+10/20 Test #16: interface_websocket ..............   Passed    0.21 sec
+      Start 18: runtime_pack_abi
+11/20 Test #11: neural_mesh ......................   Passed    0.29 sec
+      Start  9: upkeep_core
+12/20 Test  #7: expression_workflow ..............   Passed    2.93 sec
+      Start 10: workspace_core
+13/20 Test #18: runtime_pack_abi .................   Passed    0.18 sec
+      Start  2: heart
+14/20 Test  #9: upkeep_core ......................   Passed    0.20 sec
+      Start  1: core
+15/20 Test  #1: core .............................   Passed    0.04 sec
+      Start  5: workshop_core
+16/20 Test #10: workspace_core ...................   Passed    0.13 sec
+      Start 17: gemma4_template
+17/20 Test  #2: heart ............................   Passed    0.12 sec
+18/20 Test  #5: workshop_core ....................   Passed    0.02 sec
+19/20 Test #17: gemma4_template ..................   Passed    0.02 sec
+20/20 Test  #6: neural_training ..................   Passed    5.44 sec
+
+100% tests passed out of 20
+
+Total Test time (real) =   5.44 sec

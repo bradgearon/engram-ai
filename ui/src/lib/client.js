@@ -1,3 +1,4 @@
+import trace from "./diagnostics.js";
 export default class RuntimeClient {
   constructor(path, onEvent, onStatus) {
     this.path = path;
@@ -7,11 +8,12 @@ export default class RuntimeClient {
   }
   connect() {
     this.close();
+    trace("websocket.connecting", { path: this.path });
     this.onStatus("connecting");
     this.socket = new WebSocket(
       `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}${this.path}`,
     );
-    this.socket.onopen = () => this.onStatus("connected");
+    this.socket.onopen = () => { trace("websocket.connected", { path: this.path }); this.onStatus("connected"); };
     this.socket.onmessage = ({ data }) => {
       let event;
       try {
@@ -19,9 +21,11 @@ export default class RuntimeClient {
         if (!event || typeof event.type !== "string")
           throw Error("Malformed runtime event");
       } catch (error) {
+        trace("websocket.malformed", { path: this.path, data, error }, true);
         this.onEvent({ type: "error", message: error.message });
         return;
       }
+      trace("websocket.event", { path: this.path, type: event.type, request_id: event.request_id || event.trace_id, instance_id: event.instance_id, seq: event.seq, ...(event.type === "error" ? { message: event.message } : {}) }, event.type === "error");
       const id = event.trace_id || event.request_id,
         request = this.pending.get(id);
       if (
@@ -36,7 +40,8 @@ export default class RuntimeClient {
       }
       this.onEvent(event);
     };
-    this.socket.onclose = () => {
+    this.socket.onclose = (event) => {
+      trace("websocket.closed", { path: this.path, code: event.code, reason: event.reason }, true);
       this.onStatus("disconnected");
       this.rejectPending(
         "Connection interrupted. Accepted work stays in the journal; reconnect to recover it.",
@@ -57,6 +62,7 @@ export default class RuntimeClient {
     const request_id = crypto.randomUUID();
     return new Promise((resolve, reject) => {
       const timer = setTimeout(() => {
+        trace("websocket.timeout", { path: this.path, request_id, type, expected }, true);
         this.pending.delete(request_id);
         reject(
           Error(
@@ -65,6 +71,7 @@ export default class RuntimeClient {
         );
       }, 20000);
       this.pending.set(request_id, { resolve, reject, timer, expected });
+      trace("websocket.request", { path: this.path, schema: 1, type, request_id, ...values });
       this.socket.send(
         JSON.stringify({ schema: 1, type, request_id, ...values }),
       );
@@ -73,6 +80,7 @@ export default class RuntimeClient {
   send(message) {
     if (this.socket?.readyState !== WebSocket.OPEN)
       throw Error("Workshop is disconnected");
+    trace("websocket.send", { path: this.path, message });
     this.socket.send(JSON.stringify(message));
   }
   close() {

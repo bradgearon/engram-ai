@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "type": "mesh.node.register",
+  "request_id": "create-demo-knowledge-node-v06",
+  "root_id": "mesh-demo",
+  "node_id": "knowledge",
+  "purpose": "Decide whether to rest, carry a correction, or request more evidence",
+  "expected_version": 0,
+  "examples": [
+    {
+      "text": "Leave this thought quiet for now.",
+      "action": "rest"
+    },
+    {
+      "text": "Carry this correction to the connected understanding.",
+      "action": "propagate"
+    },
+    {
+      "text": "Find evidence before deciding.",
+      "action": "request_knowledge"
+    }
+  ]
+}

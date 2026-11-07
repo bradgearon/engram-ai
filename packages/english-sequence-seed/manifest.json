@@ -1,0 +1,102 @@
+{
+  "action_domain": "language",
+  "action_schema": "language.bytes/1",
+  "alignment": 64,
+  "checksum_fnv1a64": "0b4c20196b781565",
+  "dtype": "f32-le",
+  "evaluator_version": "structural-rules/1",
+  "evidence": {},
+  "feature_schema": "language.sequence/1",
+  "foundation_contract": "native recurrent next-byte student; Qwen teacher separate",
+  "id": "wds.ai.winds.english.5e82d265205ed780",
+  "maturity": "seeded",
+  "policy_version": 2,
+  "promotion": "experimental candidate; perplexity is not a general-understanding gate",
+  "schema": 1,
+  "sequence": {
+    "alignment": 64,
+    "architecture": "embedding+tanh-recurrence+softmax/1",
+    "checksum_fnv1a64": "b288521249852b72",
+    "experimental": true,
+    "file": "language.tensor",
+    "hidden": 64,
+    "inference_backend": "native-cpu",
+    "vocabulary": 256,
+    "tensors": [
+      {
+        "name": "embedding",
+        "shape": [
+          256,
+          64
+        ],
+        "offset_bytes": 64,
+        "dtype": "f32-le"
+      },
+      {
+        "name": "output",
+        "shape": [
+          256,
+          64
+        ],
+        "offset_bytes": 65600,
+        "dtype": "f32-le"
+      },
+      {
+        "name": "recurrent",
+        "shape": [
+          64,
+          64
+        ],
+        "offset_bytes": 131136,
+        "dtype": "f32-le"
+      },
+      {
+        "name": "hidden_bias",
+        "shape": [
+          64
+        ],
+        "offset_bytes": 147520,
+        "dtype": "f32-le"
+      },
+      {
+        "name": "output_bias",
+        "shape": [
+          256
+        ],
+        "offset_bytes": 147776,
+        "dtype": "f32-le"
+      }
+    ]
+  },
+  "shape": [
+    16,
+    16
+  ],
+  "state_dim": 16,
+  "state_schema": 1,
+  "training": {
+    "activation": "explicit operator only",
+    "backend": "native-cpp-tbptt-sgd",
+    "best_epoch": 4,
+    "curriculum_checksum": "916567e46527b580",
+    "fingerprint": "5e82d265205ed780",
+    "initial_validation": {
+      "bits_per_byte": 8.000285695112824,
+      "cross_entropy": 5.545375473241516,
+      "next_byte_accuracy": 0.00855482269966695,
+      "predicted_bytes": 45939,
+      "scope": "sequence prediction, not a test of general understanding or factual correctness"
+    },
+    "objective": "next-byte cross entropy",
+    "tbptt_steps": 32,
+    "validation": {
+      "bits_per_byte": 2.757615549202808,
+      "cross_entropy": 1.9114334429981916,
+      "next_byte_accuracy": 0.5571954113062975,
+      "predicted_bytes": 45939,
+      "scope": "sequence prediction, not a test of general understanding or factual correctness"
+    }
+  },
+  "training_version": 1,
+  "update_rule": "z_next=clip(z+0.25*tanh(W*(z+pooled[:16])+bias+W[:,15]*feedback),-1,1)"
+}

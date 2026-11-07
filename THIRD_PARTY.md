@@ -17,3 +17,9 @@ Project-specific code is authored for We Develop Software LLC. No third-party li
 Standalone Asio uses the Boost Software License; it does not require or link the Boost libraries. The runtime uses C++20 coroutines and standard-library executors. No Python ML framework is included.
 
 The optional v0.4 model adapter also builds the pinned llama.cpp native Jinja engine (`common/jinja`), its Unicode helpers and JSON wrapper. These source files are obtained from the same optional llama.cpp checkout under its MIT license; the project does not vendor a second Python template engine or the full common HTTP/CLI stack. The pin and build target are in CMakeLists.txt.
+
+## v0.7.1 runtime-pack adapter
+
+`third_party/llama-b9870/` contains the exact public C headers and MIT license from llama.cpp **b9870**, commit `2d973636e292ee6f75fadcf08d29cb33511f509f` (GGML 0.15.3). Only declarations are compiled into WDS; the operator supplies the native shared libraries. The pack must remain a complete matching release. See its `PROVENANCE.json`.
+
+`third_party/llama-template/` vendors the native Jinja/Unicode/JSON helper subset from the existing source pin `b1c902f026d32535b5e8eae55e5e47b379e57672`, with its MIT license. The JSON wrapper assertion is adapted to throw a C++ exception, avoiding a dependency on a second compiled GGML library. `tests/fixtures/templates/google-gemma-4-31B-it.jinja` comes from that same pin's `models/templates/` directory and is used only for template regression. No model weights, CUDA binaries or upstream HTTP server are redistributed.

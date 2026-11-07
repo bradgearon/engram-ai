@@ -1941,3 +1941,26 @@ button svg {
     min-height: 62px;
   }
 }
+
+/* Neuronal activity shares the workspace's quiet, high-contrast controls. */
+.mesh-panel { margin-bottom: 24px; }
+.mesh-heading, .mesh-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.mesh-heading { justify-content: space-between; }
+.mesh-heading h2 { display: flex; align-items: center; gap: 9px; }
+.mesh-actions { margin: 14px 0; }
+.mesh-actions label { min-width: 220px; flex: 1; }
+.mesh-map { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 20px 0; }
+.mesh-node { border: 1px solid var(--line, #deded5); border-radius: 10px; padding: 16px; min-width: 0; }
+.mesh-node.working { border-color: var(--accent, #69794b); background: #f3f6ee; }
+.mesh-node p { margin: 10px 0; }
+.mesh-node small, .mesh-history-row small { color: var(--muted, #77776e); }
+.mesh-route-list { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; font-size: 12px; }
+.mesh-route-list span { display: inline-flex; align-items: center; gap: 4px; }
+.mesh-signal { display: grid; grid-template-columns: minmax(120px, 1fr) minmax(180px, 3fr) auto; align-items: end; gap: 12px; margin: 20px 0; }
+.mesh-signal label { margin: 0; }
+.mesh-history { border-top: 1px solid var(--line, #deded5); }
+.mesh-history-row { width: 100%; display: grid; grid-template-columns: 100px 130px 1fr 70px; gap: 12px; text-align: left; padding: 12px 4px; background: none; border: 0; border-bottom: 1px solid var(--line, #deded5); font-size: 12px; }
+.mesh-history-row:hover { background: #f4f4ee; }
+.mesh-history-row span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.json-view { max-height: 300px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 11px; background: #f4f4ee; padding: 12px; border-radius: 8px; }
+@media (max-width: 760px) { .mesh-signal { grid-template-columns: 1fr; } .mesh-history-row { grid-template-columns: 80px 1fr 50px; } .mesh-history-row span:nth-of-type(2) { display: none; } }

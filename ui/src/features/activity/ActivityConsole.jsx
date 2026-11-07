@@ -11,6 +11,9 @@ import {
 import { useWorkspace } from "../../state/Workspace.jsx";
 import { stamp, label } from "../../lib/format.js";
 import Modal from "../../components/Modal.jsx";
+import MeshPanel from "./MeshPanel.jsx";
+import AssemblyPanel from "./AssemblyPanel.jsx";
+import KnowledgePanel from "./KnowledgePanel.jsx";
 
 export default function ActivityConsole({ root, chat }) {
   const w = useWorkspace(),
@@ -42,6 +45,9 @@ export default function ActivityConsole({ root, chat }) {
           Budget controls
         </button>
       </div>
+      <KnowledgePanel root={root} />
+      <MeshPanel root={root} />
+      <AssemblyPanel root={root} />
       <div className="stats-strip">
         <div>
           <span>Queued signals</span>

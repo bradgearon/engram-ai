@@ -13,7 +13,7 @@ async def recv_type(ws,kind):
 async def main():
  with tempfile.TemporaryDirectory() as tmp:
   with socket.socket() as sock:sock.bind(('127.0.0.1',0));port=sock.getsockname()[1]
-  process=await asyncio.create_subprocess_exec(sys.argv[1],'--data',tmp+'/data','--package',sys.argv[2],'--port',str(port),stdout=asyncio.subprocess.PIPE,stderr=asyncio.subprocess.PIPE)
+  process=await asyncio.create_subprocess_exec(sys.argv[1],'--language-mode','legacy','--data',tmp+'/data','--package',sys.argv[2],'--port',str(port),stdout=asyncio.subprocess.PIPE,stderr=asyncio.subprocess.PIPE)
   try:
    ready=await asyncio.wait_for(process.stdout.readline(),15);assert b'READY' in ready,ready
    endpoint=f'ws://127.0.0.1:{port}'
@@ -24,7 +24,7 @@ async def main():
     await ws.send(json.dumps({'schema':1,'type':'memory.upsert','request_id':'p1','packet':packet}));await recv_type(ws,'memory.accepted')
     await ws.send(json.dumps({'schema':1,'type':'memory.upsert','request_id':'dupe','packet':packet}));assert 'duplicate' in (await recv_type(ws,'error'))['message']
     await ws.send(json.dumps({'schema':1,'type':'seed','request_id':'seed1','root_id':'garden','text':'Describe the silver cat.','max_steps':2}))
-    final=await recv_type(ws,'episode.finished');assert 'Lumen of garden' in final['data']['artifact'];assert 'violet violin' in final['data']['artifact'];assert final['data']['status']=='completed'
+    final=await recv_type(ws,'episode.finished');assert 'Lumen of garden' not in final['data']['artifact'];assert 'violet violin' in final['data']['artifact'];assert final['data']['status']=='completed'
     packet.update(packet_id='p2',expected_version=1,text='The silver cat now plays a green flute.')
     await ws.send(json.dumps({'schema':1,'type':'memory.upsert','request_id':'p2','packet':packet}));assert (await recv_type(ws,'memory.accepted'))['data']['version']==2
     await ws.send(json.dumps({'schema':1,'type':'seed','request_id':'seed2','root_id':'garden','text':'Describe the silver cat.','max_steps':1}))
@@ -59,7 +59,7 @@ async def main():
   assert (pathlib.Path(tmp+'/memory.rna').stat().st_size-64)%256==0
 
   # Exact restart/replay; no idle resumption or polling.
-  process=await asyncio.create_subprocess_exec(sys.argv[1],'--data',tmp+'/data','--package',sys.argv[2],'--port',str(port),stdout=asyncio.subprocess.PIPE,stderr=asyncio.subprocess.PIPE)
+  process=await asyncio.create_subprocess_exec(sys.argv[1],'--language-mode','legacy','--data',tmp+'/data','--package',sys.argv[2],'--port',str(port),stdout=asyncio.subprocess.PIPE,stderr=asyncio.subprocess.PIPE)
   assert b'READY' in await asyncio.wait_for(process.stdout.readline(),15)
   process.terminate();await asyncio.wait_for(process.wait(),20)
   if sys.platform!='win32':assert process.returncode==0

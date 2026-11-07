@@ -109,6 +109,31 @@ std::string binary(const winds::Policy &p) {
 }
 int main(int argc,char **argv) {
     try {
+        if(argc==3 && std::string(argv[1])=="--language-job") return language::train(read(argv[2]));
+        if(argc==3 && std::string(argv[1])=="--language-evaluate") {std::cout<<language::evaluate(read(argv[2]))<<'\n';return 0;}
+        if(argc==3 && std::string(argv[1])=="--evaluate") {
+            const auto job=read(argv[2]);winds::Package package(field(job,"package",2048));
+            const bool language_package=package.manifest.value("feature_schema",std::string{})==cognition::language_schema;
+            const bool expression_package=package.manifest.value("feature_schema",std::string{})==expression::feature_schema;
+            require(language_package || expression_package || package.manifest.value("feature_schema",std::string{})==neural::feature_schema,"evaluation requires a neural or expression readout package");
+            const auto data=rows(job.at("rows"));size_t correct=0,accepted=0,accepted_correct=0;
+            const auto names=language_package?cognition::language_actions():expression_package?expression::actions():neural::actions();
+            json classes=json::object();for(const auto &name:names)classes[name]={{"rows",0},{"correct",0},{"accepted",0}};
+            json node={{"minimum_strength",job.value("minimum_strength",0.7)},{"minimum_margin",job.value("minimum_margin",0.1)}};
+            for(const auto &row:data){
+                auto logits=predict(package.policy,row.features);auto best=std::max_element(logits.begin(),logits.begin()+names.size())-logits.begin();
+                float maximum=logits[best],sum=0,second=0;
+                for(size_t i=0;i<names.size();++i){logits[i]=std::exp(logits[i]-maximum);sum+=logits[i];}
+                for(size_t i=0;i<names.size();++i)if(int(i)!=best)second=std::max(second,logits[i]/sum);
+                const bool uncertain=logits[best]/sum<node.at("minimum_strength").get<float>() || logits[best]/sum-second<node.at("minimum_margin").get<float>();
+                require(row.target<int(names.size()),"neural target outside action schema");
+                auto &c=classes[names.at(row.target)];c["rows"]=c.at("rows").get<int>()+1;
+                if(best==row.target){++correct;c["correct"]=c.at("correct").get<int>()+1;}
+                if(!uncertain){++accepted;c["accepted"]=c.at("accepted").get<int>()+1;if(best==row.target)++accepted_correct;}}
+            std::cout<<json({{"rows",data.size()},{"correct",correct},{"accuracy",double(correct)/data.size()},
+                {"accepted",accepted},{"accepted_correct",accepted_correct},{"coverage",double(accepted)/data.size()},
+                {"classes",classes},{"feature_schema",package.manifest.at("feature_schema")},{"scope","readout classification; expression source contract is checked separately at runtime"},{"generated_tokens",0},{"knowledge_calls",0},{"activated",false}})<<'\n';return 0;
+        }
         if(argc==2 && std::string(argv[1])=="--capabilities") {
 #ifdef WDS_GGML_TRAIN
             std::cout<<json({{"default_backend","ggml-sgd"},{"backends",{"ggml-sgd","scalar-sgd"}},{"abi",1}})<<'\n';
@@ -119,7 +144,17 @@ int main(int argc,char **argv) {
         }
         require(argc==3 && std::string(argv[1])=="--job","usage: wds-train --job job.json");
         auto job=read(argv[2]);auto train=rows(job.at("train")),validation=rows(job.at("validation"));
-        auto domain=field(job,"domain",32);tasks::actions(domain);
+        auto domain=field(job,"domain",32);auto action_names=domain=="language"?cognition::language_actions():domain=="neural"?neural::actions():domain=="expression"?expression::actions():tasks::actions(domain);
+        if(domain=="language") {
+            field(job,"representation_id",256);
+            require(job.value("feature_schema",std::string{})==cognition::language_schema,"language feature schema mismatch");
+            std::set<std::string> texts;
+            for(auto split:{"train","validation"}) for(const auto &row:job.at(split)) {
+                require(row.at("representation_id")==job.at("representation_id"),"mixed model representations");
+                require(texts.insert(field(row,"text",4096)).second,"duplicate language text across splits");
+                require(row.at("target").get<int>()<3,"invalid language label");
+            }
+        }
         int epochs=job.value("epochs",40);float rate=job.value("learning_rate",0.05f);
         require(epochs>=1 && epochs<=200 && std::isfinite(rate) && rate>0 && rate<=0.2,"invalid optimizer budget");
         winds::Package parent(field(job,"parent",2048));
@@ -156,9 +191,20 @@ int main(int argc,char **argv) {
         auto bytes=binary(best);auto manifest=parent.manifest;
         manifest["id"]="wds.ai.winds."+domain+"."+fingerprint;manifest["policy_version"]=parent.manifest.at("policy_version").get<int>()+1;
         manifest["training_version"]=manifest["policy_version"];manifest["checksum_fnv1a64"]=checksum(bytes);manifest["maturity"]="seeded";
-        manifest["action_domain"]=domain;manifest["feature_schema"]=domain+".deficits/1";manifest["action_schema"]=domain+".repairs/1";
-        manifest["actions"]=tasks::actions(domain);manifest["evaluator_version"]="wds.ai.heart."+domain+"/1";
+        manifest["action_domain"]=domain;manifest["feature_schema"]=domain=="neural"?neural::feature_schema:domain+".deficits/1";manifest["action_schema"]=domain=="neural"?"neural.impulses/1":domain+".repairs/1";
+        manifest["actions"]=action_names;manifest["evaluator_version"]="wds.ai.heart."+domain+"/1";
         manifest["action_decoder"]="argmax(first 7 outputs of step(z=0, features, feedback=0)); reset state per decision";
+        if(domain=="neural")manifest["action_decoder"]="linear logits W*x+b; softmax first 7; explicit strength and margin thresholds; no activation";
+        if(domain=="language") {
+            manifest["feature_schema"]=cognition::language_schema;manifest["action_schema"]="language.intents/1";
+            manifest["representation_id"]=job.at("representation_id");
+            manifest["action_decoder"]="signed projection/1; softmax first 3; min strength .75 and margin .25; read-only intents";
+            manifest["foundation_contract"]="frozen Qwen3 representation only; no generation";
+        }
+        if(domain=="expression") {
+            manifest["feature_schema"]=expression::feature_schema;manifest["action_schema"]="expression.plans/1";
+            manifest["action_decoder"]="linear logits W*x+b; softmax first 7; source contract gates realization; no activation";
+        }
         manifest["training"]={{"backend",backend},{"objective","cross entropy on graded one-step action imitation"},{"fingerprint",fingerprint},
             {"parent_checksum",parent.digest},{"best_epoch",best_epoch},{"validation_cross_entropy",best_loss},{"activation","explicit command only"}};
         manifest["promotion"]="candidate only; benchmark gates and activation are separate";

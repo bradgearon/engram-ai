@@ -155,3 +155,20 @@ Profiles emit stable expression metadata with `gender_type:unspecified` when no 
 The primary heart result, token events and final checkpoint identify the selected outward speaker. Consulted voices include their own `expression`. Requested speaker, engram override and original memory author remain separate. Idle item identities never grant speaking permission.
 
 Use [UPKEEP.md](UPKEEP.md) for the complete scheduling policy, capacities, defaults, expression inheritance and reinforcement rules. `max_output_tokens` is 1..4096: direct seed default 256, neuron signal default 1024, upkeep default 512. Reaching it returns an explicit failed checkpoint with a partial artifact rather than a successful truncated response.
+
+## v0.7 engram response API
+
+All commands below use schema 1, a unique `request_id` and `root_id`. Reads do not append journal events. Mutation request IDs are idempotent only for identical content. Maximum string lengths are UTF-8 byte limits.
+
+| Command | Additional fields | Result/event |
+|---|---|---|
+| `assembly.teach` | `engram_id`, `expected_version`, `subject` (256), `predicate` (80), `object` (1024), `source` (256); optional `exclusive`, `claim_status` | `assembly.taught` |
+| `assembly.attune` | `engram_id`, `expected_version`, numeric `importance` in [0,1] | `assembly.attuned` |
+| `assembly.list` | optional `before` sequence | `assembly.listed` with 20 summaries and `next_before` |
+| `assembly.inspect` | `assembly_key` | `assembly.snapshot` |
+| `assembly.feedback` | `assembly_key`, `action`, optional `note` (1024) | `assembly.feedback_recorded` |
+| `assembly.training.export` | none | `assembly.training.rows` |
+
+`mesh.signal` and `mesh.review` accept `response: true` to open an assembly; a `chat_id` also requests one. Their acknowledgment includes `assembly_key`. An optional `wind_instance_id` attaches a completed, scoped artifact up to 2,048 bytes. `chat.send` forwards the same attachment field. Subscribe with `upkeep.watch` for pushed `assembly.updated`, `assembly.completed` and `chat.message` events. Use explicit inspect after reconnect; do not poll.
+
+`wind.activate` additionally accepts domain `expression` with an expression-feature package and the current `expected_active_key`. Collecting assemblies must finish or be cancelled first. Feedback, passing tests and package registration never activate it. See [ENGRAM_RESPONSES.md](ENGRAM_RESPONSES.md) for the complete contract and limits.

@@ -31,7 +31,11 @@ CMakeUserPresets.json
 *.o
 *.a
 *.so
+*.so.*
+*.dylib
 *.dll
+*.lib
+*.exp
 *.exe
 *.pdb
 .vs/
@@ -48,3 +52,11 @@ configs/*.local.json
 *.log
 .DS_Store
 Thumbs.db
+
+# Diagnostic exports contain local conversation history
+*diagnostics*.zip
+
+# Reviewed conversations and learned local sequence checkpoints
+curricula/*.local.json
+*.checkpoint/
+*.pending/

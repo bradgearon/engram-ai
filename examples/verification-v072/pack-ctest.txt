@@ -1,0 +1,41 @@
+Test project /workspace/scratch/599c77d0dd47/wds-ai/build-pack
+      Start  1: core
+ 1/18 Test  #1: core .............................   Passed    0.03 sec
+      Start  2: heart
+ 2/18 Test  #2: heart ............................   Passed    0.11 sec
+      Start  3: heart_websocket
+ 3/18 Test  #3: heart_websocket ..................   Passed    0.39 sec
+      Start  4: websocket
+ 4/18 Test  #4: websocket ........................   Passed    1.52 sec
+      Start  5: workshop_core
+ 5/18 Test  #5: workshop_core ....................   Passed    0.03 sec
+      Start  6: neural_training
+ 6/18 Test  #6: neural_training ..................   Passed    6.04 sec
+      Start  7: expression_workflow
+ 7/18 Test  #7: expression_workflow ..............   Passed    3.29 sec
+      Start  8: native_trainer
+ 8/18 Test  #8: native_trainer ...................   Passed    0.35 sec
+      Start  9: upkeep_core
+ 9/18 Test  #9: upkeep_core ......................   Passed    0.22 sec
+      Start 10: workspace_core
+10/18 Test #10: workspace_core ...................   Passed    0.10 sec
+      Start 11: neural_mesh
+11/18 Test #11: neural_mesh ......................   Passed    0.29 sec
+      Start 12: engram_assembly
+12/18 Test #12: engram_assembly ..................   Passed    0.36 sec
+      Start 13: neural_websocket
+13/18 Test #13: neural_websocket .................   Passed    1.16 sec
+      Start 14: upkeep_websocket
+14/18 Test #14: upkeep_websocket .................   Passed    1.83 sec
+      Start 15: sixstars_setup
+15/18 Test #15: sixstars_setup ...................   Passed    0.28 sec
+      Start 16: interface_websocket
+16/18 Test #16: interface_websocket ..............   Passed    0.33 sec
+      Start 17: gemma4_template
+17/18 Test #17: gemma4_template ..................   Passed    0.02 sec
+      Start 18: runtime_pack_abi
+18/18 Test #18: runtime_pack_abi .................   Passed    0.51 sec
+
+100% tests passed out of 18
+
+Total Test time (real) =  16.90 sec

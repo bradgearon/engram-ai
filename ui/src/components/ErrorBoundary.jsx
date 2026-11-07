@@ -1,9 +1,13 @@
 import { Component } from "react";
+import trace from "../lib/diagnostics.js";
 
 export default class ErrorBoundary extends Component {
   state = { error: null };
   static getDerivedStateFromError(error) {
     return { error };
+  }
+  componentDidCatch(error, info) {
+    trace("browser.render_failed", { error, component_stack: info.componentStack }, true);
   }
   render() {
     if (this.state.error) {

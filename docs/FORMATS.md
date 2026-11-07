@@ -53,3 +53,7 @@ The native trainer emits the existing 1152-byte artifact and manifest schema 1. 
 Task action selection starts from zero state and feedback with the declared 16 feature lanes, calls the existing policy step, and takes argmax over its first seven outputs. Remaining outputs are retained to preserve the ABI. General language episodes keep the original recurrent movement rule. Exported candidates are `seeded`; reports never mutate them to a new maturity or activate them.
 
 Native `.checkpoint.json` files contain job/parent/backend fingerprints, epoch, current/best weights and validation loss. They are optimizer state outside the loadable package. The SGD backend has no hidden momentum state. A package is staged, verified by the production loader and published under a new directory. Native epoch checkpoint replacement and package publishing support ordinary interruption; arbitrary power-loss transactions are not promised.
+
+## v0.7 schemas
+
+`engram.payload/1`, `statement/1`, `astro.attunement/1` and `expression.features/1` describe provenance, teaching and application readouts. They do not alter `policy.wind` or the RNA tile ABI. Both memory datasets are authoritative in Arc; numeric exports are derived. A binary RNA/peptide instruction language is a future extension, not an executable format in this release. See [ENGRAM_RESPONSES.md](ENGRAM_RESPONSES.md).

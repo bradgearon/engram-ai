@@ -5,6 +5,10 @@
 #include "wds/ai/tasks.hpp"
 #include "wds/ai/types.hpp"
 #include "wds/ai/upkeep.hpp"
+#include "wds/ai/neural.hpp"
+#include "wds/ai/expression.hpp"
+#include "wds/ai/cognition.hpp"
+#include "wds/ai/language.hpp"
 namespace wds::ai {
 namespace soul {
 struct alignas(32) Atom {
@@ -26,7 +30,18 @@ class Store {
     std::map<std::string, json> souls_, voice_interests_, declarations_;
 
   public:
+    std::map<std::string, json> cognitive_states, cognitive_results, language_reviews;
     std::map<std::string, json> projects, chats, chat_messages, workspace_requests;
+    std::map<std::string, json> mesh_neurons, mesh_routes, mesh_pulses, mesh_samples, mesh_requests, mesh_web;
+    std::map<std::string, json> assemblies, expression_samples, assembly_requests;
+    std::map<std::string, std::string> assembly_by_lineage;
+    std::map<std::string, std::set<std::string>> pulses_by_lineage, assemblies_by_root;
+    std::set<std::pair<int64_t, std::string>> assembly_due;
+    std::map<std::string, std::set<std::string>> mesh_nodes_by_root, mesh_edges_by_node;
+    std::set<std::pair<int64_t, std::string>> mesh_due, mesh_web_due;
+    std::set<std::string> mesh_running;
+    json mesh_settings = neural::default_settings();
+    json mesh_usage = {{"window_start_ms", 0}, {"impulses", 0}, {"knowledge_calls", 0}, {"web_queries", 0}};
     std::map<std::string, std::vector<std::string>> messages_by_chat;
     json provenance(const std::string &, uint64_t before, size_t limit) const;
     std::map<std::string, json> roots, engrams, instances, packages, active_packages, activation_requests;
@@ -103,6 +118,7 @@ class Package {
   public:
     json manifest;
     Policy policy;
+    std::shared_ptr<const language::Model> sequence;
     std::string digest;
     explicit Package(const fs::path &directory);
     State step(const State &z, const Embedding &active, float feedback, bool frozen = false) const;
@@ -139,6 +155,7 @@ struct Request {
     int iteration = 0;
     json relationship;
     int max_output_tokens = 256;
+    bool language_teacher = false;
 };
 class GenerationLimit : public std::runtime_error {
   public:
@@ -151,8 +168,12 @@ class Foundation {
     virtual ~Foundation() = default;
     virtual std::string name() const = 0;
     virtual std::string propose(const Request &, Token) = 0;
+    virtual bool supports_representations() const { return false; }
+    virtual neural::Representation represent(const std::string &, const std::string &, int) {
+        throw std::runtime_error("knowledge representations unavailable; configure a Qwen3 GGUF backend");
+    }
 };
-std::unique_ptr<Foundation> create(const std::string &model, int gpu_layers);
+std::unique_ptr<Foundation> create(const std::string &model, int gpu_layers, const std::string &runtime_pack = {});
 } // namespace intelligence
 namespace runtime {
 using Emit = std::function<void(const json &)>;
@@ -169,17 +190,25 @@ class Engine {
         json instance;
         intelligence::Request request;
         heart::EvaluationContext context;
-        std::shared_ptr<const winds::Package> package;
+        std::shared_ptr<const winds::Package> package, language;
+        json cognition, prior_cognition;
     };
     struct Result {
         std::string proposal, error;
         heart::Evaluation evaluation;
         State state{};
         json task, action;
+        json neural, cognitive;
         int64_t elapsed_ms = 0;
     };
     std::optional<Work> begin_step(const std::string &, Emit);
     Result compute_step(const Work &, Emit) const;
+    Result cognitive_compute(const Work &, Emit = {}) const;
+    std::string language_mode_ = "strict";
+    int language_teacher_limit_ = 8;
+    int language_teacher_tokens_ = 1024;
+    float language_student_threshold_ = .9f;
+    void cognitive_commit(const Work &, Result &, Emit);
     bool finish_step(const Work &, Result, Emit);
     intelligence::Foundation &foundation_;
     std::unique_ptr<mesh::MeshNode> mesh_;
@@ -188,6 +217,25 @@ class Engine {
     json neuron(const std::string &, const std::string &) const;
     bool scope_command(const json &, Emit);
     bool workspace_command(const json &, Emit);
+    void workspace_recover(Emit);
+    void workspace_dequeue(Emit);
+    std::set<std::string> ready_chats_;
+    bool neural_command(const json &, Emit);
+    bool assembly_command(const json &, Emit);
+    json assembly_start(const json &) const;
+    void assembly_event(const json &, Emit);
+    void assembly_finish(json, Emit, const std::string &reason = "");
+    void assembly_expire(int64_t, Emit);
+    void assembly_recover(Emit);
+    void neural_touch(const std::string &, const std::string &, const std::string &, uint64_t, Emit);
+    void neural_dispatch(int64_t, std::vector<std::string> &, Emit);
+    json neural_snapshot(const std::string &, bool summary = false) const;
+    json neural_node(const std::string &, const std::string &, const std::string &) const;
+    json neural_pulse(const json &, const std::string &, const std::string &, uint64_t,
+                      const std::string &kind = "evidence") const;
+    Result neural_compute(const Work &) const;
+    bool neural_finish(const Work &, Result, Emit);
+    void neural_recover(Emit);
     void workspace_event(const json &, Emit);
     json resolve_soul(const std::string &, const std::string &, const std::string &explicit_soul = "") const;
     std::vector<std::string> read_roots(const std::string &) const;
@@ -211,7 +259,9 @@ class Engine {
     bool step(const std::string &id, Emit);  // One bounded proposal; true schedules the next step.
     async::Task<bool> advance(std::string id, Emit emit, async::Executor &compute,
                               async::Executor &coordinator);
+    void fail(const std::string &id, const std::string &error, Emit);
     void pause_all();
+    void configure_language(std::string mode, int calls = 8, int tokens = 1024, float threshold = .9f);
     std::vector<std::string> dispatch_ready(int64_t time_ms, Emit);
     std::optional<int64_t> next_wake(int64_t time_ms) const;
     json upkeep_snapshot(const std::string &root = "*") const;

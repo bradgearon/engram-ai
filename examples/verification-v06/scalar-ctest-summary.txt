@@ -1,0 +1,33 @@
+Test project /workspace/scratch/599c77d0dd47/wds-ai/build-v06
+      Start  1: core
+ 1/14 Test  #1: core .............................   Passed    0.07 sec
+      Start  2: heart
+ 2/14 Test  #2: heart ............................   Passed    0.12 sec
+      Start  3: heart_websocket
+ 3/14 Test  #3: heart_websocket ..................   Passed    0.38 sec
+      Start  4: websocket
+ 4/14 Test  #4: websocket ........................   Passed    1.04 sec
+      Start  5: workshop_core
+ 5/14 Test  #5: workshop_core ....................   Passed    0.05 sec
+      Start  6: neural_training
+ 6/14 Test  #6: neural_training ..................   Passed    5.84 sec
+      Start  7: native_trainer
+ 7/14 Test  #7: native_trainer ...................   Passed    0.66 sec
+      Start  8: upkeep_core
+ 8/14 Test  #8: upkeep_core ......................   Passed    0.60 sec
+      Start  9: workspace_core
+ 9/14 Test  #9: workspace_core ...................   Passed    0.07 sec
+      Start 10: neural_mesh
+10/14 Test #10: neural_mesh ......................   Passed    0.41 sec
+      Start 11: neural_websocket
+11/14 Test #11: neural_websocket .................   Passed    0.45 sec
+      Start 12: upkeep_websocket
+12/14 Test #12: upkeep_websocket .................   Passed    1.83 sec
+      Start 13: sixstars_setup
+13/14 Test #13: sixstars_setup ...................   Passed    0.20 sec
+      Start 14: interface_websocket
+14/14 Test #14: interface_websocket ..............   Passed    0.30 sec
+
+100% tests passed out of 14
+
+Total Test time (real) =  12.04 sec

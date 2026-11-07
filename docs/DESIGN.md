@@ -259,10 +259,19 @@ The neuron owns attention. The coordinator supplies a bounded immutable signal c
 
 The active implementation extends the original design with `src/upkeep.cpp` and `src/scopes.cpp`; [UPKEEP.md](UPKEEP.md) is the detailed contract. Neurons decide whether evidence merits movement, with duplicate-result reuse and a bounded inbox. Time-ordered review and claim indices drive one standalone-Asio timer. Numeric flesh changes only when an event touches its root. Global review reservations, budgets, refractory delay and explicit rest prevent unbounded background work. The coroutine compute queue uses weighted interactive/upkeep/workshop service.
 
-The IGFBP2 role returns scoped route/key metadata, while the IGF2BP2/Arc role fetches only attended payloads. Derived indices, item weights and queues replay from the same chain. Root atoms, engram atoms and artifact atoms are AI-owned lightweight records, without autonomous workers. Human or declared-voice feedback is stored with original authorship and episode/policy references. Attributed attention can add bounded response priority; it does not grant correctness, speaking permission or Wind activation.
+The IGFBP2 role returns scoped route/key metadata, while the IGF2BP2 handler fetches only attended payloads from Arc. Derived indices, item weights and queues replay from the same chain. Root atoms, engram atoms and artifact atoms are AI-owned lightweight records, without autonomous workers. Human or declared-voice feedback is stored with original authorship and episode/policy references. Attributed attention can add bounded response priority; it does not grant correctness, speaking permission or Wind activation.
 
 Root expression represents form, presence and interests separately from optional identity-specific gender/pronouns. People, creatures, objects and organizations fit the same declaration and profile boundary. Project preference overrides account defaults; shared account reads require an explicit scoped grant. The engram layer may choose a relevant saved speaker proposal, recording requested/selected identity and evidence. Weak associations remain deferred to reduce cross-soul noise. Voices remain read-only and only the coordinator commits these changes.
 
 The llama.cpp adapter now reuses the pinned native Jinja engine for modern GGUF chat templates. It preserves input markers during tokenization and disables thinking in the template inputs. It does not depend on the full llama common HTTP/CLI stack. Generation limits retain partial output and fail explicitly. Interactive text chat carries the previous finished exchange and attributed user memories; Six Stars' audio/vision/UI are not wired to this runtime.
 
 Training still emits the unchanged schema-1 Wind ABI. No upkeep, reflection, reinforcement, template or training path can activate a candidate. Explicit episode-boundary activation remains the only durable swap.
+
+
+## v0.6 neuronal mesh extension
+
+See [NEURAL_MESH.md](NEURAL_MESH.md) for the concrete event flow, read-only computation boundary, `mesh.*` protocol, representation adapter, budgets, web provenance and training ABI. New chat defaults are neuronal; `chat.review` follows the chat mode. Only the coordinator writes. A passing gate never activates a candidate.
+
+## v0.7 response assembly and Arc ownership
+
+Both engram and astroengram datasets live in the authoritative Arc journal. IGFBP2 indexes their scoped locations, versions and numeric attention metadata. IGF2BP2 handles bounded payload fetches and RNA preparation. Neither role owns a duplicate content store or a writer. See [ENGRAM_RESPONSES.md](ENGRAM_RESPONSES.md) for concrete types, response assembly, weight bindings, importance, expression training and the deferred binary instruction-language extension.

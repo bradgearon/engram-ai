@@ -67,7 +67,7 @@ int main(int argc,char **argv){
             chain::Store store(dir/"async");Blocked foundation;runtime::Engine engine(store,baseline,foundation);
             async::Executor owner(128),cpu(16);std::promise<void> finished,paused;
             std::string id;
-            owner.post([&]{id=engine.command({{"schema",1},{"type","seed"},{"request_id","blocked"},{"root_id","async"},{"text","test responsive controls"}},[](const json&){});
+            owner.post([&]{id=engine.command({{"schema",1},{"type", "seed"}, {"mode", "foundation_once"},{"request_id","blocked"},{"root_id","async"},{"text","test responsive controls"}},[](const json&){});
                 async::launch(advance(engine,id,cpu,owner,finished),[&](std::exception_ptr e){finished.set_exception(e);});});
             auto entered=foundation.entered.get_future();require(entered.wait_for(std::chrono::seconds(5))==std::future_status::ready,"compute not entered");
             owner.post([&]{engine.command({{"schema",1},{"type","cancel"},{"request_id","cancel-blocked"},{"instance_id",id}},[](const json&){});paused.set_value();});

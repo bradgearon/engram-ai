@@ -1,4 +1,5 @@
 #include "wds/ai/core.hpp"
+#include "wds/ai/diagnostics.hpp"
 #include <condition_variable>
 #include <deque>
 #include <iostream>
@@ -23,15 +24,18 @@ async::Task<async::Unit> drive(runtime::Engine &engine, std::string id, runtime:
     co_return async::Unit{};
 }
 int main(int argc, char **argv) {
+    diagnostics::Trace trace_log;
     try {
         fs::path data = "data", package = "packages/breeze", package_root = "packages";
-        std::string model;
+        std::string model, runtime_pack, trace_file, trace_level = "trace";
+        bool trace_content = true; int trace_mb = 16, trace_backups = 8;
         int port = 8765, layers = 0;
+        std::string language_mode="strict";int teacher_calls=8,teacher_tokens=1024;float student_threshold=.9f;
         for (int i = 1; i < argc; i++) {
             std::string arg = argv[i];
             if (arg == "--help") {
                 std::cout
-                    << "wds-ai [--data DIR] [--package DIR] [--model GGUF] [--gpu-layers N] [--port N]\n";
+                    << "wds-ai [--data DIR] [--package DIR] [--model GGUF] [--runtime-pack DIR] [--gpu-layers N] [--port N] [--trace-file FILE] [--trace-level trace|errors] [--trace-content true|false] [--trace-file-mb N] [--trace-backups N]\n";
                 return 0;
             }
             require(i + 1 < argc, "missing flag value");
@@ -44,6 +48,17 @@ int main(int argc, char **argv) {
                 package_root = v;
             else if (arg == "--model")
                 model = v;
+            else if (arg == "--runtime-pack")
+                runtime_pack = v;
+            else if (arg == "--language-mode") language_mode=v;
+            else if (arg == "--language-teacher-calls") teacher_calls=std::stoi(v);
+            else if (arg == "--language-teacher-tokens") teacher_tokens=std::stoi(v);
+            else if (arg == "--language-student-threshold") student_threshold=std::stof(v);
+            else if (arg == "--trace-file") trace_file = v;
+            else if (arg == "--trace-level") trace_level = v;
+            else if (arg == "--trace-content") { require(v == "true" || v == "false", "invalid trace-content"); trace_content = v == "true"; }
+            else if (arg == "--trace-file-mb") trace_mb = std::stoi(v);
+            else if (arg == "--trace-backups") trace_backups = std::stoi(v);
             else if (arg == "--port")
                 port = std::stoi(v);
             else if (arg == "--gpu-layers")
@@ -52,10 +67,14 @@ int main(int argc, char **argv) {
                 throw std::runtime_error("unknown flag");
         }
         require(port > 0 && port < 65536 && layers >= 0, "invalid port or gpu layers");
+        require((trace_level == "trace" || trace_level == "errors") && trace_mb >= 1 && trace_mb <= 256 && trace_backups >= 1 && trace_backups <= 32, "invalid trace configuration");
+        if (!trace_file.empty()) trace_log.open(trace_file, trace_content, trace_level == "errors", trace_mb, trace_backups);
+        trace_log.record("runtime.starting", {{"data",data.string()},{"model",model},{"runtime_pack",runtime_pack},{"gpu_layers",layers}});
         chain::Store store(data);
         winds::Package wind(package);
-        auto foundation = intelligence::create(model, layers);
+        auto foundation = intelligence::create(model, layers, runtime_pack);
         runtime::Engine engine(store, wind, *foundation, {}, {}, "wds.ai.heart.composite/1", package_root);
+        engine.configure_language(language_mode,teacher_calls,teacher_tokens,student_threshold);
         engine.pause_all();
         store.append("runtime.started", "system", "startup",
                      {{"foundation", foundation->name()}, {"wind_manifest", wind.manifest}});
@@ -70,6 +89,7 @@ int main(int argc, char **argv) {
         std::map<Handle, std::set<std::string>, std::owner_less<Handle>> watchers;
         std::atomic<size_t> pending{0};
         auto send = [&](Handle h, const json &value) {
+            trace_log.record("runtime.emit", value, value.value("type",std::string{}) == "error");
             std::string instance;
             if (value.contains("instance_id"))
                 instance = value.at("instance_id");
@@ -86,6 +106,7 @@ int main(int argc, char **argv) {
             bool subscribe = value.value("type", std::string{}) == "episode.attached";
             auto body = value.dump(-1, ' ', false, json::error_handler_t::replace);
             if (pending.fetch_add(body.size()) > 2 * 1024 * 1024) {
+                trace_log.record("transport.backpressure", {{"reason","output backlog"}}, true);
                 pending.fetch_sub(body.size());
                 server.get_io_service().post([&, h] {
                     websocketpp::lib::error_code ec;
@@ -113,6 +134,7 @@ int main(int argc, char **argv) {
                     if (ec)
                         continue;
                     if (c->get_buffered_amount() > 512 * 1024) {
+                        trace_log.record("transport.backpressure", {{"reason","slow consumer"}}, true);
                         server.close(recipient, 1013, "slow consumer", ec);
                         continue;
                     }
@@ -185,6 +207,15 @@ int main(int argc, char **argv) {
                                           try {
                                               std::rethrow_exception(error);
                                           } catch (const std::exception &e) {
+                                              try {
+                                                  engine.fail(id, e.what(), [&, h](const json &event) { send(h,event); });
+                                                  pump();
+                                              } catch (const std::exception &repair) {
+                                                  trace_log.record("episode.recovery_failed", {{"instance_id",id},{"message",repair.what()}}, true);
+                                                  std::cerr << "episode recovery failed: " << repair.what() << '\n';
+                                                  stopping = true;
+                                                  server.get_io_service().post([&] { server.stop(); });
+                                              }
                                               send(h, {{"schema", 1},
                                                        {"type", "error"},
                                                        {"instance_id", id},
@@ -208,20 +239,26 @@ int main(int argc, char **argv) {
                 return origin.empty();
             });
             server.set_open_handler([&](Handle h) {
+                trace_log.record("transport.connected", json::object());
                 clients.insert(h);
                 send(h, {{"schema", 1},
                          {"type", "hello"},
                          {"service", "wds.ai.understanding"},
                          {"foundation", foundation->name()},
                          {"protocol", 1},
-                         {"implementation", "0.5.0"},
+                         {"implementation", "0.9.1"},
+                         {"language_mode",language_mode},
                          {"capabilities",
                           {"relationship.declare", "heart.inspect", "mesh.voices", "task.run",
                            "practice.assess", "episode.attach", "package.register", "wind.activate",
                            "upkeep.watch", "neuron.signal", "reflection.record", "speaker.profile",
-                           "scope.bind", "engram.suggest"}}});
+                           "scope.bind", "engram.suggest", "mesh.inspect", "mesh.signal", "mesh.configure",
+                           "mesh.node.register", "mesh.route.connect", "mesh.feedback", "mesh.training.export",
+                           "mesh.web.claim", "mesh.web.complete", "mesh.pulse.cancel", "mesh.pulse.retry", "mesh.review", "assembly.inspect", "assembly.list",
+                           "assembly.teach", "assembly.attune", "assembly.feedback", "assembly.training.export", "cognition.run", "cognition.inspect"}}});
             });
             server.set_close_handler([&](Handle h) {
+                trace_log.record("transport.disconnected", json::object());
                 clients.erase(h);
                 watchers.erase(h);
                 for (auto &entry : subscriptions)
@@ -234,7 +271,9 @@ int main(int argc, char **argv) {
                 }
                 auto body = msg->get_payload();
                 if (!worker.post([&, h, body] {
+                        const auto started = now_ms();
                         std::string trace = "invalid";
+                        trace_log.record("command.received", {{"raw",body}});
                         auto emit = [&, h](const json &e) { send(h, e); };
                         try {
                             auto m = json::parse(body, [](int depth, json::parse_event_t, const json &) {
@@ -248,18 +287,23 @@ int main(int argc, char **argv) {
                                 server.get_io_service().post([&] { server.stop(); });
                                 return;
                             }
+                            trace_log.record("command.started", m);
                             auto id = engine.command(m, emit);
                             if (!id.empty())
                                 schedule(id, h);
                             pump();
+                            trace_log.record("command.finished", {{"request_id",trace},{"duration_ms",now_ms()-started}});
                         } catch (const std::exception &e) {
+                            trace_log.record("command.failed", {{"request_id",trace},{"message",e.what()},{"raw",body}}, true);
                             send(h, {{"schema", 1},
                                      {"type", "error"},
                                      {"request_id", trace},
                                      {"message", e.what()}});
                             try {
                                 store.append("command.rejected", "system", trace, {{"reason", e.what()}});
-                            } catch (...) {
+                            } catch (const std::exception &journal_error) {
+                                trace_log.record("journal.failed", {{"request_id",trace},{"message",journal_error.what()}}, true);
+                                std::cerr << "journal failed: " << journal_error.what() << '\n';
                             }
                         }
                     }))
@@ -276,9 +320,12 @@ int main(int argc, char **argv) {
             compute.shutdown();
             worker.shutdown();
         }
+        engine.configure_language(language_mode,teacher_calls,teacher_tokens,student_threshold);
         engine.pause_all();
+        trace_log.record("runtime.stopped", json::object());
         return 0;
     } catch (const std::exception &e) {
+        trace_log.record("runtime.fatal", {{"message",e.what()}}, true);
         std::cerr << "fatal: " << e.what() << '\n';
         return 1;
     }

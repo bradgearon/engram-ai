@@ -24,3 +24,8 @@ A completed review may emit a `chat.message` of kind `contribution`. Disabled co
 The `/workshop` socket accepts `training.start` with domain `music` or `architecture`, and `training.cancel`. It publishes `training.snapshot` and existing native workshop progress events. One job runs at a time; process metadata/checkpoints survive a browser disconnect. No workshop message activates a package. The UI uses the existing separate `wind.activate` runtime command, expected active key and episode-boundary guard.
 
 Existing `relationship.declare`, `speaker.profile`, `memory.upsert`, `engram.suggest`, `soul.weight`, `upkeep.configure`, `neuron.signal` and review commands retain their version checks and bounds. See PROTOCOL.md and UPKEEP.md for those contracts.
+
+
+## v0.6 neuronal mesh extension
+
+See [NEURAL_MESH.md](NEURAL_MESH.md) for the concrete event flow, read-only computation boundary, `mesh.*` protocol, representation adapter, budgets, web provenance and training ABI. New chat defaults are neuronal; `chat.review` follows the chat mode. Only the coordinator writes. A passing gate never activates a candidate.

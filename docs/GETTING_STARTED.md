@@ -1,196 +1,136 @@
-# Start talking and training — wds.ai v0.5
+# Start speaking and training — v0.7.3
 
-For the new React interface, follow [INTERFACE.md](INTERFACE.md). After configuring your GGUF, `python tools/workshop.py --config configs/sixstars.local.json start --ui --upkeep` opens the local workspace at http://127.0.0.1:8787. The terminal client remains available below.
+For the stuck-chat fix, automatic journal recovery, and a shareable full trace bundle, see [Diagnostics and recovery](DIAGNOSTICS.md). Start your existing configuration with `start --ui --trace`.
 
-This is the complete local setup guide. The release provides a React browser workspace, an interactive **text chat** terminal, a C++ runtime, native Wind training, and optional bounded background upkeep. The Six Stars microphone, VAD, Whisper and Qwen-TTS playback/UI are not connected to wds.ai in this version. Text conversation is ready through `chat.py`; do not expect `launch.cmd` from Six Stars to route its conversations into this new runtime.
+This release adds persistent response assembly, direct teaching/correction and native grounded expression to the neuronal mesh and React workspace. Arc stores both engram and astroengram records, with separate location indexing and payload handling. Qwen3 4B is optional for semantic representations. In v0.8, AI host also uses native knowledge operations; see [the current quickstart](QUICKSTART-v0.8.md).
 
-## 1. Unzip and install build prerequisites
+## 1. Extract and prepare
 
-Extract `wds_ai_rea_v0_5.zip` and open a terminal in its `wds-ai` directory.
+Extract `wds_ai_rea_v0_7_2.zip` and open a terminal in `wds-ai`.
 
-On Windows, use a **Developer PowerShell for Visual Studio 2022** with the Desktop development with C++ workload. Install CMake 3.20+, Git, and Python 3.11+ and ensure their commands are on PATH. On Linux, use a C++20 compiler, CMake, Git and Python 3.11+. macOS uses the corresponding compiler tools. Linux was tested here; the Windows instructions and CI build are supplied, but Windows was not executed in this environment.
+On Windows use Developer PowerShell for Visual Studio 2022 with the Desktop development with C++ workload. Install CMake 3.20+, Git, Python 3.11+ and Node.js 22.12+ (a recent LTS version is suitable). Linux needs a C++20 compiler; macOS needs its corresponding compiler tools. Reusing the native runtime pack does not need the CUDA development toolkit or Git. Building CUDA from source needs CMake 3.24+ and a CUDA toolkit compatible with your compiler and GPU driver.
 
 ```sh
-python --version
-cmake --version
-git --version
 python -m pip install -r tools/requirements.txt
 ```
 
-The sole Python package is `websockets`. Training math, inference, attention and the coordinator are native C++. The launcher also bootstraps a local WebSocket-only environment when needed. Installing the requirement explicitly makes the separate chat commands use the same Python environment.
+The only Python application dependency is `websockets`. Numerical learning and representations run in C++. No Boost or full ML framework is introduced. The launcher installs the locked frontend dependencies and builds the UI. The archive also contains the built UI assets.
 
-## 2. Point it at your Six Stars model
+## 2. Start without a model first, if desired
 
-The provided Six Stars source declares these paths relative to its repository/install folder:
+```sh
+python tools/workshop.py --config configs/offline.json start --ui
+```
 
-| Role | Declared location | Used by this release |
-|---|---|---|
-| Chat LLM | `models/llm/gemma-4-E4B-it-Q6_K.gguf` | Yes: existing GGUF loaded directly |
-| Vision projector | `models/llm/mmproj-gemma-4-E4B-it-Q8_0.gguf` | No vision adapter in this release |
-| Whisper model | `models/asr/ggml-large-v3-turbo.bin` | Not connected yet |
-| TTS Talker | `models/tts/qwen-talker-0.6b-base-Q8_0.gguf` | Not connected yet |
-| TTS codec | `models/tts/qwen-tokenizer-12hz-Q8_0.gguf` | Not connected yet |
+Open **http://127.0.0.1:8787**. This starts the service and all supporting workers. The mesh listens immediately and rests when no relevant work is pending. It uses explicit bootstrap rules until you train/activate a neural Wind. No GGUF is needed for this local path.
 
-The authoritative file is Six Stars' `config/models.json`. The setup helper reads it rather than assuming the filename will never change. Replace the example folder below with the **actual folder on your computer** containing that `config/models.json`:
+For optional web evidence:
+
+```sh
+python tools/workshop.py --config configs/offline.json start --ui --web
+```
+
+Stop the earlier process before starting another on the same ports. Ctrl+C shuts down the supervised processes. Alternatively, `python tools/workshop.py --config configs/offline.json stop` requests graceful shutdown.
+
+## 3. Use your Qwen3 4B GGUF and Six Stars layout
+
+The Six Stars files are `config/models.json` and `config/runtime-manifest.json`. They are inputs to setup; the WDS settings file is `configs/sixstars.local.json`.
+
+**Existing installation: keep your selected GGUF and data.** After extracting the update over the application files, run this from `U:\wds-ai` in Developer PowerShell:
 
 ```powershell
-python tools/configure_sixstars.py --six-stars "C:\Projects\the-six-stars"
+python tools/workshop.py --config configs/sixstars.local.json start --runtime-pack "U:\six-stars-solution-2\runtime-packs\win-x64\llama-cpp-dynamic-win-x64" --ui
 ```
 
-This verifies the local GGUF and writes `configs/sixstars.local.json`. It defaults to a CPU build to work without CUDA. The GGUF is read in place, not copied or modified. If you moved models, use `--models-root "D:\AI\models"` or the existing `SIX_STARS_MODELS_ROOT` environment variable. `--model "D:\AI\exact-model.gguf"` explicitly selects a different existing GGUF. `--replace` permits replacing a previously generated configuration; otherwise the helper preserves it.
-
-For NVIDIA GPU inference, install the CUDA development toolkit compatible with your compiler and driver, then generate the CUDA configuration:
+This saves the pack selection in your existing config and uses a fresh `build-native-pack` directory. It retains your model, data, run, package, GPU-layer and port settings. It does not touch the failed `build-sixstars` directory. Your prior `--cuda` setup used 99 GPU layers; that setting is retained. Later starts need only:
 
 ```powershell
-python tools/configure_sixstars.py --six-stars "C:\Projects\the-six-stars" --cuda --gpu-layers 99
+python tools/workshop.py --config configs/sixstars.local.json start --ui
 ```
 
-Add `--replace` if you already ran the CPU command. Source compilation requires the CUDA toolkit, even though Six Stars' prebuilt CUDA distribution may only need a driver. This runtime builds its own pinned llama.cpp library; it does not load Six Stars' `llama-server.exe` or swap its DLLs. The small Wind optimizer remains CPU ggml in this milestone.
+Open **http://127.0.0.1:8787**. `--web` adds bounded web evidence; `--train music,architecture` starts the curriculum process. Activation remains a separate action.
 
-If the GGUF is missing, the helper stops explicitly. Run `launch.cmd --download-models-only` from Six Stars, or supply another existing GGUF. This wds.ai helper does not download weights or silently fall back to demo output.
+**New setup:** explicitly select your actual Qwen3 4B file if the Six Stars default manifest selects a different model:
 
-The pinned llama.cpp includes Gemma 4 architecture support. The adapter also uses its native Jinja engine, with thinking disabled and input-token markers preserved. The actual large GGUF was not included in the supplied source archive, so loading/inference with your exact file and GPU must be checked on your machine. Template rendering and native adapter compilation were tested here.
+```powershell
+python tools/workshop.py start --six-stars "U:\six-stars-solution-2" --model "U:\path-to-your-models\Qwen3-4B-Q4_K_M.gguf" --runtime-pack "U:\six-stars-solution-2\runtime-packs\win-x64\llama-cpp-dynamic-win-x64" --gpu-layers 99 --ui
+```
 
-## 3. Start the runtime
+The adapter targets the **b9870** archive shown in your screenshot. It loads `llama.dll`, `ggml-base.dll`, `ggml.dll` and the matching backend DLLs directly. CUDA kernels come from the existing pack; `nvcc`, a new CUDA build and `llama-server.exe` are not used. Keep the complete pack, including CUDA dependency DLLs, together. The GGUF is read in place. A mismatched ABI, absent GPU or missing library produces an explicit startup error; the launcher does not fall back to compiling CUDA. See [RUNTIME_PACKS.md](RUNTIME_PACKS.md) for compatibility and source-build alternatives.
+
+Use `--gpu-layers 0` during new setup for explicit CPU operation. With an existing config, edit its `gpu_layers` value deliberately. In pack mode `cuda: false` means **do not compile CUDA**; offloading is still controlled by `gpu_layers` and the loaded GPU backend.
+
+Inspect **Activity → Knowledge backend**. Qwen ready means the architecture adapter is available, not that task accuracy has been calibrated. Avoid a second model instance in Six Stars if you need its RAM/VRAM for WDS.
+
+The optional representation path performs a compatible Qwen forward pass and compares hidden states with examples. It produces no autoregressive answer tokens. It does not recover arbitrary facts by directly indexing weights. CUDA speed and your actual 4B model must be evaluated on your machine.
+
+## 4. Start a conversation
+
+Choose a project, start **New conversation**, and leave **Neuronal response** selected. The current soul and Wind appear in the conversation controls. A newly selected or created root gets a small neuron; existing roots from older releases get one when used in a neuronal chat. Declaring a non-paused soul creates its scoped neuron atomically.
+
+User messages become attributed reflections. Related neurons contribute to an engram assembly before one sourced response is delivered. Taught relationships become sentences; other sources are quoted. Use **Activity → Engram responses** to teach a relationship, correct its version, set bounded attention importance and inspect the response chain. A free-form correction remains a reflection; use the Teach form to revise a structured relationship. An unresolved question remains held or requests web evidence if enabled. AI host and Neuronal response both avoid model prose generation in v0.8. Type `help` to see native language operations.
+
+Use **Soul status** for engrams, astroengrams, speaker profiles and provenance. Forms and expression can represent people, creatures, objects or organizations. Cross-project speech requires an invited source and keeps its origin visible. Project/account scopes and the existing engram speaker arbitration remain active.
+
+For an immediately runnable teaching example:
 
 ```sh
-python tools/workshop.py --config configs/sixstars.local.json start --upkeep
+python tools/engram.py --root demo demo
+python tools/engram.py --root demo ask "What is The Last Cat?"
 ```
 
-First launch builds the pinned native components. Unless `llama_source` points to an existing pinned checkout, it fetches llama.cpp source from GitHub. It downloads no GGUF. Later launches reuse the build when its fingerprint matches. Keep the terminal open.
+See [ENGRAM_RESPONSES.md](ENGRAM_RESPONSES.md) for correction, importance, Wind creation attachments and separate expression training/activation. The default renderer is bounded native realization, not general language generation.
 
-Readiness prints `workshop.ready` and `ws://127.0.0.1:8765`. The printed foundation must identify `llama.cpp/...`, rather than `wds.ai.intelligence.demo/1`, for real model conversation. Startup errors name the log folder. For this generated configuration, logs and training runs are under `sixstars-wds-runs/`; journal data is under `sixstars-wds-data/runtime/`.
+## 5. Teach neurons and build Winds
 
-`--upkeep` enables persisted background reviews with shared budgets. Omit it to preserve the existing setting; a new store starts with upkeep disabled. No idle review means no timer work. Configured-source fetching runs only when an enabled review requests a declared source.
+Open **Activity → Neuronal mesh**. Create a neuron with a focused purpose and connect it to relevant peers. Send a signal and inspect the action/provenance. Use **Inspect / teach** to enter semantic demonstrations if you want Qwen to help classify unresolved signals. There must be at least two different action labels, at most eight examples. See the ready-to-copy JSON in [NEURAL_MESH.md](NEURAL_MESH.md).
 
-If Six Stars is already running its own LLM, close it first if you need the memory for this separate model instance. Both applications can point to the same read-only GGUF, but simultaneous processes use separate RAM/VRAM. The model file is not a shared inference session.
+Select completed impulses and record expected actions with notes. At least 12 independent observations are required before training; repeated or connected observations are grouped to avoid train/test leakage. Use **Train a Wind from labeled impulses**, inspect the held-out report, and then choose **Activate neural Wind** as a separate action. Nothing in training or evaluation changes the active policy.
 
-## 4. Give the root its expression and start text chat
-
-Open a second terminal in `wds-ai`, using the same Python environment:
+For a repeatable terminal demonstration:
 
 ```sh
-python tools/soul.py send examples/expression/root.json
-python tools/soul.py send examples/expression/profile.json
-python tools/soul.py send examples/expression/preferences.json
-python tools/chat.py --root last-cat --user brad --name Brad
+python tools/mesh.py --root mesh-demo demo
+python tools/mesh.py --root mesh-demo inspect
+python tools/mesh.py --root mesh-demo signal "Recall the music motif lesson" --node motif
 ```
 
-The example root speaks as **The Last Cat organization**, with warm, sisterly, curious presence and interests in cats, music and stories. Gender is unspecified. Edit the JSON examples to choose a bird, a quiet rock, a fatherly presence, another organization, or other expressive details. Profiles live at the root and optional individual-soul level. Change `request_id` and use the current `expected_version` for a new edit; replaying the unchanged example is idempotent.
-
-The chat command declares `brad` as a local human conversation identity if needed, with its own speaking interest paused. It records your user turns as attributed astroengram memories. It includes the preceding finished exchange in the next prompt and retrieves relevant scoped memory. This is a bounded conversational context, not an unlimited transcript loaded into every prompt. Original authorship is retained even if the engram layer selects another responder.
-
-Useful commands inside chat:
-
-```text
-/profile
-/soul auto
-/soul auerlis
-/reflect The ending felt rushed; leave more space before the final note.
-/quit
-```
-
-`/soul ID` requires a declared soul in this root; `/soul auto` returns to automatic matching. `/reflect` saves feedback without starting a response. Ordinary text starts a response. Explicit speaker preference guides selection; a sufficiently relevant saved engram idea can still override it, with the reason recorded. Weak cross-soul associations stay saved.
-
-To add a separate bird persona first:
+To label, train and explicitly activate:
 
 ```sh
-python tools/relationship.py --root last-cat --soul bird --name Bird --purpose "melody singing" --voice purpose --request-id declare-bird-1
+python tools/mesh.py --root mesh-demo feedback PULSE_KEY recall --note "Recall this lesson"
+python tools/mesh.py --root mesh-demo train --config configs/sixstars.local.json
+python tools/mesh.py --root mesh-demo activate PACKAGE_KEY
 ```
 
-Then send a profile JSON file with `type:"speaker.profile"`, `root_id:"last-cat"`, `soul_id:"bird"`, `expected_version:0`, `form:"bird"`, and your chosen `presence`/`interests`. In chat, use `/soul bird`. The deterministic purpose evaluator currently checks lexical overlap; extra relevant voices may make an episode inconclusive or fail their narrow check. Profiles guide the model's expression; they are not separately trained characters yet.
+Use `configs/offline.json` in the train command when that is how you started the server. Get the package key from the registration result/UI. Distribute the complete candidate directory including `manifest.json` and `policy.wind`. The on-disk Wind ABI remains compatible.
 
-For longer replies:
+The included music and architecture curricula still train their separate structured task abilities:
 
 ```sh
-python tools/chat.py --root last-cat --user brad --name Brad --tokens 2048
+python tools/workshop.py --config configs/offline.json start --ui --train music,architecture
 ```
 
-Default chat output allowance is 1024 tokens; valid range is 1..4096, within the runtime's 8192-token total context and 8192-byte artifact limits. Your Six Stars 16384 context setting is not imported automatically. A limit produces an explicit failed checkpoint with preserved partial output, never a passing truncated answer. User turns are bounded to 2048 UTF-8 bytes for attributed memory; split longer input into separate turns. If you change roots, the chat and memory scope changes too.
+Add `--resume` after an interrupted curriculum run. Those packages belong in **Winds & learning**, not the neural conversation Wind selector. Their gates and explicit activation workflow are unchanged.
 
-## 5. Start optional Wind training
+## 6. Leave work for later
 
-To start runtime, chat support, upkeep and both learning packages together:
+Enable background contributions for a chat and schedule a review. In Neuronal response mode, that becomes a durable timed mesh impulse. It survives browser closure and process restart. Completed follow-ups are subject to the quiet contribution gate and remain auditable if held. The mesh does not run an idle inference loop.
 
-```sh
-python tools/workshop.py --config configs/sixstars.local.json start --upkeep --train music,architecture
-```
+`--upkeep` is optional compatibility support for the older general-purpose flesh/review engine. It now uses native decisions for ordinary review episodes. Leave it off when you want only neuronal mesh decisions; mesh reviews do not require it. Existing persisted upkeep settings are retained unless changed in Activity or through the CLI.
 
-Use this instead of starting a second supervisor on the same port. Stop the existing supervisor first. Chat can run in another terminal during learning. Training uses lower-priority episode work and native numerical optimization; benchmark outcomes do not create upkeep needs or add interactive reinforcement.
+## 7. Upgrade and troubleshooting
 
-For a deterministic demo without any LLM, run:
+Back up your data/run directories before changing versions. Keep the same WDS configuration paths to reuse journals, projects and installed packages. Existing policy files remain loadable; neural candidates add manifest schemas. No package is activated by this upgrade. To compare with a clean demonstration, use a separate configuration/data directory.
 
-```sh
-python tools/workshop.py --config configs/offline.json start --upkeep --train music,architecture
-python tools/chat.py --root last-cat
-```
+- **Runtime pack:** missing DLLs, ABI mismatch and GPU registration failures appear in the terminal and `runs/logs/runtime.log` under your configured run directory. See [RUNTIME_PACKS.md](RUNTIME_PACKS.md).
+- **Wrong config:** use `--six-stars` for the Six Stars folder; `--config` expects a WDS config.
+- **Local only:** no supported Qwen3 representation backend is loaded. Local Winds and web evidence still work.
+- **No Qwen calls:** add labeled semantic demonstrations to the target neuron. Local decisions intentionally avoid Qwen when already sufficient.
+- **Held or failed:** inspect the impulse reason. It may need evidence, labels, a shorter input, an available budget, an enabled node or explicit retry.
+- **Training rejected:** gather independent examples rather than relabeling the same impulse. All splits need usable observations.
+- **Activation rejected:** wait for or explicitly finish/cancel affected episodes; activation cannot replace an in-flight policy.
+- **Web failure:** the error and request lease remain visible. Wikipedia is the first provider; there is no silent search-engine fallback.
+- **Capacity reached:** export/retain the journal and begin a fresh demo data directory. Automatic archival is not implemented.
 
-The demo is explicitly labeled and exercises the architecture; it is not a real conversational model. The offline configuration uses the small C++ scalar optimizer. `configs/local.json` instead builds the native ggml optimizer while still using the demo foundation until you configure a GGUF.
-
-The curricula train two small action-selection Winds:
-
-- Music: symbolic note range, duration, cadence, intervals and motif repair.
-- Architecture: symbolic component/port/write ownership, idempotency and bounded async design repairs.
-
-They preserve supplied lessons, verify split/source checksums, gather graded trajectories, optimize the existing 16×16 policy, evaluate validation and locked test splits, and write immutable candidates and reports. They do not fine-tune the GGUF. Conversation/reflections update memory and response priority; they do not automatically rewrite active policy weights.
-
-## 6. Review and explicitly activate a candidate
-
-The supervisor prints `workshop.finished`, its report path and candidate path. Open the report. A passing gate never activates anything.
-
-Pause future upkeep and let active work finish before activation:
-
-```sh
-python tools/workshop.py --config configs/sixstars.local.json upkeep pause
-python tools/workshop.py --config configs/sixstars.local.json upkeep status
-python tools/workshop.py --config configs/sixstars.local.json status
-python tools/workshop.py --config configs/sixstars.local.json activate --domain music --package packages/candidates/music/RUN_ID
-python tools/workshop.py --config configs/sixstars.local.json run --task examples/music-task.json --root music
-python tools/workshop.py --config configs/sixstars.local.json upkeep resume
-```
-
-Replace `RUN_ID` with the actual printed directory, not a report checksum or a guessed ID. Activate architecture separately with its domain and candidate path. Activation succeeds only at an episode boundary for that domain. Paused episodes still block it: explicitly resume them or cancel them by instance ID:
-
-```sh
-python tools/workshop.py --config configs/sixstars.local.json resume --instance wind-ID
-python tools/workshop.py --config configs/sixstars.local.json cancel --instance wind-ID
-```
-
-Use an actual instance ID from the snapshot. Rollback uses the same explicit activation command with a previous package, including `packages/breeze`. Keep registered package directories unchanged and available with their journal.
-
-## 7. Inspect and guide upkeep
-
-```sh
-python tools/soul.py inspect --root last-cat
-python tools/soul.py watch --root last-cat
-python tools/soul.py reflect --root last-cat --actor brad --text "Revisit the melody's ending next time."
-```
-
-Inspect is a one-time request. Watch receives events; do not repeatedly poll inspect. Default limits are two concurrent upkeep reservations, four episodes and two foundation calls per hour, four RNA chunks per material import, and two attempts before rest. The defaults favor quiet, targeted work.
-
-Use `review.suggest` JSON to request an explicit review. Structured failed practice can create a review automatically when upkeep is enabled. Add actual public HTTPS lesson URLs under `upkeep.sources` in the supervisor config if you want the worker to fetch more material. An empty source list means no external fetching. See `UPKEEP.md` and `PROTOCOL.md` for exact fields and deferral/retry behavior.
-
-## 8. Stop, resume and troubleshoot
-
-```sh
-python tools/workshop.py --config configs/sixstars.local.json stop
-python tools/workshop.py --config configs/sixstars.local.json start --upkeep --train music,architecture --resume
-```
-
-`/quit` closes only text chat. `stop` or Ctrl+C in the supervisor stops its processes. `--resume` reuses an interrupted training job only when its input/source/binary fingerprint matches. A changed implementation or curriculum creates a new run. In-flight runtime episodes are paused after restart and need explicit resume/cancel; scheduled reviews remain persisted.
-
-| Symptom | Action |
-|---|---|
-| GGUF not found | Verify Six Stars folder or pass `--models-root`/`--model`; download through Six Stars if necessary |
-| Compiler/CMake/Git absent | Install prerequisites; on Windows use Developer PowerShell |
-| CUDA configuration fails | Install the compatible CUDA toolkit, or regenerate the CPU config explicitly |
-| `demo/1` foundation | Use `configs/sixstars.local.json`; the default demo is intentional |
-| Token/context/artifact budget reached | Read the saved partial result; use a larger permitted `--tokens` allowance or shorter context |
-| Review resting/awaiting source/budget | Inspect its reason, change the relevant setting/material, then issue a versioned retry |
-| Activation blocked | Finish or explicitly cancel active/paused episodes in that domain |
-| Training timeout | Read run checkpoints and rerun with `--resume`; failure is reported explicitly |
-| Port in use | Stop the other supervisor, or use another config port and matching chat `--ws` |
-| Writer lock after forced exit | Confirm no writer is running; follow `DESIGN.md` recovery instructions before removing a stale lock |
-| Missing/changed registered package | Restore the exact candidate directory; do not overwrite its weights in place |
-
-No credentials or model bytes from Six Stars are copied into this project. The adapter uses its own pinned C++ source and the model you explicitly configure. The current service is loopback-only for trusted local clients; the project/account scopes are not remote-user authentication.
+Full runtime details, limits and commands: [NEURAL_MESH.md](NEURAL_MESH.md). Prior generic LLM setup: [GETTING_STARTED-v0.5.md](GETTING_STARTED-v0.5.md). Validation: [VALIDATION-v0.7.3.md](VALIDATION-v0.7.3.md), with prior milestone coverage in [VALIDATION-v0.7.md](VALIDATION-v0.7.md).

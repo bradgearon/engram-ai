@@ -1,6 +1,8 @@
-# Validation record — v0.5
+# Validation record — v0.5.1
 
-Validated November 6, 2026 on Linux x86-64. This release adds the React workspace and its journaled C++ protocol to v0.4. Earlier evidence remains in [VALIDATION-v0.4.md](VALIDATION-v0.4.md).
+Validated November 5, 2026 (America/Chicago) on Linux x86-64. This release adds the React workspace and its journaled C++ protocol to v0.4. Earlier evidence remains in [VALIDATION-v0.4.md](VALIDATION-v0.4.md).
+
+The v0.5.1 setup patch reran all 11 scalar suites, 12 native suites, and 3 JavaScript tests. Supplied-manifest fixtures cover root/config/file inputs, installed versus unpacked runtime paths, model relocation, safe existing-config reuse, and the one-command launcher setup. Windows Shell Link target joining is tested with a mocked resolver; actual Windows COM and real GGUF/GPU inference remain untested here. Patch logs are in `examples/verification-v051/`.
 
 ## Executed checks
 

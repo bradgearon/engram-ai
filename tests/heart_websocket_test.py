@@ -68,7 +68,7 @@ async def main():
                 await send(ws, {'type': 'heart.inspect', 'request_id': 'inspect', 'root_id': 'composer'})
                 snapshot = (await receive(ws, 'heart.snapshot'))['data']
                 assert len(snapshot['souls']) == 2 and snapshot['interests'][0]['strength'] == 1
-                await send(ws, {'type': 'seed', 'request_id': 'music', 'root_id': 'composer',
+                await send(ws, {'type': 'seed', 'mode': 'foundation_once', 'request_id': 'music', 'root_id': 'composer',
                     'text': 'Develop music composition with a recurring motif.', 'voice_budget': 2, 'max_steps': 1})
                 final = (await receive(ws, 'episode.finished', 'music'))['data']
                 evaluation = final['evaluation']
@@ -78,12 +78,12 @@ async def main():
                 assert voices[1]['represented_souls'] == ['auerlis']
                 assert voices[1]['evidence'][-1]['sequence'] == acknowledgment['seq']
                 assert all(v['trace_id'] == 'music' and v['root_id'] == 'composer' for v in voices)
-                await send(ws, {'type': 'seed', 'request_id': 'budget', 'root_id': 'composer',
+                await send(ws, {'type': 'seed', 'mode': 'foundation_once', 'request_id': 'budget', 'root_id': 'composer',
                     'text': 'Develop music composition.', 'voice_budget': 1, 'max_steps': 1})
                 limited = (await receive(ws, 'episode.finished', 'budget'))['data']
                 assert limited['status'] == 'exhausted' and limited['evaluation']['status'] == 'inconclusive'
                 assert limited['evaluation']['skipped'][0]['reason'] == 'budget_exhausted'
-                await send(ws, {'type': 'seed', 'request_id': 'isolated', 'root_id': 'separate',
+                await send(ws, {'type': 'seed', 'mode': 'foundation_once', 'request_id': 'isolated', 'root_id': 'separate',
                     'text': 'Develop music composition.', 'max_steps': 1})
                 isolated = (await receive(ws, 'episode.finished', 'isolated'))['data']['evaluation']
                 assert isolated['represented_souls'] == ['separate']

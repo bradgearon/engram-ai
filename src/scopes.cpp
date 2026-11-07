@@ -240,7 +240,7 @@ bool Engine::scope_command(const json &m, Emit emit) {
                         "expression text too long");
             profile[field] = m.at(field);
         }
-        commit("speaker.profiled", {{"profiles", {profile}}}, {{"profile", profile}});
+        commit("speaker.profiled", {{"profiles", json::array({profile})}}, {{"profile", profile}});
         return true;
     }
     if (op == "persona.preferences") {
@@ -278,7 +278,7 @@ bool Engine::scope_command(const json &m, Emit emit) {
                     values[it.key()] = it.value();
         values["key"] = root;
         values["version"] = version + 1;
-        commit("persona.configured", {{"preferences", {values}}}, {{"preferences", values}});
+        commit("persona.configured", {{"preferences", json::array({values})}}, {{"preferences", values}});
         return true;
     }
     if (op == "soul.weight") {
@@ -289,7 +289,7 @@ bool Engine::scope_command(const json &m, Emit emit) {
         auto weight = m.at("weight").get<double>();
         require(std::isfinite(weight) && weight >= 0 && weight <= 1, "weight must be finite in 0..1");
         json row = {{"key", id}, {"weight", weight}, {"version", version + 1}};
-        commit("soul.weighted", {{"weights", {row}}}, {{"item", row}});
+        commit("soul.weighted", {{"weights", json::array({row})}}, {{"item", row}});
         return true;
     }
     if (op == "scope.bind") {
@@ -306,7 +306,7 @@ bool Engine::scope_command(const json &m, Emit emit) {
                 require(entry.second.at("account_root") != root,
                         "scope is still used as shared account memory");
         json scope = {{"key", root}, {"kind", kind}, {"account_root", account}, {"version", version + 1}};
-        commit("scope.bound", {{"scopes", {scope}}}, {{"scope", scope}});
+        commit("scope.bound", {{"scopes", json::array({scope})}}, {{"scope", scope}});
         return true;
     }
     if (op == "reflection.record") {
@@ -357,7 +357,7 @@ bool Engine::scope_command(const json &m, Emit emit) {
         auto n = neuron(root, target.at("soul_id"));
         n["attention_credit"] = std::min(0.2, n.value("attention_credit", 0.) + 0.05);
         n["attention_source"] = memory.at("id");
-        commit("reflection.recorded", {{"memories", {memory}}, {"neurons", {n}}},
+        commit("reflection.recorded", {{"memories", json::array({memory})}, {"neurons", json::array({n})}},
                {{"engram_id", memory.at("id")}, {"target", target}, {"learning_link", link}});
         memory_changed(root, memory.at("id"), emit);
         return true;
@@ -383,7 +383,7 @@ bool Engine::scope_command(const json &m, Emit emit) {
                      {"eligible_ms", now_ms() + delay},
                      {"status", "pending"},
                      {"version", 1}};
-        commit("engram.idea_saved", {{"ideas", {idea}}}, {{"idea", idea}});
+        commit("engram.idea_saved", {{"ideas", json::array({idea})}}, {{"idea", idea}});
         return true;
     }
     auto id = field(m, "idea_key", 80);
@@ -395,7 +395,7 @@ bool Engine::scope_command(const json &m, Emit emit) {
     idea["eligible_ms"] = now_ms() + delay;
     idea["status"] = "pending";
     idea["version"] = idea.at("version").get<int>() + 1;
-    commit("engram.idea_saved", {{"ideas", {idea}}}, {{"idea", idea}});
+    commit("engram.idea_saved", {{"ideas", json::array({idea})}}, {{"idea", idea}});
     return true;
 }
 } // namespace wds::ai::runtime

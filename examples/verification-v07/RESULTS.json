@@ -1,0 +1,69 @@
+{
+  "version": "0.7.0",
+  "recorded_at": "2026-11-06T03:08:04.024332+00:00",
+  "platform": "Linux x86_64 CPU",
+  "scalar_ctest": {
+    "passed": 16,
+    "failed": 0
+  },
+  "native_ctest": {
+    "passed": 18,
+    "failed": 0
+  },
+  "native_source_commit": "b1c902f026d32535b5e8eae55e5e47b379e57672",
+  "frontend": {
+    "production_build": "passed",
+    "bundle": "index-B9RZiNAM.js",
+    "source_sha256": "05888d94ebf19d3efc4dd7a84990df2dba2ca4abb0ef7dab49032ad154874296",
+    "browser_and_ui_unit_tests": "not run, user requested skip"
+  },
+  "assembly": {
+    "multiple_contributors": true,
+    "correction_preserves_prior_evidence": true,
+    "scope_isolation": true,
+    "source_deduplication": true,
+    "conflict_deadline_and_cancel": true,
+    "restart_resume": true,
+    "exactly_once_delivery_after_completion_crash": true,
+    "native_prose_generation_calls": 0
+  },
+  "arc": {
+    "engram_and_astroengram_shared_journal": true,
+    "indexer_excludes_payloads": true,
+    "handler_lazy_version_checked_fetch": true,
+    "importance_affects_attention_without_claim_promotion": true,
+    "readout_rows_and_checksum_provenance": true
+  },
+  "expression_training": {
+    "synthetic_plan_labels": 90,
+    "held_out_accuracy_assertion": "> 0.95 on synthetic fixture",
+    "policy_bytes": 1152,
+    "auto_activation": false,
+    "activation_during_assembly_rejected": true,
+    "note": "Classification/ABI regression only; not general natural-language quality."
+  },
+  "command_acceptance": {
+    "shipped_cli": true,
+    "teach_ask_correct_attune_inspect": true,
+    "completed_music_wind_attachment": true,
+    "feedback_export": true
+  },
+  "native_representation": {
+    "tiny_random_qwen3_graph_fixture": "passed",
+    "pretrained_qwen3_4b_tested": false,
+    "cuda_tested": false
+  },
+  "deferred": [
+    "binary RNA/peptide instruction language",
+    "learned general language generation",
+    "automatic importance learning",
+    "base GGUF updates/adapters",
+    "multi-host inference"
+  ],
+  "untested": [
+    "Windows/macOS execution",
+    "Qwen3 4B knowledge quality",
+    "GPU performance",
+    "browser interaction"
+  ]
+}

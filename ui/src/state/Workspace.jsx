@@ -1,3 +1,4 @@
+import trace from "../lib/diagnostics.js";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import RuntimeClient from "../lib/client.js";
 const Context = createContext(null);
@@ -10,9 +11,11 @@ export default function Workspace({ children }) {
     [snapshot, setSnapshot] = useState({ projects: [], chats: [] });
   const [packages, setPackages] = useState({ packages: [], active: {} }),
     [activity, setActivity] = useState([]),
+    [mesh, setMesh] = useState(null),
     [upkeep, setUpkeep] = useState(null);
   const [messages, setMessages] = useState({}),
     [streams, setStreams] = useState({}),
+    [streamSources, setStreamSources] = useState({}),
     [training, setTraining] = useState({
       job: { status: "idle" },
       events: [],
@@ -28,6 +31,7 @@ export default function Workspace({ children }) {
     try {
       return await action();
     } catch (e) {
+      trace("workspace.action_failed", { error: e }, true);
       setError(e.message);
       return null;
     }
@@ -39,16 +43,19 @@ export default function Workspace({ children }) {
     }
     refreshing.current = true;
     try {
-      const [w, p, u] = await Promise.all([
+      const [w, p, u, n] = await Promise.all([
         api.current.call("workspace.snapshot", "workspace.snapshot"),
         api.current.call("package.list", "package.snapshot"),
         api.current.call("upkeep.inspect", "upkeep.snapshot"),
+        api.current.call("mesh.inspect", "mesh.snapshot", { summary: true }),
       ]);
       setSnapshot(w.data);
       setPackages(p.data);
       setUpkeep(u.data);
+      setMesh(n.data);
       setRevision((r) => r + 1);
     } catch (e) {
+      trace("workspace.action_failed", { error: e }, true);
       setError(e.message);
     } finally {
       refreshing.current = false;
@@ -91,6 +98,7 @@ export default function Workspace({ children }) {
       await api.current.call("upkeep.watch", "upkeep.snapshot");
       await refresh();
     } catch (e) {
+      trace("workspace.action_failed", { error: e }, true);
       setError(e.message);
     }
   }
@@ -105,9 +113,11 @@ export default function Workspace({ children }) {
         }
         if (event.type === "error") {
           setError(event.message);
+          if (event.instance_id) refresh();
           return;
         }
         if (event.type === "token") {
+          if(event.source_kind) setStreamSources((s) => ({...s,[event.instance_id]:event.source_kind}));
           setStreams((s) => ({
             ...s,
             [event.instance_id]: (s[event.instance_id] || "") + event.text,
@@ -137,18 +147,18 @@ export default function Workspace({ children }) {
               w.project,
             ],
           }));
-        if (w?.message)
-          setMessages((s) => ({
-            ...s,
-            [w.message.chat_id]: [
-              ...(s[w.message.chat_id] || []).filter(
-                (m) => m.id !== w.message.id,
-              ),
-              w.message,
-            ],
-          }));
+        if (w?.message) {
+          setMessages((s) => {
+            const rows = s[w.message.chat_id] || [];
+            return { ...s, [w.message.chat_id]: rows.some((m) => m.id === w.message.id)
+              ? rows.map((m) => m.id === w.message.id ? w.message : m) : [...rows, w.message] };
+          });
+          if (w.message.role === "assistant" && w.message.instance_id)
+            setStreams((s) => { const next = { ...s }; delete next[w.message.instance_id]; return next; });
+        }
         if (
           [
+            "cognition.committed",
             "relationship.declared",
             "speaker.profiled",
             "persona.configured",
@@ -164,7 +174,7 @@ export default function Workspace({ children }) {
             "material.received",
             "engram.idea_saved",
             "review.changed",
-          ].includes(event.type)
+          ].includes(event.type) || (event.seq && event.data?.mesh)
         )
           refresh();
       },
@@ -196,7 +206,7 @@ export default function Workspace({ children }) {
       ...(before != null ? { before } : {}),
     });
     setMessages((s) => {
-      const all = [...r.data.messages, ...(s[id] || [])];
+      const all = [...(s[id] || []), ...r.data.messages];
       return {
         ...s,
         [id]: [...new Map(all.map((m) => [m.id, m])).values()].sort(
@@ -216,8 +226,10 @@ export default function Workspace({ children }) {
         packages,
         activity,
         upkeep,
+        mesh,
         messages,
         streams,
+        streamSources,
         training,
         trainingStatus,
         revision,

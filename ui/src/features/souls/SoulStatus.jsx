@@ -349,8 +349,8 @@ export default function SoulStatus({ root }) {
                 <Database size={18} />
                 <span>
                   <b>
-                    {m.memory_kind === "reflection"
-                      ? "Astroengram · attributed reflection"
+                    {m.arc_dataset === "astroengrams" || m.memory_kind === "reflection"
+                      ? `Astroengram · ${m.memory_kind === "expression_trace" ? "response trace" : "attributed reflection"}`
                       : "Engram"}
                   </b>
                   <p>{m.text}</p>
@@ -807,7 +807,7 @@ function SoulGraph({ root, data, onSelect }) {
           m,
           28,
           55 + i * 68,
-          m.memory_kind === "reflection" ? "Astroengram" : "Engram",
+          m.arc_dataset === "astroengrams" || m.memory_kind === "reflection" ? "Astroengram" : "Engram",
           m.text,
           "memory",
         ),

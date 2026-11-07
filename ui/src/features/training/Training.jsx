@@ -24,7 +24,7 @@ export default function Training({ root }) {
   const job = w.training.job || {},
     running = job.status === "running",
     packages = w.packages.packages.filter(
-      (p) => p.manifest.action_domain === domain,
+      (p) => domain === "english" ? p.manifest.feature_schema === "language.sequence/1" : p.manifest.action_domain === domain,
     ),
     curriculum = w.training.curricula.find((c) => c.domain === domain);
   const result = w.activity.find(
@@ -49,6 +49,7 @@ export default function Training({ root }) {
       <div className="domain-tabs">
         {[
           ["music", "Music", "Motifs, cadence & composition"],
+          ["english", "English", "Experimental sequence learning"],
           [
             "architecture",
             "Architecture",
@@ -76,7 +77,7 @@ export default function Training({ root }) {
             LEARNING PACKAGE
           </div>
           <h2>
-            {domain === "music"
+            {domain === "english" ? "English sequence learner" : domain === "music"
               ? "A sense of composition"
               : "Thoughtful architecture"}
           </h2>
@@ -107,7 +108,7 @@ export default function Training({ root }) {
               className="primary"
               disabled={running || w.trainingStatus !== "connected"}
               onClick={() =>
-                w.run(async () => w.train({ type: "training.start", domain }))
+                w.run(async () => w.train({ type: "training.start", domain, ...(domain === "english" ? {root_id: root} : {}) }))
               }
             >
               <Play size={15} />
@@ -151,7 +152,7 @@ export default function Training({ root }) {
                 <small>
                   {e.epoch != null
                     ? `Epoch ${e.epoch}`
-                    : e.message || e.status || e.domain || ""}
+                    : e.stage || e.message || e.status || e.domain || ""}
                 </small>
               </div>
             ))}
@@ -201,7 +202,7 @@ export default function Training({ root }) {
             </span>
             <span className="pill">{p.manifest.maturity}</span>
             <span>
-              {w.packages.active[domain] === p.key ? (
+              {w.packages.active[domain === "english" ? "language" : domain] === p.key ? (
                 <span className="active-text">Active</span>
               ) : (
                 "Candidate"
@@ -209,7 +210,7 @@ export default function Training({ root }) {
             </span>
             <button
               className="secondary"
-              disabled={w.packages.active[domain] === p.key}
+              disabled={w.packages.active[domain === "english" ? "language" : domain] === p.key}
               onClick={() => setActivate(p)}
             >
               Activate
@@ -244,7 +245,7 @@ export default function Training({ root }) {
             <dt>Candidate</dt>
             <dd>{shortKey(activate.key)}</dd>
             <dt>Current</dt>
-            <dd>{shortKey(w.packages.active[domain])}</dd>
+            <dd>{shortKey(w.packages.active[domain === "english" ? "language" : domain])}</dd>
           </dl>
           <p className="muted">
             The coordinator will reject activation while this domain has running
@@ -259,9 +260,9 @@ export default function Training({ root }) {
               onClick={() =>
                 w.run(async () => {
                   await w.call("wind.activate", "wind.activated", {
-                    domain,
+                    domain: domain === "english" ? "language" : domain,
                     package_key: activate.key,
-                    expected_active_key: w.packages.active[domain],
+                    expected_active_key: w.packages.active[domain === "english" ? "language" : domain],
                   });
                   setActivate(null);
                 })

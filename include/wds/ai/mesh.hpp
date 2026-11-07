@@ -12,11 +12,26 @@ class MemoryIndex {
         return refs;
     }
 };
+// Both roles read the same Arc. Neither owns a second memory store or a writer.
+class IGFBP2Indexer {
+    const chain::Store &arc_;
+  public:
+    explicit IGFBP2Indexer(const chain::Store &arc) : arc_(arc) {}
+    std::vector<json> locate(const std::string &, const Embedding &) const;
+};
+class IGF2BP2Handler {
+    const chain::Store &arc_;
+  public:
+    explicit IGF2BP2Handler(const chain::Store &arc) : arc_(arc) {}
+    std::vector<json> fetch(const std::string &, const std::vector<json> &) const;
+    json prepare_rna(const json &packet, const std::string &trace) const;
+};
 class LocalScanIndex final : public MemoryIndex {
-    const chain::Store &store_;
+    IGFBP2Indexer indexer_;
+    IGF2BP2Handler handler_;
 
   public:
-    explicit LocalScanIndex(const chain::Store &s) : store_(s) {}
+    explicit LocalScanIndex(const chain::Store &s) : indexer_(s), handler_(s) {}
     std::vector<json> retrieve(const std::string &, const Embedding &) const override;
     std::vector<json> fetch(const std::string &, const std::vector<json> &) const override;
 };

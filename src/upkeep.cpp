@@ -165,6 +165,8 @@ std::string Engine::signal_signature(const json &s) const {
     return checksum(json{{"text", s.at("text")},
                          {"task", s.value("task", json())},
                          {"memory_generations", versions},
+                         {"cognitive_version", store_.cognitive_states.count(root) ? store_.cognitive_states.at(root).at("version") : json(0)},
+                         {"language_package", active_key("language")},
                          {"speaker", speaker},
                          {"purpose", n.at("purpose")},
                          {"policy", s.value("package_key",active_key(domain_of(s)))},
@@ -374,7 +376,7 @@ bool Engine::upkeep_command(const json &m, Emit emit) {
             extra["instance_id"] = cached;
             extra["artifact"] = store_.instances.at(cached).at("artifact");
         }
-        commit("neuron.decision", {{"signals", {signal}}, {"neurons", {n}}}, extra);
+        commit("neuron.decision", {{"signals", json::array({signal})}, {"neurons", json::array({n})}}, extra);
         return true;
     }
     if (op == "review.suggest") {
@@ -424,7 +426,7 @@ bool Engine::upkeep_command(const json &m, Emit emit) {
         }
         auto f = upkeep::Flesh::read(store_.flesh.count(root) ? store_.flesh.at(root) : json());
         f.need(review.at("requires_material"), 0.4);
-        commit("review.suggested", {{"reviews", {review}}, {"neurons", {n}}, {"flesh", {{root, f.record()}}}},
+        commit("review.suggested", {{"reviews", json::array({review})}, {"neurons", json::array({n})}, {"flesh", {{root, f.record()}}}},
                {{"review_key", key}, {"due_ms", review.at("due_ms")}});
         return true;
     }
@@ -516,8 +518,8 @@ bool Engine::upkeep_command(const json &m, Emit emit) {
             review["reason"] = "new source material is hypothetical; review required";
         }
         review["version"] = review.at("version").get<int>() + 1;
-        changes["materials"] = {item};
-        changes["reviews"] = {review};
+        changes["materials"] = json::array({item});
+        changes["reviews"] = json::array({review});
         commit(
             "material.received", changes,
             {{"material_key", key}, {"status", item.at("status")}, {"review_status", review.at("status")}});
@@ -526,6 +528,8 @@ bool Engine::upkeep_command(const json &m, Emit emit) {
     throw std::runtime_error("unknown upkeep command");
 }
 void Engine::memory_changed(const std::string &root, const std::string &memory_id, Emit emit) {
+    if (store_.engrams.count(memory_id))
+        neural_touch(root, memory_id, store_.engrams.at(memory_id).at("text"), store_.sequence(), emit);
     if (store_.upkeep_settings.at("enabled") != true)
         return;
     auto index = store_.reviews_by_memory.find(memory_id);
@@ -604,10 +608,14 @@ void Engine::suggest_from_failure(const json &x, Emit emit) {
               {"before_score", x.value("heart_score", 0.)}};
     event("review.suggested", root, x.at("trace_id"),
           {{"review_key", key},
-           {"maintenance", {{"reviews", {r}}, {"neurons", {n}}, {"flesh", {{root, f.record()}}}}}},
+           {"maintenance", {{"reviews", json::array({r})}, {"neurons", json::array({n})}, {"flesh", {{root, f.record()}}}}}},
           emit);
 }
 void Engine::settle_signal(const json &x, Emit emit) {
+    if (x.contains("neuron_signal_key")) {
+        const auto key = x.at("neuron_signal_key").get<std::string>();
+        if (store_.signals.count(key) && store_.signals.at(key).at("status") != "running") return;
+    }
     auto root = x.at("root_id").get<std::string>();
     json changes;
     if (x.at("status") == "completed" && x.value("work_class", std::string("interactive")) == "interactive" &&
@@ -629,7 +637,7 @@ void Engine::settle_signal(const json &x, Emit emit) {
                 {"meaning", "response attention priority; no claim of truth or automatic wind activation"}};
             n["attention_credit"] = 0.;
             event("neuron.reinforced", root, x.at("trace_id"),
-                  {{"weight", weight}, {"maintenance", {{"weights", {weight}}, {"neurons", {n}}}}}, emit);
+                  {{"weight", weight}, {"maintenance", {{"weights", json::array({weight})}, {"neurons", json::array({n})}}}}, emit);
         }
     }
     // A speaker proposal is retained if its attempted expression was cancelled or failed.
@@ -639,7 +647,7 @@ void Engine::settle_signal(const json &x, Emit emit) {
             idea["status"] =
                 (x.at("status") == "completed" || x.at("status") == "exhausted") ? "delivered" : "pending";
             idea["version"] = idea.at("version").get<int>() + 1;
-            changes["ideas"] = {idea};
+            changes["ideas"] = json::array({idea});
         }
     }
     if (!x.contains("neuron_signal_key")) {
@@ -664,8 +672,8 @@ void Engine::settle_signal(const json &x, Emit emit) {
     if (x.at("status") != "completed")
         n["refractory_until_ms"] =
             now_ms() + store_.upkeep_settings.at("upkeep_refractory_ms").get<int64_t>();
-    changes["signals"] = {signal};
-    changes["neurons"] = {n};
+    changes["signals"] = json::array({signal});
+    changes["neurons"] = json::array({n});
     auto review_key = signal.value("review_key", std::string{});
     if (!review_key.empty()) {
         auto r = store_.reviews.at(review_key);
@@ -693,7 +701,7 @@ void Engine::settle_signal(const json &x, Emit emit) {
             r["status"] = "resting";
             r["reason"] = "review stopped: " + signal.at("reason").get<std::string>();
         }
-        changes["reviews"] = {r};
+        changes["reviews"] = json::array({r});
     }
     auto index = store_.reviews_by_neuron.find(n.at("key"));
     if (index != store_.reviews_by_neuron.end())
@@ -719,17 +727,25 @@ void Engine::settle_signal(const json &x, Emit emit) {
           emit);
 }
 std::optional<int64_t> Engine::next_wake(int64_t time_ms) const {
-    if (store_.upkeep_settings.at("enabled") != true)
-        return {};
     std::optional<int64_t> earliest;
-    if (!store_.review_due.empty())
+    if (!ready_chats_.empty()) earliest = time_ms;
+    if (!store_.assembly_due.empty() && (!earliest || store_.assembly_due.begin()->first < *earliest)) earliest = store_.assembly_due.begin()->first;
+    if (store_.upkeep_settings.at("enabled") == true && !store_.review_due.empty() && (!earliest || store_.review_due.begin()->first < *earliest))
         earliest = store_.review_due.begin()->first;
-    if (!store_.material_due.empty() && (!earliest || store_.material_due.begin()->first < *earliest))
+    if (store_.upkeep_settings.at("enabled") == true && !store_.material_due.empty() && (!earliest || store_.material_due.begin()->first < *earliest))
         earliest = store_.material_due.begin()->first;
+    if (store_.mesh_settings.at("enabled") == true && !store_.mesh_due.empty() &&
+        store_.mesh_running.size() < store_.mesh_settings.at("max_concurrent").get<size_t>() &&
+        store_.active_instances.size() < 16 && (!earliest || store_.mesh_due.begin()->first < *earliest))
+        earliest = store_.mesh_due.begin()->first;
+    if (!store_.mesh_web_due.empty() && (!earliest || store_.mesh_web_due.begin()->first < *earliest))
+        earliest = store_.mesh_web_due.begin()->first;
     (void)time_ms;
     return earliest;
 }
 std::vector<std::string> Engine::dispatch_ready(int64_t time, Emit emit) {
+    workspace_dequeue(emit);
+    assembly_expire(time, emit);
     std::vector<std::string> ready;
     const auto settings = store_.upkeep_settings;
     auto usage = store_.upkeep_usage;
@@ -750,7 +766,7 @@ std::vector<std::string> Engine::dispatch_ready(int64_t time, Emit emit) {
             event("material.expired", item.at("root_id"), "fetch-timeout",
                   {{"material_key", item.at("key")},
                    {"reason", item.at("error")},
-                   {"maintenance", {{"materials", {item}}, {"reviews", {r}}}}},
+                   {"maintenance", {{"materials", json::array({item})}, {"reviews", json::array({r})}}}},
                   emit);
         }
         // Each event handles a bounded number of due records; remaining due work gets a one-shot wake.
@@ -761,7 +777,7 @@ std::vector<std::string> Engine::dispatch_ready(int64_t time, Emit emit) {
             auto n = neuron(root, r.at("soul_id"));
             auto commit = [&](std::string type, json extra = json::object(), json changes = json::object()) {
                 r["version"] = r.at("version").get<int>() + 1;
-                changes["reviews"] = {r};
+                changes["reviews"] = json::array({r});
                 extra["review_key"] = r.at("key");
                 extra["status"] = r.at("status");
                 extra["reason"] = r.at("reason");
@@ -825,7 +841,7 @@ std::vector<std::string> Engine::dispatch_ready(int64_t time, Emit emit) {
                 usage["fetches"] = usage.at("fetches").get<int>() + 1;
                 r["status"] = "waiting_material";
                 r["reason"] = "waiting for configured-source worker";
-                commit("material.requested", {{"request", item}}, {{"materials", {item}}, {"usage", usage}});
+                commit("material.requested", {{"request", item}}, {{"materials", json::array({item})}, {"usage", usage}});
                 continue;
             }
             int steps = settings.at("max_steps"), calls = r.contains("task") ? 0 : steps;
@@ -886,7 +902,7 @@ std::vector<std::string> Engine::dispatch_ready(int64_t time, Emit emit) {
                    {{"signal_key", key},
                     {"decision", decision.action},
                     {"learning_history", history(root, r.at("text"))}},
-                   {{"signals", {signal}}, {"neurons", {n}}, {"usage", usage}});
+                   {{"signals", json::array({signal})}, {"neurons", json::array({n})}, {"usage", usage}});
             ++background;
             ++active;
         }
@@ -917,7 +933,7 @@ std::vector<std::string> Engine::dispatch_ready(int64_t time, Emit emit) {
                    {"instance_id", cached},
                    {"status", "reuse"},
                    {"artifact", store_.instances.at(cached).at("artifact")},
-                   {"maintenance", {{"signals", {signal}}}}},
+                   {"maintenance", {{"signals", json::array({signal})}}}},
                   emit);
             continue;
         }
@@ -945,13 +961,13 @@ std::vector<std::string> Engine::dispatch_ready(int64_t time, Emit emit) {
             } catch (const std::exception &error) {
                 signal["status"] = "failed";
                 signal["reason"] = error.what();
-                json changes = {{"signals", {signal}}};
+                json changes = {{"signals", json::array({signal})}};
                 if (!signal.at("review_key").get<std::string>().empty()) {
                     auto r = store_.reviews.at(signal.at("review_key"));
                     r["status"] = "resting";
                     r["reason"] = error.what();
                     r["version"] = r.at("version").get<int>() + 1;
-                    changes["reviews"] = {r};
+                    changes["reviews"] = json::array({r});
                 }
                 event("neuron.failed", root, request,
                       {{"signal_key", key}, {"reason", error.what()}, {"maintenance", changes}}, emit);
@@ -974,7 +990,7 @@ std::vector<std::string> Engine::dispatch_ready(int64_t time, Emit emit) {
               {{"signal_key", key},
                {"instance_id", id},
                {"decision", signal.at("decision")},
-               {"maintenance", {{"signals", {signal}}, {"neurons", {n}}, {"instances", {x}}}}},
+               {"maintenance", {{"signals", json::array({signal})}, {"neurons", json::array({n})}, {"instances", json::array({x})}}}},
               emit);
         if (terminal(x))
             settle_signal(x, emit);
@@ -995,9 +1011,10 @@ std::vector<std::string> Engine::dispatch_ready(int64_t time, Emit emit) {
                 r["due_ms"] = std::max(time, n.at("refractory_until_ms").get<int64_t>());
                 r["version"] = r.at("version").get<int>() + 1;
                 event("review.ready", r.at("root_id"), "slot-available",
-                      {{"review_key", r.at("key")}, {"maintenance", {{"reviews", {r}}}}}, emit);
+                      {{"review_key", r.at("key")}, {"maintenance", {{"reviews", json::array({r})}}}}, emit);
             }
     }
+    neural_dispatch(time, ready, emit);
     return ready;
 }
 } // namespace wds::ai::runtime

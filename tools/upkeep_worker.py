@@ -40,7 +40,10 @@ async def complete(endpoint,item,fetcher=fetch):
             'status':result['data']['status'],'extraction_limited':payload.get('extraction_limited',False),
             'reason':payload.get('error','')}),flush=True)
 
-async def run(endpoint,fetcher=fetch):
+async def run(endpoint,fetcher=fetch,network_enabled=True):
+    if not network_enabled:
+        def offline_fetch(url):raise RuntimeError('Network acquisition disabled by offline configuration; local archives remain available')
+        fetcher=offline_fetch
     async with Client(endpoint) as watch:
         snapshot=(await watch.call('upkeep.watch','upkeep.snapshot',root_id='*'))['data']
         pending=[m for m in snapshot['materials'] if m['status']=='pending'] if snapshot['settings']['enabled'] else []

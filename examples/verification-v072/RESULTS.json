@@ -1,0 +1,24 @@
+{
+  "version": "0.7.2",
+  "regression_before_fix": "reproduced the exact missing ggml_backend_dev_name error with disjoint fixture exports",
+  "runtime_pack_ctest": {
+    "passed": 18,
+    "failed": 0
+  },
+  "fixture_library_ownership": {
+    "ggml-base": [
+      "ggml_commit",
+      "ggml_version",
+      "ggml_backend_dev_name"
+    ],
+    "ggml": [
+      "ggml_backend_load_all_from_path",
+      "ggml_backend_dev_by_type"
+    ],
+    "llama": "llama_* functions"
+  },
+  "synthetic_device_name_lookup": "passed",
+  "ui_production_build": "passed",
+  "browser_and_ui_tests": "not run per request",
+  "windows_gpu_execution": "not available; not tested"
+}

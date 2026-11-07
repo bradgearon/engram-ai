@@ -5,7 +5,7 @@ from ws_client import Client
 from upkeep_worker import run as worker
 
 async def start(directory,port):
-    p=await asyncio.create_subprocess_exec(sys.argv[1],'--data',directory,'--package',sys.argv[2],'--port',str(port),stdout=asyncio.subprocess.PIPE,stderr=asyncio.subprocess.PIPE)
+    p=await asyncio.create_subprocess_exec(sys.argv[1],'--language-mode','legacy','--data',directory,'--package',sys.argv[2],'--port',str(port),stdout=asyncio.subprocess.PIPE,stderr=asyncio.subprocess.PIPE)
     line=await asyncio.wait_for(p.stdout.readline(),20)
     assert line.startswith(b'READY'),(line,(await p.stderr.read()).decode())
     return p

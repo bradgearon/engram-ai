@@ -1,3 +1,4 @@
+import trace from "./lib/diagnostics.js";
 import { useEffect, useState } from "react";
 import {
   MessageSquare,
@@ -48,6 +49,9 @@ export default function App() {
     localStorage.setItem("wds-root", root);
     localStorage.setItem("wds-chat", chatId);
   }, [root, chatId]);
+  useEffect(() => {
+    trace("workspace.context", { view, root_id: root, chat_id: chatId });
+  }, [view, root, chatId]);
   const navigate = (page) => setView(page);
   async function newChat() {
     await w.run(async () => {
@@ -217,7 +221,7 @@ export default function App() {
             {w.status === "connected"
               ? "Local runtime connected"
               : "Runtime " + w.status}
-            <span>v0.5</span>
+            <span>v0.9.1</span>
           </div>
         </div>
       </aside>
@@ -264,8 +268,8 @@ export default function App() {
         )}
         {w.snapshot.foundation?.includes("demo") && (
           <div className="demo-banner">
-            Demo foundation · Connect your GGUF configuration for real
-            conversation.
+            Local knowledge engine · A GGUF can add language features for
+            recognized intents.
           </div>
         )}
         {w.error && (

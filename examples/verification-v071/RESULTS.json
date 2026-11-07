@@ -1,0 +1,17 @@
+{
+  "version": "0.7.1",
+  "runtime_pack_ctest": {
+    "passed": 18,
+    "failed": 0,
+    "library_kind": "synthetic b9870 ABI fixtures"
+  },
+  "source_native_ctest": {
+    "passed": 18,
+    "failed": 0,
+    "model_kind": "tiny random-weight Qwen3 fixture"
+  },
+  "production_ui_build": "passed",
+  "ui_tests": "not run per request",
+  "pack_cuda_compiler_enabled": false,
+  "windows_gpu_and_pretrained_qwen": "not available; not tested"
+}

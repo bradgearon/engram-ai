@@ -1,0 +1,6 @@
+{
+  "repository": "https://github.com/ggml-org/llama.cpp",
+  "tag": "b9870",
+  "commit": "2d973636e292ee6f75fadcf08d29cb33511f509f",
+  "purpose": "Exact native runtime pack C ABI declarations; no CUDA implementation compiled"
+}
